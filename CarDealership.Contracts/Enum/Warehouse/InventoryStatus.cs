@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace CarDealership.Contracts.Enum.Warehouse;
 
-public enum InvoiceStatus
+public enum InventoryStatus
 {
-    Pending,
-    Delivered,
-    Canceled
+    Ordered,
+    Available,
+    Reserved,
+    SoldOut,
 }

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarDealership.Contracts.Model;
+namespace CarDealership.Contracts.Model.Car;
 
-public class Car
+public class CarModel
 {
-    public string Id { get; set; }
     public string Make { get; set; }
     public string Model { get; set; }
     public int Year { get; set; }
+    public List<CarSpecific> Specification { get; set; }
 }

@@ -4,8 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarDealership.Contracts.Model;
+namespace CarDealership.Contracts.Enum.Warehouse;
 
-internal class CarSpecific
+public enum OrderStatus
 {
+    InProcess,
+    Done,
+    Canceled
 }
