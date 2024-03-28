@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarDealership.Contracts.Enum.Warehouse;
+namespace CarDealership.Contracts.Enum;
 
 public enum InventoryStatus
 {

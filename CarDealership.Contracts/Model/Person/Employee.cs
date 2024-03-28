@@ -8,5 +8,5 @@ namespace CarDealership.Contracts.Model.Person;
 
 public class Employee : Person
 {
-
+    public string Position { get; set; }
 }

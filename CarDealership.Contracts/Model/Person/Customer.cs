@@ -8,5 +8,5 @@ namespace CarDealership.Contracts.Model.Person;
 
 public class Customer : Person
 {
-    public string ManagerId { get; set; }
+
 }
