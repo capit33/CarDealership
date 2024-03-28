@@ -8,6 +8,7 @@ namespace CarDealership.Contracts.Enum;
 
 public enum InventoryStatus
 {
+    Creating,
     Ordered,
     Available,
     Reserved,
