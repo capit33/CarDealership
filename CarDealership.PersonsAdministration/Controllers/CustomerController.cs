@@ -1,7 +1,15 @@
-﻿using CarDealership.PersonsAdministration.Interfaces.BLL;
+﻿using CarDealership.Contracts.Model.Filters;
+using CarDealership.Contracts.Model.Person.Employee.DTO;
+using CarDealership.Contracts.Model.Person.Employee;
+using CarDealership.PersonsAdministration.BLL;
+using CarDealership.PersonsAdministration.Interfaces.BLL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
+using System;
+using CarDealership.Contracts.Model.Person.Customer;
+using CarDealership.Contracts.Model.Person.Customer.DTO;
 
 namespace CarDealership.PersonsAdministration.Controllers;
 
@@ -20,6 +28,112 @@ public class CustomerController : ControllerBase
 		CustomerManager = customerManager;
 	}
 
+	[HttpGet]
+	[Route("{customerId}")]
+	public async Task<IActionResult> GetCustomerAsync(string customerId)
+	{
+		try
+		{
+			return Ok(await CustomerManager.GetCustomerByIdAsync(customerId));
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, ex.Message, ex.StackTrace);
+			return BadRequest(ex.Message);
+		}
+	}
 
+	[HttpPost]
+	[Route("filter")]
+	public async Task<IActionResult> GetCustomerByFilterAsync([FromBody] CustomerFilter customerFilter)
+	{
+		try
+		{
+			return Ok(await CustomerManager.GetCustomerByFilterAsync(customerFilter));
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, ex.Message, ex.StackTrace);
+			return BadRequest(ex.Message);
+		}
+	}
+
+	[HttpPost]
+	[Route("")]
+	public async Task<IActionResult> CreateCustomerAsync([FromBody] Customer customer)
+	{
+		try
+		{
+			return Ok(await CustomerManager.CreateCustomerAsync(customer));
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, ex.Message, ex.StackTrace);
+			return BadRequest(ex.Message);
+		}
+	}
+
+	[HttpPut]
+	[Route("{customerId}")]
+	public async Task<IActionResult> EditCustomerAsync(string customerId, [FromBody] CustomerEdit customerEdit)
+	{
+		try
+		{
+			return Ok(await CustomerManager.EditCustomerAsync(customerId, customerEdit));
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, ex.Message, ex.StackTrace);
+			return BadRequest(ex.Message);
+		}
+	}
+
+	[HttpPut]
+	[Route("restore/{customerId}")]
+	public async Task<IActionResult> RestoreCustomerAsync(string customerId)
+	{
+		try
+		{
+			return Ok(await CustomerManager.RestoreCustomerAsync(customerId));
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, ex.Message, ex.StackTrace);
+			return BadRequest(ex.Message);
+		}
+	}
+
+
+	[HttpPut]
+	[Route("remove/{customerId}")]
+	public async Task<IActionResult> RemoveCustomerAsync(string customerId)
+	{
+		try
+		{
+			await CustomerManager.RemoveCustomerAsync(customerId);
+			return Ok();
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, ex.Message, ex.StackTrace);
+			return BadRequest(ex.Message);
+		}
+	}
+
+	[HttpDelete]
+	[Route("{customerId}")]
+	public async Task<IActionResult> DeleteCustomerAsync(string customerId)
+	{
+		try
+		{
+			await CustomerManager.DeleteCustomerAsync(customerId);
+			return Ok();
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, ex.Message, ex.StackTrace);
+			return BadRequest(ex.Message);
+		}
+	}
 
 }

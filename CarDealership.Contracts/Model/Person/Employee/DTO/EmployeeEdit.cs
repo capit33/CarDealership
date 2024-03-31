@@ -20,7 +20,7 @@ public class EmployeeEdit : IObjectValidation
 			|| string.IsNullOrWhiteSpace(LastName)
 			|| string.IsNullOrWhiteSpace(Position))
 		{
-			errorMessage = "No fields to edit";
+			errorMessage = ConstantMessages.NoFieldsToEdit;
 			return false;
 		}
 		return true;

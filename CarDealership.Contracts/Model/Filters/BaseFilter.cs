@@ -29,13 +29,13 @@ public class BaseFilter
 		description = string.Empty;
 		if (PageSize <= 0)
 		{
-			description = "Page size must be greater than 0";
+			description = ConstantMessages.PageSizeError;
 			return false;
 		}
 
 		if (PageNumber < 0)
 		{
-			description = "Page number cannot be negative";
+			description = ConstantMessages.PageNumberError;
 			return false;
 		}
 		return true;

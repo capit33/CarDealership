@@ -1,4 +1,5 @@
-﻿using CarDealership.Contracts.Model.Filters;
+﻿using CarDealership.Contracts;
+using CarDealership.Contracts.Model.Filters;
 using CarDealership.Contracts.Model.Person.Employee;
 using CarDealership.Contracts.Model.Person.Employee.DTO;
 using CarDealership.PersonsAdministration.Interfaces.BLL;
@@ -28,7 +29,7 @@ public class EmployeeManager : IEmployeeManager
 
 	public async Task<Employee> GetEmployeeByIdAsync(string employeeId)
 	{
-		if (employeeId == null)
+		if (string.IsNullOrWhiteSpace(employeeId))
 			throw new ArgumentNullException(nameof(employeeId));
 
 		return await EmployeeRepository.GetEmployeeByIdAsync(employeeId);
@@ -51,7 +52,7 @@ public class EmployeeManager : IEmployeeManager
         if (employeesCount == 0)
 			return pageItems;
 
-		pageItems.PageCount = (int)employeesCount;
+		pageItems.PageCount = (int)Math.Ceiling((double)employeesCount / pageItems.PageSize);
 		pageItems.Items = await EmployeeRepository.GetEmployeesByFilterAsync(employeeFilter);
 
         return pageItems;
@@ -87,7 +88,7 @@ public class EmployeeManager : IEmployeeManager
 		if (string.IsNullOrWhiteSpace(employeeId))
 			throw new ArgumentNullException(nameof(employeeId));
 
-		return await EmployeeRepository.ChangeEmployeeRemoveStatusAsync(employeeId, true);
+		return await EmployeeRepository.ChangeEmployeeRemoveStatusAsync(employeeId, false);
 	}
 
 	public async Task RemoveEmployeeAsync(string employeeId)
@@ -102,7 +103,7 @@ public class EmployeeManager : IEmployeeManager
 	{
 		var isUsing = await ObjectUsageManager.IsEmployeeIdUsedAsync(employeeId);
 		if (isUsing)
-			new Exception($"Employee id: {employeeId}, can not be delete, it used in other documents. You can change remove status.");
+			new Exception($"{nameof(employeeId)}: {employeeId} {ConstantMessages.DeleteError}");
 
 		await EmployeeRepository.DeleteEmployeeAsync(employeeId);
 	}

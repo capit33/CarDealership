@@ -20,7 +20,7 @@ public class Employee : Person
 
 		if (string.IsNullOrWhiteSpace(Position))
 		{
-			errorMessage = "Position can not be null or empty";
+			errorMessage = ConstantMessages.EmployeePositionEmpty;
 			return false;
 		}
 

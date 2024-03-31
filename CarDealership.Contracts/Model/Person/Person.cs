@@ -20,13 +20,19 @@ public class Person : IObjectValidation
 
 		if (string.IsNullOrWhiteSpace(FirstName))
 		{
-			errorMessage = "FirstName can not be null or empty";
+			errorMessage = ConstantMessages.FirstNameNullOrEmpty;
 			return false;
 		}
 
 		if (string.IsNullOrWhiteSpace(LastName))
 		{
-			errorMessage = "LastName can not be null or empty";
+			errorMessage = ConstantMessages.LastNameNullOrEmpty;
+			return false;
+		}
+
+		if (IsRemove)
+		{
+			errorMessage = ConstantMessages.RemoveIsTrue;
 			return false;
 		}
 
