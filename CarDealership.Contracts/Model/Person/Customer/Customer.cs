@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarDealership.Contracts.Model.Person;
+namespace CarDealership.Contracts.Model.Person.Customer;
 
-public class Employee : Person
+public class Customer : Person
 {
-    public string Position { get; set; }
+
 }

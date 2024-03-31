@@ -1,0 +1,20 @@
+﻿@CarDealership.PersonsAdministration_HostAddress = https://localhost:1990
+
+@id = 66087571a00f71488f1578b5
+
+GET {{CarDealership.PersonsAdministration_HostAddress}}/employees/{{id}}
+
+###
+
+POST {{CarDealership.PersonsAdministration_HostAddress}}/employees
+Content-Type: application/json
+
+{
+  "id": "0",
+  "firstName": "Rostyslav",
+  "lastName": "Romanenko",
+  "position": "Manager", 
+  "isRemove" : false
+}
+
+###
