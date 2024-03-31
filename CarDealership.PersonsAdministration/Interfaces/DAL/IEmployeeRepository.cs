@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarDealership.PersonsAdministration.Interfaces.DAL;
 
-    public interface IEmployeeRepository
+public interface IEmployeeRepository
 	{
 		Task<Employee> GetEmployeeByIdAsync(string employeeId);
 		Task<List<Employee>> GetEmployeesByFilterAsync(EmployeeFilter employeeFilter);

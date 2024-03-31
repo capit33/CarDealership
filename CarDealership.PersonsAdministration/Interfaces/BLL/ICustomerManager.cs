@@ -1,7 +1,6 @@
 ﻿using CarDealership.Contracts.Model.Filters;
 using CarDealership.Contracts.Model.Person.Customer;
 using CarDealership.Contracts.Model.Person.Customer.DTO;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CarDealership.PersonsAdministration.Interfaces.BLL;

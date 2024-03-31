@@ -23,6 +23,7 @@ public class Program
 
 		RegisterManagers(builder.Services);
 		RegisterRepositories(builder.Services);
+		RegisterRegisterRestClient(builder.Services);
 		ConfigureServices(builder.Services, builder.Configuration);
 
 		var app = builder.Build();
@@ -47,6 +48,12 @@ public class Program
 
 	}
 
+	private static void RegisterRegisterRestClient(IServiceCollection services)
+	{
+		services.AddHttpClient();
+		//services.AddScoped<IChatRestClient, ChatRestClient>();
+		
+	}
 	private static void RegisterManagers(IServiceCollection services)
 	{
 		services.AddScoped<ICustomerManager, CustomerManager>();

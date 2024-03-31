@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CarDealership.Contracts.Enum;
 using CarDealership.Contracts.Model.Car;
-using CarDealership.Contracts.Enum;
+using System;
 
 namespace CarDealership.Contracts.Model.Order;
 
-public class SupplierOrder : BaseOrder
+public class SupplierOrder
 {
-    public string SupplierName { get; set; }
+	public string Id { get; set; }
+	public CarModel Car { get; set; }
+	public DocumentStatus OrderStatus { get; set; }
+	public DateTime CreatingDate { get; set; }
+	public string SupplierName { get; set; }
 }

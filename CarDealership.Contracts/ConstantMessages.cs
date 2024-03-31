@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarDealership.Contracts;
+﻿namespace CarDealership.Contracts;
 
 public static class ConstantMessages
 {

@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace CarDealership.CarDealership.Controllers
 {
-    [ApiController]
+	[ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {

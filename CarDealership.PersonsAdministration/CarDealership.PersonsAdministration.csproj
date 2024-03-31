@@ -14,4 +14,8 @@
     <ProjectReference Include="..\CarDealership.Infrastructure\CarDealership.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="RestClients\" />
+  </ItemGroup>
+
 </Project>

@@ -2,12 +2,8 @@
 using CarDealership.Contracts.Model.Filters;
 using CarDealership.Contracts.Model.Person.Customer;
 using CarDealership.Contracts.Model.Person.Customer.DTO;
-using CarDealership.Contracts.Model.Person.Employee;
-using CarDealership.PersonsAdministration.DAL;
 using CarDealership.PersonsAdministration.Interfaces.BLL;
 using CarDealership.PersonsAdministration.Interfaces.DAL;
-using MassTransit.Observables;
-using MongoDB.Bson;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -99,7 +95,7 @@ public class CustomerManager : ICustomerManager
 
 	public async Task DeleteCustomerAsync(string customerId)
 	{
-		var isUsing = await ObjectUsageManager.IsCunsumerIdUsedAsync(customerId);
+		var isUsing = await ObjectUsageManager.IsCustomerIdUsedAsync(customerId);
 		if (isUsing)
 			new Exception($"{nameof(customerId)}: {customerId} {ConstantMessages.DeleteError}");
 

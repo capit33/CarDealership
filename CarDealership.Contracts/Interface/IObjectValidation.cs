@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarDealership.Contracts.Interface;
+﻿namespace CarDealership.Contracts.Interface;
 
 public interface IObjectValidation
 {

@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -17,7 +18,11 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        var app = builder.Build();
+		ConfigureServices(builder.Services, builder.Configuration);
+		RegisterManagers(builder.Services);
+		RegisterRepositories(builder.Services);
+
+		var app = builder.Build();
 
         if (app.Environment.IsDevelopment())
         {
@@ -34,26 +39,26 @@ public class Program
         app.Run();
     }
 
-    private static void RegisterQueues(IServiceCollection services)
-    {
+	private static void RegisterQueues(IServiceCollection services)
+	{
 
-    }
+	}
 
-    private static void RegisterManagers(IServiceCollection services)
-    {
+	private static void RegisterManagers(IServiceCollection services)
+	{
 
-    }
+	}
 
-    private static void RegisterRepositories(IServiceCollection services)
-    {
+	private static void RegisterRepositories(IServiceCollection services)
+	{
 
-    }
+	}
 
-    public static void ConfigureServices(IServiceCollection services)
-    {
-        services.AddLogging(loggingBuilder =>
-        {
-            loggingBuilder.AddSeq("http://localhost:5555");
-        });
-    }
+	public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+	{
+		services.AddLogging(loggingBuilder =>
+		{
+			loggingBuilder.AddSeq(configuration.GetValue<string>("SeqUrl"));
+		});
+	}
 }

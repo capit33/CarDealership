@@ -6,7 +6,6 @@ using CarDealership.PersonsAdministration.Interfaces.DAL;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,6 +23,7 @@ public class EmployeeRepository : BaseMongoRepository<Employee>, IEmployeeReposi
 	{
 		return await Collection.Find(e => e.Id == employeeId).SingleOrDefaultAsync();
 	}
+
 	public async Task<List<Employee>> GetEmployeesByFilterAsync(EmployeeFilter employeeFilter)
 	{
 		var filter = FilterDefinition(employeeFilter);

@@ -11,11 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\CarDealership.Infrastructure\CarDealership.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CarDealership.Infrastructure\CarDealership.Infrastructure.csproj" />
+    <Folder Include="RestClients\" />
   </ItemGroup>
 	
 

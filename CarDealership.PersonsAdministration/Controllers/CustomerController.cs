@@ -1,15 +1,11 @@
 ﻿using CarDealership.Contracts.Model.Filters;
-using CarDealership.Contracts.Model.Person.Employee.DTO;
-using CarDealership.Contracts.Model.Person.Employee;
-using CarDealership.PersonsAdministration.BLL;
-using CarDealership.PersonsAdministration.Interfaces.BLL;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System;
 using CarDealership.Contracts.Model.Person.Customer;
 using CarDealership.Contracts.Model.Person.Customer.DTO;
+using CarDealership.PersonsAdministration.Interfaces.BLL;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace CarDealership.PersonsAdministration.Controllers;
 
@@ -17,11 +13,11 @@ namespace CarDealership.PersonsAdministration.Controllers;
 [ApiController]
 public class CustomerController : ControllerBase
 {
-	private ILogger<EmployeeController> Logger { get; }
+	private ILogger<CustomerController> Logger { get; }
 	private ICustomerManager CustomerManager { get; }
 
 	public CustomerController(
-		ILogger<EmployeeController> logger, 
+		ILogger<CustomerController> logger, 
 		ICustomerManager customerManager)
 	{
 		Logger = logger;

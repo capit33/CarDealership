@@ -1,5 +1,10 @@
 
+using CarDealership.Warehouse.BLL;
+using CarDealership.Warehouse.DAL;
+using CarDealership.Warehouse.Interfaces.BLL;
+using CarDealership.Warehouse.Interfaces.DAL;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -12,6 +17,10 @@ public class Program
 	{
 		var builder = WebApplication.CreateBuilder(args);
 
+
+		ConfigureServices(builder.Services, builder.Configuration);
+		RegisterManagers(builder.Services);
+		RegisterRepositories(builder.Services);
 
 		builder.Services.AddControllers();
 		builder.Services.AddEndpointsApiExplorer();
@@ -41,19 +50,19 @@ public class Program
 
 	private static void RegisterManagers(IServiceCollection services)
 	{
-
+		services.AddScoped<IWarehouseManager, WarehouseManager>();
 	}
 
 	private static void RegisterRepositories(IServiceCollection services)
 	{
-
+		services.AddScoped<IWarehouseRepository, WarehouseRepository>();
 	}
 
-	public static void ConfigureServices(IServiceCollection services)
+	public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
 	{
 		services.AddLogging(loggingBuilder =>
 		{
-			loggingBuilder.AddSeq("http://localhost:5555");
+			loggingBuilder.AddSeq(configuration.GetValue<string>("SeqUrl"));
 		});
 	}
 }
