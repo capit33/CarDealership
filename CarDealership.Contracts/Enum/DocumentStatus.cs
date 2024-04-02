@@ -3,6 +3,7 @@
 public enum DocumentStatus
 {
     Open,
-    Done,
+	Processed,
+	Done,
     Canceled
 }
