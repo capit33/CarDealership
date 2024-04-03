@@ -6,5 +6,5 @@ namespace CarDealership.Warehouse.Interfaces.BLL;
 public interface IWarehouseManager
 {
 	Task<object> GetCarsByFilterAsync(CarFilter carFilter);
-	Task<object> GetCarsInWarehouseAsync();
+	Task<object> GetAvailableCarsAsync();
 }

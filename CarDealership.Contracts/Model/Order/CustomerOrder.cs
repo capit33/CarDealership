@@ -10,6 +10,4 @@ public class CustomerOrder
 	public CarModel Car { get; set; }
 	public DocumentStatus OrderStatus { get; set; }
 	public string CustomerId { get; set; }
-	public string EmployeeId { get; set; }
-
 }

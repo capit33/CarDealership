@@ -10,26 +10,26 @@ using System.Threading.Tasks;
 
 namespace CarDealership.Warehouse.Controllers;
 
-[Route("warehouse")]
+[Route("car-warehouse")]
 [ApiController]
-public class WarehouseController : ControllerBase
+public class CarWarehouseController : ControllerBase
 {
 	public IWarehouseManager WarehouseManager { get; set; }
-	private ILogger<WarehouseController> Logger { get; }
+	private ILogger<CarWarehouseController> Logger { get; }
 
-	public WarehouseController(IWarehouseManager warehouseManager, ILogger<WarehouseController> logger)
+	public CarWarehouseController(IWarehouseManager warehouseManager, ILogger<CarWarehouseController> logger)
 	{
 		WarehouseManager = warehouseManager;
 		Logger = logger;
 	}
 
 	[HttpGet]
-	[Route("")]
-	public async Task<IActionResult> GetCarsInWarehouseAsync()
+	[Route("available")]
+	public async Task<IActionResult> GetAvailableCarsAsync()
 	{
 		try
 		{
-			return Ok(await WarehouseManager.GetCarsInWarehouseAsync());
+			return Ok(await WarehouseManager.GetAvailableCarsAsync());
 		}
 		catch (Exception ex)
 		{

@@ -11,5 +11,4 @@ public class SupplierOrder
 	public DocumentStatus OrderStatus { get; set; }
 	public DateTime CreatingDate { get; set; }
 	public string SupplierName { get; set; }
-	public string EmployeeId { get; set;}
 }
