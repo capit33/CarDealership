@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System;
+using CarDealership.Contracts.Model.WarehouseModel.DTO;
 
 namespace CarDealership.Warehouse.Controllers;
 
@@ -53,12 +54,12 @@ public class CustomerOrderController : ControllerBase
 	}
 
 	[HttpPut]
-	[Route("{customerOrderId}/status/{status}")]
-	public async Task<IActionResult> EditPurchaseOrderStatusAsync(string customerOrderId, string status)
+	[Route("status/{status}")]
+	public async Task<IActionResult> ChangeCustomerOrderStatusAsync([FromBody] CustomerOrderEdit customerOrderEdit, string status)
 	{
 		try
 		{
-			return Ok(await CustomerOrderManager.EditCustomerOrderStatusAsync(customerOrderId, status));
+			return Ok(await CustomerOrderManager.ChangeCustomerOrderStatusAsync(customerOrderEdit, status));
 		}
 		catch (Exception ex)
 		{

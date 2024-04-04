@@ -1,4 +1,6 @@
 
+using CarDealership.CarDealership.BLL;
+using CarDealership.CarDealership.Interfaces.BLL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,7 +57,9 @@ public class Program
 
 	private static void RegisterManagers(IServiceCollection services)
 	{
-
+		services.AddScoped<ICustomerOrderManager, CustomerOrderManager>();
+		services.AddScoped<IWarehouseOrderManager, WarehouseOrderManager>();
+		services.AddScoped<IWarehouseManager, WarehouseManager>();
 	}
 
 	private static void RegisterRepositories(IServiceCollection services)

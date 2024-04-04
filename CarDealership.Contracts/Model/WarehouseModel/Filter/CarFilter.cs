@@ -14,5 +14,4 @@ public class CarFilter : BaseFilter
     public string Model { get; set; }
     public string ModelTrim { get; set; }
     public int? Year { get; set; }
-    public InventoryStatus? InventoryStatus { get; set; }
 }
