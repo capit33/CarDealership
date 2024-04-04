@@ -1,6 +1,6 @@
-﻿using CarDealership.Contracts.Model.Filters;
-using CarDealership.Contracts.Model.Person.Employee;
-using CarDealership.Contracts.Model.Person.Employee.DTO;
+﻿using CarDealership.Contracts.Model.CarDealershipModel.Person.Employee;
+using CarDealership.Contracts.Model.CarDealershipModel.Person.Employee.DTO;
+using CarDealership.Contracts.Model.Filters;
 using CarDealership.Infrastructure.Repository;
 using CarDealership.PersonsAdministration.Interfaces.DAL;
 using Microsoft.Extensions.Configuration;

@@ -1,7 +1,7 @@
 ﻿using CarDealership.Contracts.Model.CarModel;
-using CarDealership.Contracts.Model.Filters;
 using CarDealership.Contracts.Model.WarehouseModel;
 using CarDealership.Contracts.Model.WarehouseModel.DTO;
+using CarDealership.Contracts.Model.WarehouseModel.Filter;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

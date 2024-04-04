@@ -1,12 +1,12 @@
-﻿using CarDealership.Contracts.Model.Filters;
-using CarDealership.Contracts.Model.Person.Customer;
-using CarDealership.Contracts.Model.Person.Customer.DTO;
+﻿using CarDealership.Contracts.Model.CarDealershipModel.Filter;
+using CarDealership.Contracts.Model.CarDealershipModel.Person.Customer;
+using CarDealership.Contracts.Model.CarDealershipModel.Person.Customer.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CarDealership.PersonsAdministration.Interfaces.DAL
 {
-	public interface ICustomerRepository
+    public interface ICustomerRepository
 	{
 		Task<Customer> ChangeCustomerRemoveStatusAsync(string customerId, bool removeStatus);
 		Task<Customer> CreateCustomerAsync(Customer customer);

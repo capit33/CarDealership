@@ -1,7 +1,7 @@
 ﻿using CarDealership.Contracts;
+using CarDealership.Contracts.Model.CarDealershipModel.Person.Employee;
+using CarDealership.Contracts.Model.CarDealershipModel.Person.Employee.DTO;
 using CarDealership.Contracts.Model.Filters;
-using CarDealership.Contracts.Model.Person.Employee;
-using CarDealership.Contracts.Model.Person.Employee.DTO;
 using CarDealership.PersonsAdministration.Interfaces.BLL;
 using CarDealership.PersonsAdministration.Interfaces.DAL;
 using System;

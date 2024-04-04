@@ -39,6 +39,21 @@ public class SupplierOrderController : ControllerBase
 		}
 	}
 
+	[HttpGet]
+	[Route("/status/{status}")]
+	public async Task<IActionResult> GetSupplierOrderByStatusAsync(string status)
+	{
+		try
+		{
+			return Ok(await SupplierOrderManager.GetSupplierOrderByStatusAsync(status));
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, ex.Message, ex.StackTrace);
+			return BadRequest(ex.Message);
+		}
+	}
+
 	[HttpPost]
 	[Route("")]
 	public async Task<IActionResult> CreateSupplierOrderAsync([FromBody] WarehouseSupplierOrderDTO supplierOrder)
@@ -75,7 +90,7 @@ public class SupplierOrderController : ControllerBase
 	{
 		try
 		{
-			return Ok(await SupplierOrderManager.ChangeSupplierOrderStutusAsync(supplierOrderId, status));
+			return Ok(await SupplierOrderManager.ChangeSupplierOrderStatusAsync(supplierOrderId, status));
 		}
 		catch (Exception ex)
 		{

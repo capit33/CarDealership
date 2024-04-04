@@ -1,11 +1,7 @@
-﻿using CarDealership.Contracts.Model.Filters;
-using CarDealership.Contracts.Model.Person.Customer;
-<<<<<<< HEAD
+﻿using CarDealership.Contracts.Model.Person.Customer;
 using CarDealership.Contracts.Model.WarehouseModel;
 using CarDealership.Contracts.Model.WarehouseModel.DTO;
-=======
-using CarDealership.Contracts.Model.Warehouse;
->>>>>>> fa08f945cb51894383ec824d32e632393fe6e72f
+using CarDealership.Contracts.Model.WarehouseModel.Filter;
 using CarDealership.Warehouse.Interfaces.BLL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,28 +15,18 @@ namespace CarDealership.Warehouse.Controllers;
 [ApiController]
 public class CarWarehouseController : ControllerBase
 {
-<<<<<<< HEAD
-	public ICarWarehouseManager CarWarehouseManager { get; set; }
+	private ICarWarehouseManager CarWarehouseManager { get; set; }
 	private ILogger<CarWarehouseController> Logger { get; }
 
 	public CarWarehouseController(ICarWarehouseManager warehouseManager, 
 		ILogger<CarWarehouseController> logger)
 	{
 		CarWarehouseManager = warehouseManager;
-=======
-	public IWarehouseManager WarehouseManager { get; set; }
-	private ILogger<CarWarehouseController> Logger { get; }
-
-	public CarWarehouseController(IWarehouseManager warehouseManager, ILogger<CarWarehouseController> logger)
-	{
-		WarehouseManager = warehouseManager;
->>>>>>> fa08f945cb51894383ec824d32e632393fe6e72f
 		Logger = logger;
 	}
 
 	[HttpGet]
 	[Route("available")]
-<<<<<<< HEAD
 	public async Task<IActionResult> GetAvailableCarAsync()
 	{
 		try
@@ -61,13 +47,6 @@ public class CarWarehouseController : ControllerBase
 		try
 		{
 			return Ok(await CarWarehouseManager.GetCarByIdAsync(carId));
-=======
-	public async Task<IActionResult> GetAvailableCarsAsync()
-	{
-		try
-		{
-			return Ok(await WarehouseManager.GetAvailableCarsAsync());
->>>>>>> fa08f945cb51894383ec824d32e632393fe6e72f
 		}
 		catch (Exception ex)
 		{
@@ -77,16 +56,12 @@ public class CarWarehouseController : ControllerBase
 	}
 
 	[HttpPost]
-<<<<<<< HEAD
 	[Route("available/filter")]
-=======
-	[Route("filter")]
->>>>>>> fa08f945cb51894383ec824d32e632393fe6e72f
+
 	public async Task<IActionResult> GetCarsByFilterAsync([FromBody] CarFilter carFilter)
 	{
 		try
 		{
-<<<<<<< HEAD
 			return Ok(await CarWarehouseManager.GetCarsByFilterAsync(carFilter));
 		}
 		catch (Exception ex)
@@ -132,10 +107,8 @@ public class CarWarehouseController : ControllerBase
 	{
 		try
 		{
-			return Ok(await CarWarehouseManager.DeleteCarAsync(carId));
-=======
-			return Ok(await WarehouseManager.GetCarsByFilterAsync(carFilter));
->>>>>>> fa08f945cb51894383ec824d32e632393fe6e72f
+			await CarWarehouseManager.DeleteCarAsync(carId);
+			return Ok();
 		}
 		catch (Exception ex)
 		{

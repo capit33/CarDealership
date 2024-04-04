@@ -1,4 +1,6 @@
-﻿namespace CarDealership.Contracts.Model.Filters;
+﻿using CarDealership.Contracts.Model.Filters;
+
+namespace CarDealership.Contracts.Model.CarDealershipModel.Filter;
 
 public class CustomerFilter : BaseFilter
 {
