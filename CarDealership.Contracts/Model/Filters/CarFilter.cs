@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarDealership.Contracts.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,4 +13,5 @@ public class CarFilter : BaseFilter
 	public string Model { get; set; }
 	public string ModelTrim { get; set; }
 	public int? Year { get; set; }
+	public InventoryStatus? InventoryStatus { get; set; }
 }
