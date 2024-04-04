@@ -7,15 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="RestClients\**" />
+    <Content Remove="RestClients\**" />
+    <EmbeddedResource Remove="RestClients\**" />
+    <None Remove="RestClients\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CarDealership.Infrastructure\CarDealership.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="RestClients\" />
   </ItemGroup>
 
 </Project>

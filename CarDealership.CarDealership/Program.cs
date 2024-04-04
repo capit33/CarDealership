@@ -21,6 +21,8 @@ public class Program
 		ConfigureServices(builder.Services, builder.Configuration);
 		RegisterManagers(builder.Services);
 		RegisterRepositories(builder.Services);
+		RegisterRegisterRestClient(builder.Services);
+
 
 		var app = builder.Build();
 
@@ -38,6 +40,13 @@ public class Program
 
         app.Run();
     }
+
+	private static void RegisterRegisterRestClient(IServiceCollection services)
+	{
+		services.AddHttpClient();
+		//services.AddScoped<IChatRestClient, ChatRestClient>();
+
+	}
 
 	private static void RegisterQueues(IServiceCollection services)
 	{
