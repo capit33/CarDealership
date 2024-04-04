@@ -2,7 +2,7 @@
 
 namespace CarDealership.Warehouse.BLL;
 
-public class WarehouseManager : IWarehouseManager
+public class CarWarehouseManager : ICarWarehouseManager
 {
 
 }

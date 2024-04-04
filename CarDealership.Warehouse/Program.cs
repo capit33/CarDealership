@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace CarDealership.Warehouse;
 
@@ -16,7 +17,6 @@ public class Program
 	public static void Main(string[] args)
 	{
 		var builder = WebApplication.CreateBuilder(args);
-
 
 		ConfigureServices(builder.Services, builder.Configuration);
 		RegisterManagers(builder.Services);
@@ -50,7 +50,8 @@ public class Program
 
 	private static void RegisterManagers(IServiceCollection services)
 	{
-		services.AddScoped<IWarehouseManager, WarehouseManager>();
+		services.AddScoped<ICarWarehouseManager, CarWarehouseManager>();
+		services.AddScoped<ISupplierOrderManager, SupplierOrderManager>();
 	}
 
 	private static void RegisterRepositories(IServiceCollection services)

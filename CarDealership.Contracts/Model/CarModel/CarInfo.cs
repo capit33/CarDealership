@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarDealership.Contracts.Model.Warehouse.DTO;
+namespace CarDealership.Contracts.Model.CarModel;
 
-public class VINumber
+public class CarInfo : Car
 {
-	public string VIN {  get; set; }
+	public string Id { get; set; }
 }

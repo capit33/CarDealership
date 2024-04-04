@@ -4,4 +4,5 @@ namespace CarDealership.Warehouse.BLL;
 
 public class SupplierOrderManager : ISupplierOrderManager
 {
+
 }
