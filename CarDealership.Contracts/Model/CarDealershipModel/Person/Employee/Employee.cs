@@ -2,21 +2,21 @@
 
 public class Employee : Person
 {
-    public string Position { get; set; }
+	public string Position { get; set; }
 
-    public override bool IsObjectValid(out string errorMessage)
-    {
-        var baseValidation = base.IsObjectValid(out errorMessage);
+	public override bool IsObjectValid(out string errorMessage)
+	{
+		var baseValidation = base.IsObjectValid(out errorMessage);
 
-        if (!baseValidation)
-            return baseValidation;
+		if (!baseValidation)
+			return baseValidation;
 
-        if (string.IsNullOrWhiteSpace(Position))
-        {
-            errorMessage = ConstantMessages.EmployeePositionEmpty;
-            return false;
-        }
+		if (string.IsNullOrWhiteSpace(Position))
+		{
+			errorMessage = ConstantApp.EmployeePositionEmpty;
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 }

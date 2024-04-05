@@ -1,11 +1,9 @@
-﻿using CarDealership.Warehouse.BLL;
+﻿using CarDealership.Contracts.Model.WarehouseModel.DTO;
 using CarDealership.Warehouse.Interfaces.BLL;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 using System;
-using CarDealership.Contracts.Model.WarehouseModel.DTO;
+using System.Threading.Tasks;
 
 namespace CarDealership.Warehouse.Controllers;
 
@@ -16,7 +14,7 @@ public class CustomerOrderController : ControllerBase
 	private ILogger<CustomerOrderController> Logger { get; }
 	private ICustomerOrderManager CustomerOrderManager { get; }
 
-	public CustomerOrderController(ILogger<CustomerOrderController> logger, 
+	public CustomerOrderController(ILogger<CustomerOrderController> logger,
 		ICustomerOrderManager customerOrderManager)
 	{
 		Logger = logger;

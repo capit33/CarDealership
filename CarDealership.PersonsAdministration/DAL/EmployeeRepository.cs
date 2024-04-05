@@ -57,7 +57,7 @@ public class EmployeeRepository : BaseMongoRepository<Employee>, IEmployeeReposi
 		{
 			ReturnDocument = ReturnDocument.After
 		};
-		
+
 		return await Collection.FindOneAndUpdateAsync(filter, update, options);
 	}
 
@@ -98,7 +98,7 @@ public class EmployeeRepository : BaseMongoRepository<Employee>, IEmployeeReposi
 			filters.Add(Builders<Employee>.Filter
 					.Where(e => e.IsRemove == employeeFilter.IsRemove));
 
-		if (filters.Any()) 
+		if (filters.Any())
 			return Builders<Employee>.Filter.And(filters);
 		return Builders<Employee>.Filter.Empty;
 	}
@@ -111,7 +111,7 @@ public class EmployeeRepository : BaseMongoRepository<Employee>, IEmployeeReposi
 			updates.Add(Builders<Employee>.Update.Set(e => e.FirstName, employeeEdit.FirstName));
 		if (employeeEdit.LastName != null)
 			updates.Add(Builders<Employee>.Update.Set(e => e.LastName, employeeEdit.LastName));
-		if (employeeEdit.Position!= null)
+		if (employeeEdit.Position != null)
 			updates.Add(Builders<Employee>.Update.Set(e => e.Position, employeeEdit.Position));
 
 		return Builders<Employee>.Update.Combine(updates);

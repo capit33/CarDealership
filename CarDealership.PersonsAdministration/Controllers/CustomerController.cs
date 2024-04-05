@@ -17,7 +17,7 @@ public class CustomerController : ControllerBase
 	private ICustomerManager CustomerManager { get; }
 
 	public CustomerController(
-		ILogger<CustomerController> logger, 
+		ILogger<CustomerController> logger,
 		ICustomerManager customerManager)
 	{
 		Logger = logger;

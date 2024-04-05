@@ -1,15 +1,17 @@
-﻿using CarDealership.Contracts.Model.CarDealershipModel.Orders.DTO;
+﻿using CarDealership.Contracts.Model.CarDealershipModel.Orders;
+using CarDealership.Contracts.Model.CarDealershipModel.Orders.DTO;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CarDealership.CarDealership.Interfaces.BLL
 {
 	public interface IWarehouseOrderManager
 	{
-		Task<object> CanceledWarehouseOrderAsync(string warehouseOrderId);
-		Task<object> CreateWarehouseOrderAsync(WarehouseOrderCreate warehouseOrderCreate);
+		Task<WarehouseOrder> GetWarehouseOrderByIdAsync(string warehouseOrderId);
+		Task<List<WarehouseOrder>> GetWarehouseOrdersByStatusAsync(string status);
+		Task<WarehouseOrder> CreateWarehouseOrderAsync(WarehouseOrderCreate warehouseOrderCreate);
+		Task<WarehouseOrder> EditWarehouseOrderEmployeeIdAsync(string warehouseOrderId, string employeeId);
+		Task<WarehouseOrder> CanceledWarehouseOrderAsync(string warehouseOrderId);
 		Task DeleteWarehouseOrderAsync(string warehouseOrderId);
-		Task<object> EditWarehouseOrderEmployeeIdAsync(string warehouseOrderId, string employeeId);
-		Task<object> GetWarehouseOrderByIdAsync(string warehouseOrderId);
-		Task<object> GetWarehouseOrdersByStatusAsync(string status);
 	}
 }

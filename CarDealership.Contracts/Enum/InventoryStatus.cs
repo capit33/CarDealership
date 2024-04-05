@@ -2,8 +2,9 @@
 
 public enum InventoryStatus
 {
-    Ordered,
-    Available,
-    Reserved,
-    SoldOut,
+	Created,
+	Ordered,
+	Available,
+	Reserved,
+	SoldOut,
 }

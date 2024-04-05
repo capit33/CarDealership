@@ -1,13 +1,9 @@
-﻿using Amazon.Runtime;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace CarDealership.Infrastructure.RestClient;
 
@@ -83,7 +79,7 @@ public class BaseRestClient
 	{
 		var requestMessage = new HttpRequestMessage(HttpMethod.Patch, GetUri(path));
 
-		
+
 		requestMessage.Content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, MEDIA_TIPE);
 		var responseMessage = await _httpClient.SendAsync(requestMessage);
 		var content = await responseMessage.Content.ReadAsStringAsync();

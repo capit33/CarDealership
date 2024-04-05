@@ -14,7 +14,7 @@ public class EmployeeManager : IEmployeeManager
 {
 	public IEmployeeRepository EmployeeRepository { get; }
 	public IObjectUsageManager ObjectUsageManager { get; }
-	
+
 	public EmployeeManager(
 		IEmployeeRepository employeeRepository,
 		IObjectUsageManager objectUsageManager)
@@ -37,7 +37,7 @@ public class EmployeeManager : IEmployeeManager
 			throw new ArgumentNullException(nameof(employeeFilter));
 
 		var isValid = employeeFilter.IsPaginationValid(out string message);
-		
+
 		if (!isValid)
 			throw new InvalidDataException(message);
 
@@ -45,13 +45,13 @@ public class EmployeeManager : IEmployeeManager
 
 		var employeesCount = await EmployeeRepository.GetEmployeeCountByFilterAsync(employeeFilter);
 
-        if (employeesCount == 0)
+		if (employeesCount == 0)
 			return pageItems;
 
-		pageItems.PageCount = (int)Math.Ceiling((double)employeesCount / pageItems.PageSize);
+		pageItems.SetPageCount((int)employeesCount);
 		pageItems.Items = await EmployeeRepository.GetEmployeesByFilterAsync(employeeFilter);
 
-        return pageItems;
+		return pageItems;
 	}
 
 	public async Task<Employee> CreateEmployeeAsync(Employee employee)
@@ -75,7 +75,7 @@ public class EmployeeManager : IEmployeeManager
 
 		if (employeeEdit.IsObjectValid(out string errorMessage))
 			throw new InvalidDataException(errorMessage);
-		
+
 		return await EmployeeRepository.EditEmployeeAsync(employeeId, employeeEdit);
 	}
 
@@ -99,7 +99,7 @@ public class EmployeeManager : IEmployeeManager
 	{
 		var isUsing = await ObjectUsageManager.IsEmployeeIdUsedAsync(employeeId);
 		if (isUsing)
-			new Exception($"{nameof(employeeId)}: {employeeId} {ConstantMessages.DeleteError}");
+			new Exception($"{nameof(employeeId)}: {employeeId} {ConstantApp.DeleteError}");
 
 		await EmployeeRepository.DeleteEmployeeAsync(employeeId);
 	}

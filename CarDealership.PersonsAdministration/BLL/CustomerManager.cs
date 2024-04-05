@@ -16,7 +16,7 @@ public class CustomerManager : ICustomerManager
 	public IObjectUsageManager ObjectUsageManager { get; }
 	public ICustomerRepository CustomerRepository { get; }
 
-	public CustomerManager(IObjectUsageManager objectUsageManager, 
+	public CustomerManager(IObjectUsageManager objectUsageManager,
 		ICustomerRepository customerRepository)
 	{
 		ObjectUsageManager = objectUsageManager;
@@ -47,7 +47,7 @@ public class CustomerManager : ICustomerManager
 		if (customerCount == 0)
 			return pageItems;
 
-		pageItems.PageCount = (int)Math.Ceiling((double)customerCount / pageItems.PageSize);
+		pageItems.SetPageCount((int)customerCount);
 		pageItems.Items = await CustomerRepository.GetCustomersByFilterAsync(customerFilter);
 
 		return pageItems;
@@ -66,7 +66,7 @@ public class CustomerManager : ICustomerManager
 
 	public async Task<Customer> EditCustomerAsync(string customerId, CustomerEdit customerEdit)
 	{
-		if (string .IsNullOrWhiteSpace(customerId))
+		if (string.IsNullOrWhiteSpace(customerId))
 			throw new ArgumentNullException(nameof(customerId));
 
 		if (customerId == null)
@@ -98,7 +98,7 @@ public class CustomerManager : ICustomerManager
 	{
 		var isUsing = await ObjectUsageManager.IsCustomerIdUsedAsync(customerId);
 		if (isUsing)
-			new Exception($"{nameof(customerId)}: {customerId} {ConstantMessages.DeleteError}");
+			new Exception($"{nameof(customerId)}: {customerId} {ConstantApp.DeleteError}");
 
 		await CustomerRepository.DeleteCustomerAsync(customerId);
 	}

@@ -3,12 +3,12 @@ using CarDealership.Warehouse.BLL;
 using CarDealership.Warehouse.DAL;
 using CarDealership.Warehouse.Interfaces.BLL;
 using CarDealership.Warehouse.Interfaces.DAL;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System.Linq;
 
 namespace CarDealership.Warehouse;
 
@@ -43,9 +43,35 @@ public class Program
 		app.Run();
 	}
 
-	private static void RegisterQueues(IServiceCollection services)
+	private static void MessageBrokerRegistration(IServiceCollection services)
 	{
+		//services.AddScoped<IUserWriter, UserWriter>();
 
+
+		//services.AddMassTransit(x =>
+		//{
+		//	x.SetKebabCaseEndpointNameFormatter();
+
+		//	x.AddConsumer<CarConsumer>();
+
+		//	x.UsingRabbitMq((context, cfg) =>
+		//	{
+		//		cfg.Host("rabbitmq://localhost", h =>
+		//		{
+		//			h.Username("guest");
+		//			h.Password("guest");
+		//		});
+
+		//		cfg.ReceiveEndpoint("car-queue", e =>
+		//		{
+		//			e.ConfigureConsumer<CarConsumer>(context);
+		//		});
+
+		//		cfg.ClearSerialization();
+		//		cfg.UseRawJsonSerializer();
+		//		cfg.ConfigureEndpoints(context);
+		//	});
+		//});
 	}
 
 	private static void RegisterManagers(IServiceCollection services)
@@ -58,7 +84,7 @@ public class Program
 
 	private static void RegisterRepositories(IServiceCollection services)
 	{
-		services.AddScoped<IWarehouseRepository, WarehouseRepository>();
+		services.AddScoped<ICarWarehouseRepository, CarWarehouseRepository>();
 	}
 
 	public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)

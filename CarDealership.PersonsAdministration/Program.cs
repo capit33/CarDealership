@@ -52,12 +52,12 @@ public class Program
 	{
 		services.AddHttpClient();
 		//services.AddScoped<IChatRestClient, ChatRestClient>();
-		
+
 	}
 	private static void RegisterManagers(IServiceCollection services)
 	{
 		services.AddScoped<ICustomerManager, CustomerManager>();
-		services.AddScoped<IEmployeeManager, EmployeeManager>(); 
+		services.AddScoped<IEmployeeManager, EmployeeManager>();
 		services.AddScoped<IObjectUsageManager, ObjectUsageManager>();
 	}
 

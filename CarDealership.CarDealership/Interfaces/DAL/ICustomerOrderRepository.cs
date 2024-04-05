@@ -1,6 +1,6 @@
 ﻿namespace CarDealership.CarDealership.Interfaces.DAL
 {
-    public interface ICustomerOrderRepository
-    {
-    }
+	public interface ICustomerOrderRepository
+	{
+	}
 }

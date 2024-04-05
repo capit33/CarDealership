@@ -1,10 +1,9 @@
 ﻿using CarDealership.CarDealership.Interfaces.BLL;
-using Microsoft.AspNetCore.Http;
+using CarDealership.Contracts.Model.WarehouseModel.Filter;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 using System;
-using CarDealership.Contracts.Model.WarehouseModel.Filter;
+using System.Threading.Tasks;
 
 namespace CarDealership.CarDealership.Controllers;
 
@@ -16,7 +15,7 @@ public class WarehouseController : ControllerBase
 
 	private IWarehouseManager WarehouseManager { get; }
 
-	public WarehouseController(ILogger<WarehouseController> logger, 
+	public WarehouseController(ILogger<WarehouseController> logger,
 		IWarehouseManager warehouseManager)
 	{
 		Logger = logger;

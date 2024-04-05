@@ -1,12 +1,9 @@
-﻿using CarDealership.Warehouse.BLL;
+﻿using CarDealership.Contracts.Model.WarehouseModel.DTO;
 using CarDealership.Warehouse.Interfaces.BLL;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 using System;
-using CarDealership.Contracts.Model.WarehouseModel.DTO;
-using CarDealership.Contracts.Enum;
+using System.Threading.Tasks;
 
 namespace CarDealership.Warehouse.Controllers;
 
@@ -17,7 +14,7 @@ public class SupplierOrderController : ControllerBase
 	private ILogger<SupplierOrderController> Logger { get; }
 	private ISupplierOrderManager SupplierOrderManager { get; }
 
-	public SupplierOrderController(ILogger<SupplierOrderController> logger, 
+	public SupplierOrderController(ILogger<SupplierOrderController> logger,
 		ISupplierOrderManager supplierOrderManager)
 	{
 		Logger = logger;
@@ -85,8 +82,23 @@ public class SupplierOrderController : ControllerBase
 	}
 
 	[HttpPut]
+	[Route("arrival-car")]
+	public async Task<IActionResult> ArrivalCarAsync([FromBody] ArrivalCar arrivalCar)
+	{
+		try
+		{
+			return Ok(await SupplierOrderManager.ArrivalCarAsync(arrivalCar));
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, ex.Message, ex.StackTrace);
+			return BadRequest(ex.Message);
+		}
+	}
+
+	[HttpPut]
 	[Route("{supplierOrderId}/status/{status}")]
-	public async Task<IActionResult> EditSupplierOrderAsync(string supplierOrderId, string status)
+	public async Task<IActionResult> EditSupplierOrderStatusAsync(string supplierOrderId, string status)
 	{
 		try
 		{
@@ -105,7 +117,8 @@ public class SupplierOrderController : ControllerBase
 	{
 		try
 		{
-			return Ok(await SupplierOrderManager.DeleteSupplierOrderAsync(supplierOrderId));
+			await SupplierOrderManager.DeleteSupplierOrderAsync(supplierOrderId);
+			return Ok();
 		}
 		catch (Exception ex)
 		{

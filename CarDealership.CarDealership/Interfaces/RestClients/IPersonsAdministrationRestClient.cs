@@ -1,6 +1,6 @@
 ﻿namespace CarDealership.CarDealership.Interfaces.RestClients
 {
-    public interface IPersonsAdministrationRestClient
-    {
-    }
+	public interface IPersonsAdministrationRestClient
+	{
+	}
 }

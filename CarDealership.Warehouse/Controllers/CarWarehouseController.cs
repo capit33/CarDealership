@@ -1,9 +1,7 @@
-﻿using CarDealership.Contracts.Model.Person.Customer;
-using CarDealership.Contracts.Model.WarehouseModel;
+﻿using CarDealership.Contracts.Model.WarehouseModel;
 using CarDealership.Contracts.Model.WarehouseModel.DTO;
 using CarDealership.Contracts.Model.WarehouseModel.Filter;
 using CarDealership.Warehouse.Interfaces.BLL;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -18,7 +16,7 @@ public class CarWarehouseController : ControllerBase
 	private ICarWarehouseManager CarWarehouseManager { get; set; }
 	private ILogger<CarWarehouseController> Logger { get; }
 
-	public CarWarehouseController(ICarWarehouseManager warehouseManager, 
+	public CarWarehouseController(ICarWarehouseManager warehouseManager,
 		ILogger<CarWarehouseController> logger)
 	{
 		CarWarehouseManager = warehouseManager;
@@ -73,11 +71,11 @@ public class CarWarehouseController : ControllerBase
 
 	[HttpPost]
 	[Route("")]
-	public async Task<IActionResult> CreateCarAsync([FromBody] CarFile carFile)
+	public async Task<IActionResult> CreateCarAsync([FromBody] CarFileCreate carCreate)
 	{
 		try
 		{
-			return Ok(await CarWarehouseManager.CreateCarAsync(carFile));
+			return Ok(await CarWarehouseManager.CreateCarAsync(carCreate));
 		}
 		catch (Exception ex)
 		{

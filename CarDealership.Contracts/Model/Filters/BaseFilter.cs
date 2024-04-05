@@ -1,14 +1,16 @@
-﻿namespace CarDealership.Contracts.Model.Filters;
+﻿using System;
 
-public class BaseFilter 
+namespace CarDealership.Contracts.Model.Filters;
+
+public class BaseFilter
 {
 	public int PageSize { get; set; }
 	public int PageNumber { get; set; }
 	public int PageCount { get; set; }
 
-	public BaseFilter() 
-	{ 
-	
+	public BaseFilter()
+	{
+
 	}
 
 	public BaseFilter(BaseFilter baseFilter)
@@ -23,15 +25,21 @@ public class BaseFilter
 		description = string.Empty;
 		if (PageSize <= 0)
 		{
-			description = ConstantMessages.PageSizeError;
+			description = ConstantApp.PageSizeError;
 			return false;
 		}
 
 		if (PageNumber < 0)
 		{
-			description = ConstantMessages.PageNumberError;
+			description = ConstantApp.PageNumberError;
 			return false;
 		}
 		return true;
+	}
+
+	public void SetPageCount(int totalItems)
+	{
+		if (PageSize != 0)
+			PageCount = (int)Math.Ceiling((double)totalItems / PageSize);
 	}
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarDealership.PersonsAdministration.Interfaces.DAL
 {
-    public interface ICustomerRepository
+	public interface ICustomerRepository
 	{
 		Task<Customer> ChangeCustomerRemoveStatusAsync(string customerId, bool removeStatus);
 		Task<Customer> CreateCustomerAsync(Customer customer);

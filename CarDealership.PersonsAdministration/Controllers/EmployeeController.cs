@@ -60,7 +60,7 @@ public class EmployeeController : ControllerBase
 	{
 		try
 		{
-			return Ok( await EmployeeManager.CreateEmployeeAsync(employee));
+			return Ok(await EmployeeManager.CreateEmployeeAsync(employee));
 		}
 		catch (Exception ex)
 		{

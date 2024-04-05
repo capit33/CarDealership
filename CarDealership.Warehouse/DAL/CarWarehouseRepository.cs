@@ -5,9 +5,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace CarDealership.Warehouse.DAL;
 
-public class WarehouseRepository : BaseMongoRepository<CarFile>, IWarehouseRepository
+public class CarWarehouseRepository : BaseMongoRepository<CarFile>, ICarWarehouseRepository
 {
-	public WarehouseRepository(IConfiguration configuration) : base(configuration, "carWarehouse")
+	public CarWarehouseRepository(IConfiguration configuration) 
+		: base(configuration, "carWarehouse")
 	{
 
 	}
