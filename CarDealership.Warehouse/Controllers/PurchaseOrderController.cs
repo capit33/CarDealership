@@ -50,13 +50,14 @@ public class PurchaseOrderController : ControllerBase
 		}
 	}
 
-	[HttpPut]
-	[Route("{purchaseOrderId}/status/{status}")]
-	public async Task<IActionResult> EditPurchaseOrderStatusAsync(string purchaseOrderId, string status)
+	[HttpDelete]
+	[Route("{purchaseOrderId}")]
+	public async Task<IActionResult> DeletePurchaseOrderAsync(string purchaseOrderId)
 	{
 		try
 		{
-			return Ok(await PurchaseOrderManager.EditPurchaseOrderStatusAsync(purchaseOrderId, status));
+			await PurchaseOrderManager.DeletePurchaseOrderAsync(purchaseOrderId);
+			return Ok();
 		}
 		catch (Exception ex)
 		{

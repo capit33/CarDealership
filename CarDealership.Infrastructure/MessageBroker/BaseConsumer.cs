@@ -17,7 +17,8 @@ public class BaseConsumer<T, TY> : IConsumer<T>
 
 	public async Task Consume(ConsumeContext<T> context)
 	{
-		Logger.LogInformation(context.Message.CorrelationId);
+		var message = context.Message;
+		Logger.LogInformation(message.CorrelationId + "_" + "{@message}", @message);
 		try
 		{
 			await HandleMessageAsync(context.Message);

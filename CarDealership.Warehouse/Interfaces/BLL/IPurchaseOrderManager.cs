@@ -8,5 +8,5 @@ public interface IPurchaseOrderManager
 {
 	Task<WarehousePurchaseOrder> GetPurchaseOrderByIdAsync(string purchaseOrderId);
 	Task<List<WarehousePurchaseOrder>> GetPurchaseOrderByStatusAsync(string status);
-	Task<WarehousePurchaseOrder> EditPurchaseOrderStatusAsync(string purchaseOrderId, string status);
+	Task DeletePurchaseOrderAsync(string purchaseOrderId);
 }

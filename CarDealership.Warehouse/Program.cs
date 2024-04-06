@@ -1,8 +1,11 @@
-
+using CarDealership.Contracts.Model.QueueModel;
 using CarDealership.Warehouse.BLL;
 using CarDealership.Warehouse.DAL;
 using CarDealership.Warehouse.Interfaces.BLL;
 using CarDealership.Warehouse.Interfaces.DAL;
+using CarDealership.Warehouse.MessageBroker.Consumers;
+using CarDealership.Warehouse.MessageBroker.Interface;
+using CarDealership.Warehouse.MessageBroker.Publisher;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -45,33 +48,39 @@ public class Program
 
 	private static void MessageBrokerRegistration(IServiceCollection services)
 	{
-		//services.AddScoped<IUserWriter, UserWriter>();
+		services.AddScoped<IPurchaseOrderStatusQueuePublisher, PurchaseOrderStatusQueuePublisher>();
+		services.AddScoped<ICustomerOrderStatusQueuePublisher, CustomerOrderStatusQueuePublisher>();
 
+		services.AddMassTransit(x =>
+		{
+			x.SetKebabCaseEndpointNameFormatter();
 
-		//services.AddMassTransit(x =>
-		//{
-		//	x.SetKebabCaseEndpointNameFormatter();
+			x.AddConsumer<CustomerOrderStatusQueueConsumer>();
+			x.AddConsumer<PurchaseOrderQueueConsumer>();
 
-		//	x.AddConsumer<CarConsumer>();
+			x.UsingRabbitMq((context, cfg) =>
+			{
+				cfg.Host("rabbitmq://localhost", h =>
+				{
+					h.Username("guest");
+					h.Password("guest");
+				});
 
-		//	x.UsingRabbitMq((context, cfg) =>
-		//	{
-		//		cfg.Host("rabbitmq://localhost", h =>
-		//		{
-		//			h.Username("guest");
-		//			h.Password("guest");
-		//		});
+				cfg.ReceiveEndpoint("car-dealership-customer-order-status-queue", e =>
+				{
+					e.ConfigureConsumer<CustomerOrderStatusQueueConsumer>(context);
+				});
 
-		//		cfg.ReceiveEndpoint("car-queue", e =>
-		//		{
-		//			e.ConfigureConsumer<CarConsumer>(context);
-		//		});
+				cfg.ReceiveEndpoint("car-dealership-purchase-order-queue", e =>
+				{
+					e.ConfigureConsumer<PurchaseOrderQueueConsumer>(context);
+				});
 
-		//		cfg.ClearSerialization();
-		//		cfg.UseRawJsonSerializer();
-		//		cfg.ConfigureEndpoints(context);
-		//	});
-		//});
+				cfg.ClearSerialization();
+				cfg.UseRawJsonSerializer();
+				cfg.ConfigureEndpoints(context);
+			});
+		});
 	}
 
 	private static void RegisterManagers(IServiceCollection services)
@@ -87,6 +96,8 @@ public class Program
 	{
 		services.AddScoped<ICarWarehouseRepository, CarWarehouseRepository>();
 		services.AddScoped<ISupplierOrderRepository, SupplierOrderRepository>();
+		services.AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>();
+		services.AddScoped<ICustomerOrderRepository, CustomerOrderRepository>();
 	}
 
 	public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)

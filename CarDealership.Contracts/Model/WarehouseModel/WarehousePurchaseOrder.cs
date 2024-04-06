@@ -10,6 +10,6 @@ public class WarehousePurchaseOrder
 	public string CarDealershipOrderId { get; set; }
 	public string SupplierOrderId { get; set; }
 	public Car Car { get; set; }
-	public DocumentStatus OrderStatus { get; set; }
+	public DocumentStatus DocumentStatus { get; set; }
 	public DateTime CreatedDate { get; set; }
 }

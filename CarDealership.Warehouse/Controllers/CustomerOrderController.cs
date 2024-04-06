@@ -82,12 +82,12 @@ public class CustomerOrderController : ControllerBase
 	}
 
 	[HttpPut]
-	[Route("status/{status}/warehouse-customer-order/{WarehouseCustomerOrder}")]
-	public async Task<IActionResult> ChangeCustomerOrderStatusAsync(string WarehouseCustomerOrder, string status)
+	[Route("{customerOrderId}/status/{status}")]
+	public async Task<IActionResult> ChangeCustomerOrderStatusAsync(string customerOrderId, string status)
 	{
 		try
 		{
-			return Ok(await CustomerOrderManager.ChangeCustomerOrderStatusAsync(WarehouseCustomerOrder, status));
+			return Ok(await CustomerOrderManager.ChangeCustomerOrderStatusAsync(customerOrderId, status));
 		}
 		catch (Exception ex)
 		{

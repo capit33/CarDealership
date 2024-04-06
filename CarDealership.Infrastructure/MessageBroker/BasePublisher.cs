@@ -25,6 +25,8 @@ public class BasePublisher<T, TY> : IBasePublisher<T>
 		try
 		{
 			message.CorrelationId = Guid.NewGuid().ToString();
+			Logger.LogInformation(message.CorrelationId + "_" + "{@message}", @message);
+
 			await _publishEndpoint.Publish(message);
 		}
 		catch (Exception ex)
