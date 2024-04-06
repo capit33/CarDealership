@@ -1,5 +1,5 @@
-﻿using CarDealership.Contracts.Enum;
-using CarDealership.Contracts.Model.CarModel;
+﻿using CarDealership.Contracts.Model.CarModel;
+using CarDealership.Contracts.Model.CarModel.Interface;
 using CarDealership.Contracts.Model.Filters;
 using CarDealership.Contracts.Model.WarehouseModel;
 using CarDealership.Contracts.Model.WarehouseModel.DTO;
@@ -15,8 +15,8 @@ public interface ICarWarehouseManager
 	Task<CarInfo> GetCarInfoByIdAsync(string carId);
 	Task<List<CarInfo>> GetAvailableCarsAsync();
 	Task<PageItems<CarInfo>> GetCarsByFilterAsync(CarFilter carFilter);
-	Task<CarFile> CreateCarAsync(CarFileCreate carFileCreate);
-	Task<CarFile> CarOrderedAsync(CarFileCreate carFileCreate);
+	Task<CarFile> CreateCarAsync(ICar carFileCreate);
+	Task<CarFile> CreateCarByOrderAsync(ICar carFileCreate);
 	Task<CarFile> CarArrivalAsync(string carId, string VIN);
 	Task<CarFile> CarSoldOutAsync(string carId);
 	Task<CarFile> CarReservationAsync(string carId);

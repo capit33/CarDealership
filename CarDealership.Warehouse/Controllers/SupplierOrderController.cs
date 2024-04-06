@@ -37,7 +37,7 @@ public class SupplierOrderController : ControllerBase
 	}
 
 	[HttpGet]
-	[Route("/status/{status}")]
+	[Route("status/{status}")]
 	public async Task<IActionResult> GetSupplierOrderByStatusAsync(string status)
 	{
 		try
@@ -53,7 +53,7 @@ public class SupplierOrderController : ControllerBase
 
 	[HttpPost]
 	[Route("")]
-	public async Task<IActionResult> CreateSupplierOrderAsync([FromBody] WarehouseSupplierOrderDTO supplierOrder)
+	public async Task<IActionResult> CreateSupplierOrderAsync([FromBody] WarehouseSupplierOrderCreate supplierOrder)
 	{
 		try
 		{
@@ -67,12 +67,12 @@ public class SupplierOrderController : ControllerBase
 	}
 
 	[HttpPut]
-	[Route("")]
-	public async Task<IActionResult> EditSupplierOrderAsync([FromBody] WarehouseSupplierOrderDTO supplierOrder)
+	[Route("confirm/{supplierOrderId}")]
+	public async Task<IActionResult> SupplierOrderConfirmAsync(string supplierOrderId, [FromBody] SupplierOrderConfirm supplierOrderConfirm)
 	{
 		try
 		{
-			return Ok(await SupplierOrderManager.EditSupplierOrderAsync(supplierOrder));
+			return Ok(await SupplierOrderManager.SupplierOrderConfirmAsync(supplierOrderId, supplierOrderConfirm));
 		}
 		catch (Exception ex)
 		{
@@ -82,12 +82,12 @@ public class SupplierOrderController : ControllerBase
 	}
 
 	[HttpPut]
-	[Route("arrival-car")]
-	public async Task<IActionResult> ArrivalCarAsync([FromBody] ArrivalCar arrivalCar)
+	[Route("{supplierOrderId}")]
+	public async Task<IActionResult> EditSupplierOrderAsync(string supplierOrderId, [FromBody] WarehouseSupplierOrderEdit supplierOrderEdit)
 	{
 		try
 		{
-			return Ok(await SupplierOrderManager.ArrivalCarAsync(arrivalCar));
+			return Ok(await SupplierOrderManager.EditSupplierOrderAsync(supplierOrderId, supplierOrderEdit));
 		}
 		catch (Exception ex)
 		{
@@ -97,12 +97,27 @@ public class SupplierOrderController : ControllerBase
 	}
 
 	[HttpPut]
-	[Route("{supplierOrderId}/status/{status}")]
-	public async Task<IActionResult> EditSupplierOrderStatusAsync(string supplierOrderId, string status)
+	[Route("arrival-car/{supplierOrderId}/VIN/{VIN}")]
+	public async Task<IActionResult> ArrivalCarAsync(string supplierOrderId, string VIN)
 	{
 		try
 		{
-			return Ok(await SupplierOrderManager.ChangeSupplierOrderStatusAsync(supplierOrderId, status));
+			return Ok(await SupplierOrderManager.ArrivalCarAsync(supplierOrderId, VIN));
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, ex.Message, ex.StackTrace);
+			return BadRequest(ex.Message);
+		}
+	}
+
+	[HttpPut]
+	[Route("canceled/{supplierOrderId}")]
+	public async Task<IActionResult> CanceledSupplierOrderAsync(string supplierOrderId)
+	{
+		try
+		{
+			return Ok(await SupplierOrderManager.CanceledSupplierOrderAsync(supplierOrderId));
 		}
 		catch (Exception ex)
 		{
@@ -113,7 +128,7 @@ public class SupplierOrderController : ControllerBase
 
 	[HttpDelete]
 	[Route("{supplierOrderId}")]
-	public async Task<IActionResult> EditSupplierOrderAsync(string supplierOrderId)
+	public async Task<IActionResult> DeleteSupplierOrderAsync(string supplierOrderId)
 	{
 		try
 		{

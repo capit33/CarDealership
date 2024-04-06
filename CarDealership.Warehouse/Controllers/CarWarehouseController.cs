@@ -1,5 +1,4 @@
-﻿using CarDealership.Contracts.Model.WarehouseModel;
-using CarDealership.Contracts.Model.WarehouseModel.DTO;
+﻿using CarDealership.Contracts.Model.WarehouseModel.DTO;
 using CarDealership.Contracts.Model.WarehouseModel.Filter;
 using CarDealership.Warehouse.Interfaces.BLL;
 using Microsoft.AspNetCore.Mvc;

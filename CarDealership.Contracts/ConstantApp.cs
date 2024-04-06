@@ -1,8 +1,4 @@
-﻿using CarDealership.Contracts.Model.CarModel;
-using DnsClient.Protocol;
-using System;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using System.Runtime.Serialization;
 
 namespace CarDealership.Contracts;
 
@@ -13,9 +9,12 @@ public static class ConstantApp
 	public const string PageNumberError = "Page number cannot be negative";
 	public const string NoFieldsToEdit = "No fields to edit";
 	public const string RemoveIsTrue = "IsRemove can not be true";
-	public const string NotAvailableCarError = "The car is not available.";
-	public const string NotValidCarStatusError = "The car status is not valid.";
-	public const string NotReservationCarError = "The car is not reservation.";
+	public const string CarNotFindError = "The car is not find.";
+	public const string CarNotAvailableError = "The car is not available.";
+	public const string CarStatusNotValidError = "The car status is not valid.";
+	public const string CarNotReservationError = "The car is not reservation.";
+	public const string DocumentStatusNotValidError = "The document status is not valid.";
+	public const string SupplierOrderNotFindError = "The Supplier Order is not find.";
 
 	public const int MinProductionYear = 1900;
 	public static readonly string BadProductionYear = $"The year of production cannot be less than {1900} and greater than the current year";

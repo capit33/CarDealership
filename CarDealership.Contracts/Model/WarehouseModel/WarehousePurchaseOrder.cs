@@ -11,4 +11,5 @@ public class WarehousePurchaseOrder
 	public string SupplierOrderId { get; set; }
 	public Car Car { get; set; }
 	public DocumentStatus OrderStatus { get; set; }
+	public DateTime CreatedDate { get; set; }
 }

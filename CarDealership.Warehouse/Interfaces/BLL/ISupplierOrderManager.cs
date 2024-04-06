@@ -9,9 +9,10 @@ public interface ISupplierOrderManager
 {
 	Task<WarehouseSupplierOrder> GetSupplierOrderByIdAsync(string supplierOrderId);
 	Task<List<WarehouseSupplierOrder>> GetSupplierOrderByStatusAsync(string status);
-	Task<WarehouseSupplierOrder> CreateSupplierOrderAsync(WarehouseSupplierOrderDTO supplierOrder);
-	Task<WarehouseSupplierOrder> ArrivalCarAsync(ArrivalCar arrivalCar);
-	Task<WarehouseSupplierOrder> EditSupplierOrderAsync(WarehouseSupplierOrderDTO supplierOrder);
-	Task<WarehouseSupplierOrder> ChangeSupplierOrderStatusAsync(string supplierOrderId, string status);
+	Task<WarehouseSupplierOrder> CreateSupplierOrderAsync(WarehouseSupplierOrderCreate supplierOrder);
+	Task<WarehouseSupplierOrder> SupplierOrderConfirmAsync(string supplierOrderId, SupplierOrderConfirm supplierOrderConfirm);
+	Task<WarehouseSupplierOrder> EditSupplierOrderAsync(string supplierOrderId, WarehouseSupplierOrderEdit supplierOrder);
+	Task<WarehouseSupplierOrder> ArrivalCarAsync(string supplierOrderId, string VIN);
+	Task<WarehouseSupplierOrder> CanceledSupplierOrderAsync(string supplierOrderId);
 	Task DeleteSupplierOrderAsync(string supplierOrderId);
 }

@@ -2,8 +2,7 @@
 
 namespace CarDealership.Contracts.Model.WarehouseModel.DTO;
 
-public class WarehouseSupplierOrderDTO
+public class WarehouseSupplierOrderCreate
 {
-	public string SupplierName { get; set; }
 	public Car Car { get; set; }
 }

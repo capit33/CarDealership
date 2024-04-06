@@ -1,11 +1,7 @@
-﻿using Amazon.Runtime;
-using Amazon.Runtime.Endpoints;
-using CarDealership.Contracts;
+﻿using CarDealership.Contracts;
 using CarDealership.Contracts.Enum;
-using CarDealership.Contracts.Model.CarDealershipModel.Filter;
-using CarDealership.Contracts.Model.CarDealershipModel.Person.Customer;
-using CarDealership.Contracts.Model.CarDealershipModel.Person.Customer.DTO;
 using CarDealership.Contracts.Model.CarModel;
+using CarDealership.Contracts.Model.CarModel.Interface;
 using CarDealership.Contracts.Model.Filters;
 using CarDealership.Contracts.Model.WarehouseModel;
 using CarDealership.Contracts.Model.WarehouseModel.DTO;
@@ -14,23 +10,21 @@ using CarDealership.Warehouse.Interfaces.BLL;
 using CarDealership.Warehouse.Interfaces.DAL;
 using System;
 using System.Collections.Generic;
-using System.Formats.Tar;
 using System.IO;
-using System.Reflection.Metadata;
 using System.Threading.Tasks;
 
 namespace CarDealership.Warehouse.BLL;
 
 public class CarWarehouseManager : ICarWarehouseManager
 {
-	private ICarWarehouseRepository CarWarehouseRepository { get; }
 	private IChangeOrderStatusManager ChangeOrderStatusManager { get; }
+	private ICarWarehouseRepository CarWarehouseRepository { get; }
 
 	public CarWarehouseManager(ICarWarehouseRepository carWarehouseRepository, 
 		IChangeOrderStatusManager changeOrderStatusManager)
 	{
-		CarWarehouseRepository = carWarehouseRepository;
 		ChangeOrderStatusManager = changeOrderStatusManager;
+		CarWarehouseRepository = carWarehouseRepository;
 	}
 
 	public async Task<List<CarInfo>> GetAvailableCarsAsync()
@@ -66,6 +60,7 @@ public class CarWarehouseManager : ICarWarehouseManager
 		var pageItems = new PageItems<CarInfo>(carFilter);
 
 		var carCount = await CarWarehouseRepository.GetAvailableCarsCountByFilterAsync(carFilter);
+
 		if (carCount == 0)
 			return pageItems;
 
@@ -74,13 +69,14 @@ public class CarWarehouseManager : ICarWarehouseManager
 
 		return pageItems;
 	}
-	public async Task<CarFile> CreateCarAsync(CarFileCreate carFileCreate)
+
+	public async Task<CarFile> CreateCarAsync(ICar carFileCreate)
 	{
 		var carFile = CreateCarValidationData(carFileCreate, InventoryStatus.Created);
 		return await CarWarehouseRepository.CreateCarAsync(carFile);
 	}
 
-	public async Task<CarFile> CarOrderedAsync(CarFileCreate carFileCreate)
+	public async Task<CarFile> CreateCarByOrderAsync(ICar carFileCreate)
 	{
 		var carFile = CreateCarValidationData(carFileCreate, InventoryStatus.Ordered);
 		return await CarWarehouseRepository.CreateCarAsync(carFile);
@@ -94,11 +90,11 @@ public class CarWarehouseManager : ICarWarehouseManager
 		var carFile = await GetCarByIdAsync(carId);
 
 		if (carFile == null)
-			return null;
+			throw new InvalidDataException(ConstantApp.CarNotFindError);
 
 		if (!(carFile.InventoryStatus == InventoryStatus.Created
 			|| carFile.InventoryStatus == InventoryStatus.Ordered))
-			throw new InvalidOperationException(ConstantApp.NotValidCarStatusError);
+			throw new InvalidOperationException(ConstantApp.CarStatusNotValidError);
 
 		return await CarWarehouseRepository.EditCarArrivalAsync(carId, VIN);
 	}
@@ -112,7 +108,7 @@ public class CarWarehouseManager : ICarWarehouseManager
 
 		if (!(carFile.InventoryStatus == InventoryStatus.Available
 			|| carFile.InventoryStatus == InventoryStatus.Reserved))
-			throw new InvalidOperationException(ConstantApp.NotAvailableCarError);
+			throw new InvalidOperationException(ConstantApp.CarNotAvailableError);
 
 		return await CarWarehouseRepository.EditCarStatusAsync(carId, InventoryStatus.SoldOut);
 	}
@@ -122,10 +118,10 @@ public class CarWarehouseManager : ICarWarehouseManager
 		var carFile = await GetCarByIdAsync(carId);
 
 		if (carFile == null)
-			return null;
+			throw new InvalidDataException(ConstantApp.CarNotFindError);
 
 		if (carFile.InventoryStatus != InventoryStatus.Available)
-			throw new InvalidOperationException(ConstantApp.NotAvailableCarError);
+			throw new InvalidOperationException(ConstantApp.CarNotAvailableError);
 
 		return await CarWarehouseRepository.EditCarStatusAsync(carId, InventoryStatus.Reserved);
 	}
@@ -135,10 +131,10 @@ public class CarWarehouseManager : ICarWarehouseManager
 		var carFile = await GetCarByIdAsync(carId);
 
 		if (carFile == null)
-			return null;
+			throw new InvalidDataException(ConstantApp.CarNotFindError);
 
 		if (carFile.InventoryStatus != InventoryStatus.Reserved)
-			throw new InvalidOperationException(ConstantApp.NotReservationCarError);
+			throw new InvalidOperationException(ConstantApp.CarNotReservationError);
 
 		return await CarWarehouseRepository.EditCarStatusAsync(carId, InventoryStatus.Available);
 	}
@@ -148,14 +144,12 @@ public class CarWarehouseManager : ICarWarehouseManager
 		var carFile = await GetCarByIdAsync(carId);
 
 		if (carFile == null)
-			return null;
+			throw new InvalidDataException(ConstantApp.CarNotFindError);
 
 		if (carFile.InventoryStatus == InventoryStatus.SoldOut
 			|| carFile.InventoryStatus == InventoryStatus.Reserved)
-		{
 			throw new InvalidOperationException(
-				ConstantApp.GetErrorMessageEditNotPossible(nameof(carFile.InventoryStatus), carFile.InventoryStatus.ToString()));
-		}
+					ConstantApp.GetErrorMessageEditNotPossible(nameof(carFile.InventoryStatus), carFile.InventoryStatus.ToString()));
 
 		if (carFileEdit == null)
 			throw new ArgumentNullException(nameof(carFileEdit));
@@ -163,7 +157,7 @@ public class CarWarehouseManager : ICarWarehouseManager
 		if (carFileEdit.IsObjectValid(out string errorMessage))
 			throw new InvalidDataException(errorMessage);
 
-		return await CarWarehouseRepository.EditCarAsync(carFileEdit);
+		return await CarWarehouseRepository.EditCarAsync(carId, carFileEdit);
 	}
 
 	public async Task DeleteCarAsync(string carId)
@@ -183,14 +177,14 @@ public class CarWarehouseManager : ICarWarehouseManager
 		await CarWarehouseRepository.DeleteCarAsync(carId);
 	}
 
-	private CarFile CreateCarValidationData(CarFileCreate carFileCreate, InventoryStatus status)
+	private CarFile CreateCarValidationData(ICar car, InventoryStatus status)
 	{
-		if (carFileCreate == null)
-			throw new ArgumentNullException(nameof(carFileCreate));
+		if (car == null)
+			throw new ArgumentNullException(nameof(car));
 
-		if (!carFileCreate.IsObjectValid(out string errorMessage))
+		if (!car.IsObjectValid(out string errorMessage))
 			throw new InvalidDataException(errorMessage);
 
-		return new CarFile(carFileCreate, status);
+		return new CarFile(car, status);
 	}
 }

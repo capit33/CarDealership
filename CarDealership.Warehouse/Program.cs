@@ -86,6 +86,7 @@ public class Program
 	private static void RegisterRepositories(IServiceCollection services)
 	{
 		services.AddScoped<ICarWarehouseRepository, CarWarehouseRepository>();
+		services.AddScoped<ISupplierOrderRepository, SupplierOrderRepository>();
 	}
 
 	public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
