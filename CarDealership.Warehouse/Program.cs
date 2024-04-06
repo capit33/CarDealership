@@ -80,6 +80,7 @@ public class Program
 		services.AddScoped<ISupplierOrderManager, SupplierOrderManager>();
 		services.AddScoped<IPurchaseOrderManager, PurchaseOrderManager>();
 		services.AddScoped<ICustomerOrderManager, CustomerOrderManager>();
+		services.AddScoped<IChangeOrderStatusManager, ChangeOrderStatusManager>();
 	}
 
 	private static void RegisterRepositories(IServiceCollection services)

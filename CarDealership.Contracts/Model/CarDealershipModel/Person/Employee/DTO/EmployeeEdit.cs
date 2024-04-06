@@ -12,8 +12,8 @@ public class EmployeeEdit : IObjectValidation
 	{
 		errorMessage = string.Empty;
 		if (string.IsNullOrWhiteSpace(FirstName)
-			|| string.IsNullOrWhiteSpace(LastName)
-			|| string.IsNullOrWhiteSpace(Position))
+			&& string.IsNullOrWhiteSpace(LastName)
+			&& string.IsNullOrWhiteSpace(Position))
 		{
 			errorMessage = ConstantApp.NoFieldsToEdit;
 			return false;

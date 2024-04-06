@@ -13,7 +13,7 @@ public class Employee : Person
 
 		if (string.IsNullOrWhiteSpace(Position))
 		{
-			errorMessage = ConstantApp.EmployeePositionEmpty;
+			errorMessage = ConstantApp.GetMessageNullOrEmpty(nameof(Position));
 			return false;
 		}
 

@@ -44,7 +44,7 @@ public class CarWarehouseController : ControllerBase
 	{
 		try
 		{
-			return Ok(await CarWarehouseManager.GetCarByIdAsync(carId));
+			return Ok(await CarWarehouseManager.GetCarInfoByIdAsync(carId));
 		}
 		catch (Exception ex)
 		{

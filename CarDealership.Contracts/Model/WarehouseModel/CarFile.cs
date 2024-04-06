@@ -6,7 +6,6 @@ namespace CarDealership.Contracts.Model.WarehouseModel;
 public class CarFile : Car
 {
 	public string Id { get; set; }
-	public string SupplierOrderId { get; set; }
 	public string VIN { get; set; }
 	public InventoryStatus InventoryStatus { get; set; }
 

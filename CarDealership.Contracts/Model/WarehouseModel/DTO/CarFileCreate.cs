@@ -25,17 +25,17 @@ public class CarFileCreate : Car, IObjectValidation
 
 		if (string.IsNullOrWhiteSpace(Model))
 		{
-			errorMessage = ConstantApp.GetMessageNullOrEmpty(nameof(Make));
+			errorMessage = ConstantApp.GetMessageNullOrEmpty(nameof(Model));
 			return false;
 		}
 
 		if (string.IsNullOrWhiteSpace(ModelTrim))
 		{
-			errorMessage = ConstantApp.GetMessageNullOrEmpty(nameof(Make));
+			errorMessage = ConstantApp.GetMessageNullOrEmpty(nameof(ModelTrim));
 			return false;
 		}
 		
-		if ( Year > DateTime.Today.Year || Year < ConstantApp.MinProductionYear)
+		if (Year < ConstantApp.MinProductionYear || Year > DateTime.Today.Year)
 		{
 			errorMessage = ConstantApp.BadProductionYear;
 			return false;

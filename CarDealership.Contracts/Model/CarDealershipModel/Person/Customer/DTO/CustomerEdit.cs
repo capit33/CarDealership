@@ -11,7 +11,7 @@ public class CustomerEdit : IObjectValidation
 	{
 		errorMessage = string.Empty;
 		if (string.IsNullOrWhiteSpace(FirstName)
-			|| string.IsNullOrWhiteSpace(LastName))
+			&& string.IsNullOrWhiteSpace(LastName))
 		{
 			errorMessage = ConstantApp.NoFieldsToEdit;
 			return false;

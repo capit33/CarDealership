@@ -51,13 +51,43 @@ public class CustomerOrderController : ControllerBase
 		}
 	}
 
-	[HttpPut]
-	[Route("status/{status}")]
-	public async Task<IActionResult> ChangeCustomerOrderStatusAsync([FromBody] CustomerOrderEdit customerOrderEdit, string status)
+	[HttpPost]
+	[Route("")]
+	public async Task<IActionResult> CreateCustomerOrderAsync([FromBody] WarehouseCustomerOrderCreate warehouseCustomerOrderCreate)
 	{
 		try
 		{
-			return Ok(await CustomerOrderManager.ChangeCustomerOrderStatusAsync(customerOrderEdit, status));
+			return Ok(await CustomerOrderManager.CreateCustomerOrderAsync(warehouseCustomerOrderCreate));
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, ex.Message, ex.StackTrace);
+			return BadRequest(ex.Message);
+		}
+	}
+
+	[HttpPut]
+	[Route("car-dealership-order/{carDealershipOrderId}")]
+	public async Task<IActionResult> ChangeCustomerOrderAsync(string carDealershipOrderId, [FromBody] WarehouseCustomerOrderEdit customerOrderEdit)
+	{
+		try
+		{
+			return Ok(await CustomerOrderManager.ChangeCustomerOrderAsync(carDealershipOrderId, customerOrderEdit));
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, ex.Message, ex.StackTrace);
+			return BadRequest(ex.Message);
+		}
+	}
+
+	[HttpPut]
+	[Route("status/{status}/warehouse-customer-order/{WarehouseCustomerOrder}")]
+	public async Task<IActionResult> ChangeCustomerOrderStatusAsync(string WarehouseCustomerOrder, string status)
+	{
+		try
+		{
+			return Ok(await CustomerOrderManager.ChangeCustomerOrderStatusAsync(WarehouseCustomerOrder, status));
 		}
 		catch (Exception ex)
 		{

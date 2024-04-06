@@ -1,4 +1,5 @@
-﻿using CarDealership.Contracts.Model.CarModel;
+﻿using CarDealership.Contracts.Enum;
+using CarDealership.Contracts.Model.CarModel;
 using CarDealership.Contracts.Model.Filters;
 using CarDealership.Contracts.Model.WarehouseModel;
 using CarDealership.Contracts.Model.WarehouseModel.DTO;
@@ -10,10 +11,16 @@ namespace CarDealership.Warehouse.Interfaces.BLL;
 
 public interface ICarWarehouseManager
 {
-	Task<CarInfo> GetCarByIdAsync(string carId);
+	Task<CarFile> GetCarByIdAsync(string carId);
+	Task<CarInfo> GetCarInfoByIdAsync(string carId);
 	Task<List<CarInfo>> GetAvailableCarsAsync();
 	Task<PageItems<CarInfo>> GetCarsByFilterAsync(CarFilter carFilter);
 	Task<CarFile> CreateCarAsync(CarFileCreate carFileCreate);
+	Task<CarFile> CarOrderedAsync(CarFileCreate carFileCreate);
+	Task<CarFile> CarArrivalAsync(string carId, string VIN);
+	Task<CarFile> CarSoldOutAsync(string carId);
+	Task<CarFile> CarReservationAsync(string carId);
+	Task<CarFile> CanceledCarReservationAsync(string carId);
 	Task<CarFile> EditCarAsync(string carId, CarFileEdit carFileEdit);
 	Task DeleteCarAsync(string carId);
 }

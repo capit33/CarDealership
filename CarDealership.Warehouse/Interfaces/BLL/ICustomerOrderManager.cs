@@ -9,5 +9,7 @@ public interface ICustomerOrderManager
 {
 	Task<WarehouseCustomerOrder> GetCustomerOrderByIdAsync(string customerOrderId);
 	Task<List<WarehouseCustomerOrder>> GetCustomerOrderByStatusAsync(string status);
-	Task<WarehouseCustomerOrder> ChangeCustomerOrderStatusAsync(CustomerOrderEdit customerOrderEdit, string status);
+	Task<WarehouseCustomerOrderInfo> CreateCustomerOrderAsync(WarehouseCustomerOrderCreate warehouseCustomerOrderCreate);
+	Task<WarehouseCustomerOrder> ChangeCustomerOrderStatusAsync(string warehouseCustomerOrderId, string status);
+	Task<WarehouseCustomerOrderInfo> ChangeCustomerOrderAsync(string carDealershipOrderId, WarehouseCustomerOrderEdit customerOrderEdit);
 }

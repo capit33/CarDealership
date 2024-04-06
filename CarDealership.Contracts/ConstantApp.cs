@@ -1,4 +1,8 @@
-﻿using DnsClient.Protocol;
+﻿using CarDealership.Contracts.Model.CarModel;
+using DnsClient.Protocol;
+using System;
+using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CarDealership.Contracts;
 
@@ -9,16 +13,27 @@ public static class ConstantApp
 	public const string PageNumberError = "Page number cannot be negative";
 	public const string NoFieldsToEdit = "No fields to edit";
 	public const string RemoveIsTrue = "IsRemove can not be true";
-	
+	public const string NotAvailableCarError = "The car is not available.";
+	public const string NotValidCarStatusError = "The car status is not valid.";
+	public const string NotReservationCarError = "The car is not reservation.";
+
 	public const int MinProductionYear = 1900;
 	public static readonly string BadProductionYear = $"The year of production cannot be less than {1900} and greater than the current year";
-
 	public const string SuffixNullOrEmptyErrorMessage = "can not be null or empty";
+	
 
 	public static string GetMessageNullOrEmpty(string prefix)
 	{
 		return $"{prefix} {SuffixNullOrEmptyErrorMessage}.";
 	}
 
+	public static string GetErrorMessageDeleteNotPossible(string propertyName, string propertyValue)
+	{
+		return $"Deletion is impossible! In properties - {propertyName} is set \"{propertyValue}\".";
+	}
 
+	public static string GetErrorMessageEditNotPossible(string propertyName, string propertyValue)
+	{
+		return $"Edition is impossible! In properties - {propertyName} is set \"{propertyValue}\".";
+	}
 }
