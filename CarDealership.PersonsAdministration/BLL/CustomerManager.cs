@@ -3,11 +3,13 @@ using CarDealership.Contracts.Model.CarDealershipModel.Filter;
 using CarDealership.Contracts.Model.CarDealershipModel.Person.Customer;
 using CarDealership.Contracts.Model.CarDealershipModel.Person.Customer.DTO;
 using CarDealership.Contracts.Model.Filters;
+using CarDealership.Infrastructure;
 using CarDealership.PersonsAdministration.Interfaces.BLL;
 using CarDealership.PersonsAdministration.Interfaces.DAL;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CarDealership.PersonsAdministration.BLL;
 
@@ -69,11 +71,10 @@ public class CustomerManager : ICustomerManager
 		if (string.IsNullOrWhiteSpace(customerId))
 			throw new ArgumentNullException(nameof(customerId));
 
-		if (customerId == null)
-			throw new ArgumentNullException(nameof(customerEdit));
-
 		if (customerEdit.IsObjectValid(out string errorMessage))
 			throw new InvalidDataException(errorMessage);
+
+		bool isValid = Helper.ValidationInputData(customerEdit, customerId, customerId);
 
 		return await CustomerRepository.EditCustomerAsync(customerId, customerEdit);
 	}

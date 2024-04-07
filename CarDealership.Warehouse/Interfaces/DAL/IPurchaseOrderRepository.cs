@@ -7,6 +7,7 @@ namespace CarDealership.Warehouse.Interfaces.DAL;
 
 public interface IPurchaseOrderRepository
 {
+	Task CreatePurchaseOrderAsync(WarehousePurchaseOrder purchaseOrder);
 	Task DeletePurchaseOrderAsync(string purchaseOrderId);
 	Task<WarehousePurchaseOrder> GetPurchaseOrderByIdAsync(string purchaseOrderId);
 	Task<List<WarehousePurchaseOrder>> GetPurchaseOrderByStutusAsync(DocumentStatus documentStatus);

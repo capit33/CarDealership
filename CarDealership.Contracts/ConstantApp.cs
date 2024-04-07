@@ -8,11 +8,13 @@ public static class ConstantApp
 	public const string PageSizeError = "Page size must be greater than 0";
 	public const string PageNumberError = "Page number cannot be negative";
 	public const string NoFieldsToEdit = "No fields to edit";
+	public const string EditObjectNullErrorMessage = "Edit object can not be null.";
 	public const string RemoveIsTrue = "IsRemove can not be true";
 	public const string CarNotAvailableError = "The car is not available.";
 	public const string CarStatusNotValidError = "The car status is not valid.";
 	public const string CarNotReservationError = "The car is not reservation.";
 	public const string DocumentStatusNotValidError = "The document status is not valid.";
+	public const string IdNullOrEmptyErrorMessage = "Id can not be null or empty";
 
 	public const string CarNotFindError = "The car is not find.";
 	public const string SupplierOrderNotFindError = "The Supplier Order is not find.";

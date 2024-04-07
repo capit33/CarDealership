@@ -9,6 +9,6 @@ public class WarehouseSupplierOrder
 	public string Id { get; set; }
 	public string SupplierName { get; set; }
 	public string CarFileId { get; set; }
-	public DocumentStatus OrderStatus { get; set; }
+	public DocumentStatus DocumentStatus { get; set; }
 	public DateTime CreatedDate { get; set; }
 }

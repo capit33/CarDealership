@@ -6,6 +6,7 @@ using CarDealership.Contracts.Model.Filters;
 using CarDealership.Contracts.Model.WarehouseModel;
 using CarDealership.Contracts.Model.WarehouseModel.DTO;
 using CarDealership.Contracts.Model.WarehouseModel.Filter;
+using CarDealership.Infrastructure;
 using CarDealership.Warehouse.Interfaces.BLL;
 using CarDealership.Warehouse.Interfaces.DAL;
 using System;
@@ -115,6 +116,8 @@ public class CarWarehouseManager : ICarWarehouseManager
 
 	public async Task<CarFile> CarReservationAsync(string carId)
 	{
+		Helper.InputIdValidation(carId);
+
 		var carFile = await GetCarByIdAsync(carId);
 
 		if (carFile == null)
@@ -128,6 +131,8 @@ public class CarWarehouseManager : ICarWarehouseManager
 
 	public async Task<CarFile> CanceledCarReservationAsync(string carId)
 	{
+		Helper.InputIdValidation(carId);
+
 		var carFile = await GetCarByIdAsync(carId);
 
 		if (carFile == null)
@@ -141,6 +146,9 @@ public class CarWarehouseManager : ICarWarehouseManager
 
 	public async Task<CarFile> EditCarAsync(string carId, CarFileEdit carFileEdit)
 	{
+		Helper.InputIdValidation(carId);
+		Helper.InputDataValidation(carFileEdit);
+
 		var carFile = await GetCarByIdAsync(carId);
 
 		if (carFile == null)
@@ -151,17 +159,12 @@ public class CarWarehouseManager : ICarWarehouseManager
 			throw new InvalidOperationException(
 					ConstantApp.GetErrorMessageEditNotPossible(nameof(carFile.InventoryStatus), carFile.InventoryStatus.ToString()));
 
-		if (carFileEdit == null)
-			throw new ArgumentNullException(nameof(carFileEdit));
-
-		if (carFileEdit.IsObjectValid(out string errorMessage))
-			throw new InvalidDataException(errorMessage);
-
 		return await CarWarehouseRepository.EditCarAsync(carId, carFileEdit);
 	}
 
 	public async Task DeleteCarAsync(string carId)
 	{
+		Helper.InputIdValidation(carId);
 		var carFile = await GetCarByIdAsync(carId);
 
 		if (carFile == null)

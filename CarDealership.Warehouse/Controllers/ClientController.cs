@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System;
 using CarDealership.Contracts.Model.WarehouseModel.Filter;
+using CarDealership.Contracts.Model.WarehouseModel.DTO;
 
 namespace CarDealership.Warehouse.Controllers;
 
@@ -71,5 +72,33 @@ public class ClientController : ControllerBase
 		}
 	}
 
+	[HttpPost]
+	[Route("")]
+	public async Task<IActionResult> CreateCustomerOrderAsync([FromBody] WarehouseCarDealershipCustomerOrderCreate warehouseCustomerOrderCreate)
+	{
+		try
+		{
+			return Ok(await CustomerOrderManager.CreateCustomerOrderCarDealershipAsync(warehouseCustomerOrderCreate));
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, ex.Message, ex.StackTrace);
+			return BadRequest(ex.Message);
+		}
+	}
 
+	[HttpPut]
+	[Route("car-dealership-order/{carDealershipOrderId}")]
+	public async Task<IActionResult> ChangeCustomerOrderAsync(string carDealershipOrderId, [FromBody] WarehouseCustomerOrderEdit customerOrderEdit)
+	{
+		try
+		{
+			return Ok(await CustomerOrderManager.EditCustomerOrderCarDealershipIdAsync(carDealershipOrderId, customerOrderEdit));
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, ex.Message, ex.StackTrace);
+			return BadRequest(ex.Message);
+		}
+	}
 }

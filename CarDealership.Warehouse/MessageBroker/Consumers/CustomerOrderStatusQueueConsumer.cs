@@ -1,4 +1,5 @@
-﻿using CarDealership.Contracts.Model.QueueModel;
+﻿using CarDealership.Contracts.Enum;
+using CarDealership.Contracts.Model.QueueModel;
 using CarDealership.Infrastructure.MessageBroker;
 using CarDealership.Warehouse.Interfaces.BLL;
 using Microsoft.Extensions.Logging;
@@ -18,8 +19,14 @@ public class CustomerOrderStatusQueueConsumer
 		CustomerOrderManager = customerOrderManager;
 	}
 
-	public override Task HandleMessageAsync(CarDealershipCustomerOrderStatusQueue message)
+	public override async Task HandleMessageAsync(CarDealershipCustomerOrderStatusQueue message)
 	{
-		return base.HandleMessageAsync(message);
+		if (message != null)
+		{
+			if (message.OrderStatus == DocumentStatus.Canceled)
+			{
+				await CustomerOrderManager.CanceledCustomerOrderByCarDealershipIdAsync(message.CarDealershipOrderId);
+			}
+		}
 	}
 }

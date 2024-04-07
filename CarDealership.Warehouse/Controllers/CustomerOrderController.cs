@@ -67,12 +67,12 @@ public class CustomerOrderController : ControllerBase
 	}
 
 	[HttpPut]
-	[Route("car-dealership-order/{carDealershipOrderId}")]
-	public async Task<IActionResult> ChangeCustomerOrderAsync(string carDealershipOrderId, [FromBody] WarehouseCustomerOrderEdit customerOrderEdit)
+	[Route("{customerOrderId}")]
+	public async Task<IActionResult> ChangeCustomerOrderAsync(string customerOrderId, [FromBody] WarehouseCustomerOrderEdit customerOrderEdit)
 	{
 		try
 		{
-			return Ok(await CustomerOrderManager.ChangeCustomerOrderAsync(carDealershipOrderId, customerOrderEdit));
+			return Ok(await CustomerOrderManager.EditCustomerOrderByIdAsync(customerOrderId, customerOrderEdit));
 		}
 		catch (Exception ex)
 		{
@@ -82,12 +82,43 @@ public class CustomerOrderController : ControllerBase
 	}
 
 	[HttpPut]
-	[Route("{customerOrderId}/status/{status}")]
-	public async Task<IActionResult> ChangeCustomerOrderStatusAsync(string customerOrderId, string status)
+	[Route("canceled/{customerOrderId}")]
+	public async Task<IActionResult> CanceledCustomerOrderAsync(string customerOrderId)
 	{
 		try
 		{
-			return Ok(await CustomerOrderManager.ChangeCustomerOrderStatusAsync(customerOrderId, status));
+			return Ok(await CustomerOrderManager.CanceledCustomerOrderByIdAsync(customerOrderId));
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, ex.Message, ex.StackTrace);
+			return BadRequest(ex.Message);
+		}
+	}
+
+	[HttpPut]
+	[Route("completed/{customerOrderId}")]
+	public async Task<IActionResult> CompletedCustomerOrderAsync(string customerOrderId)
+	{
+		try
+		{
+			return Ok(await CustomerOrderManager.CompletedCustomerOrderByIdAsync(customerOrderId));
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, ex.Message, ex.StackTrace);
+			return BadRequest(ex.Message);
+		}
+	}
+
+	[HttpDelete]
+	[Route("{customerOrderId}")]
+	public async Task<IActionResult> DeleteCustomerOrderAsync(string customerOrderId)
+	{
+		try
+		{
+			await CustomerOrderManager.DeleteCustomerOrderAsync(customerOrderId);
+			return Ok();
 		}
 		catch (Exception ex)
 		{

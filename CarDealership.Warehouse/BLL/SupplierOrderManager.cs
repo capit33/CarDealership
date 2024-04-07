@@ -69,10 +69,18 @@ public class SupplierOrderManager : ISupplierOrderManager
 		var supplierOrder = new WarehouseSupplierOrder()
 		{
 			CarFileId = carFile.Id,
-			OrderStatus = DocumentStatus.Created,
+			DocumentStatus = DocumentStatus.Created,
 			CreatedDate = DateTime.UtcNow
 		};
 		return await SupplierOrderRepository.CreateSupplierOrderAsync(supplierOrder);
+	}
+
+	public async Task<WarehouseSupplierOrder> CreateSupplierOrderFromPurchaseOrderAsync(WarehousePurchaseOrder purchaseOrder)
+	{
+		return await CreateSupplierOrderAsync(new WarehouseSupplierOrderCreate()
+		{
+			Car = purchaseOrder.Car,
+		});
 	}
 
 	public async Task<WarehouseSupplierOrder> SupplierOrderConfirmAsync(string supplierOrderId, SupplierOrderConfirm supplierOrderConfirm)
@@ -85,7 +93,7 @@ public class SupplierOrderManager : ISupplierOrderManager
 		if (supplierOrder == null)
 			throw new InvalidDataException(ConstantApp.SupplierOrderNotFindError);
 
-		if (supplierOrder.OrderStatus != DocumentStatus.Created)
+		if (supplierOrder.DocumentStatus != DocumentStatus.Created)
 			throw new InvalidOperationException(ConstantApp.DocumentStatusNotValidError);
 
 		supplierOrder =  await SupplierOrderRepository.SupplierOrderConfirmAsync(supplierOrderId, supplierOrderConfirm);
@@ -104,10 +112,10 @@ public class SupplierOrderManager : ISupplierOrderManager
 		if (supplierOrder == null)
 			throw new InvalidDataException(ConstantApp.SupplierOrderNotFindError);
 
-		if (supplierOrder.OrderStatus != DocumentStatus.Created 
-			|| supplierOrder.OrderStatus != DocumentStatus.Processing)
+		if (supplierOrder.DocumentStatus != DocumentStatus.Created 
+			|| supplierOrder.DocumentStatus != DocumentStatus.Processing)
 			throw new InvalidOperationException(
-					ConstantApp.GetErrorMessageEditNotPossible(nameof(supplierOrder.OrderStatus), supplierOrder.OrderStatus.ToString()));
+					ConstantApp.GetErrorMessageEditNotPossible(nameof(supplierOrder.DocumentStatus), supplierOrder.DocumentStatus.ToString()));
 
 		var isOderEdit = !string.IsNullOrEmpty(supplierOrderEdit.SupplierName);
 		var isCarEdit = supplierOrderEdit.CarEditing.IsObjectValid(out string errorMessage);
@@ -134,8 +142,8 @@ public class SupplierOrderManager : ISupplierOrderManager
 		if (supplierOrder == null)
 			throw new InvalidDataException(ConstantApp.SupplierOrderNotFindError);
 
-		if (supplierOrder.OrderStatus == DocumentStatus.Done
-			|| supplierOrder.OrderStatus == DocumentStatus.Canceled)
+		if (supplierOrder.DocumentStatus == DocumentStatus.Done
+			|| supplierOrder.DocumentStatus == DocumentStatus.Canceled)
 			throw new InvalidOperationException(ConstantApp.DocumentStatusNotValidError);
 
 		var carFile = await CarWarehouseManager.CarArrivalAsync(supplierOrder.CarFileId, VIN);
@@ -156,8 +164,8 @@ public class SupplierOrderManager : ISupplierOrderManager
 		if (supplierOrder == null)
 			throw new InvalidDataException(ConstantApp.SupplierOrderNotFindError);
 
-		if (supplierOrder.OrderStatus == DocumentStatus.Done
-			|| supplierOrder.OrderStatus == DocumentStatus.Canceled)
+		if (supplierOrder.DocumentStatus == DocumentStatus.Done
+			|| supplierOrder.DocumentStatus == DocumentStatus.Canceled)
 			throw new InvalidOperationException(ConstantApp.DocumentStatusNotValidError);
 
 		await CarWarehouseManager.DeleteCarAsync(supplierOrder.CarFileId);
@@ -175,7 +183,7 @@ public class SupplierOrderManager : ISupplierOrderManager
 		if (supplierOrder == null)
 			return;
 
-		if (supplierOrder.OrderStatus != DocumentStatus.Canceled)
+		if (supplierOrder.DocumentStatus != DocumentStatus.Canceled)
 			throw new InvalidOperationException(ConstantApp.DocumentStatusNotValidError);
 
 		await SupplierOrderRepository.DeleteOrderAsync(supplierOrderId);

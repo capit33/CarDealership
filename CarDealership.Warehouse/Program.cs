@@ -24,6 +24,7 @@ public class Program
 		ConfigureServices(builder.Services, builder.Configuration);
 		RegisterManagers(builder.Services);
 		RegisterRepositories(builder.Services);
+		RegisterMessageBrokers(builder.Services, builder.Configuration);
 
 		builder.Services.AddControllers();
 		builder.Services.AddEndpointsApiExplorer();
@@ -46,7 +47,7 @@ public class Program
 		app.Run();
 	}
 
-	private static void MessageBrokerRegistration(IServiceCollection services)
+	private static void RegisterMessageBrokers(IServiceCollection services, IConfiguration configuration)
 	{
 		services.AddScoped<IPurchaseOrderStatusQueuePublisher, PurchaseOrderStatusQueuePublisher>();
 		services.AddScoped<ICustomerOrderStatusQueuePublisher, CustomerOrderStatusQueuePublisher>();
@@ -60,11 +61,7 @@ public class Program
 
 			x.UsingRabbitMq((context, cfg) =>
 			{
-				cfg.Host("rabbitmq://localhost", h =>
-				{
-					h.Username("guest");
-					h.Password("guest");
-				});
+				cfg.Host(configuration.GetSection("RabbitMQ:Uri").Value);
 
 				cfg.ReceiveEndpoint("car-dealership-customer-order-status-queue", e =>
 				{
@@ -104,7 +101,7 @@ public class Program
 	{
 		services.AddLogging(loggingBuilder =>
 		{
-			loggingBuilder.AddSeq(configuration.GetValue<string>("SeqUrl"));
+			loggingBuilder.AddSeq(configuration.GetSection("SeqUrl").Value);
 		});
 	}
 }

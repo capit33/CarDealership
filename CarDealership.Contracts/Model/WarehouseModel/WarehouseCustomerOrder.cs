@@ -10,6 +10,6 @@ public class WarehouseCustomerOrder
 	public string CustomerFirstName { get; set; }
 	public string CustomerLastName { get; set; }
 	public string ReservedCarId { get; set; }
-	public DocumentStatus OrderStatus { get; set; }
+	public DocumentStatus DocumentStatus { get; set; }
 	public DateTime CreatedDate { get; set; }
 }

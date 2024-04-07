@@ -1,4 +1,5 @@
 ﻿using CarDealership.Contracts.Model.QueueModel;
+using CarDealership.Contracts.Model.WarehouseModel;
 using CarDealership.Infrastructure.MessageBroker;
 using CarDealership.Warehouse.Interfaces.BLL;
 using MassTransit.Context;
@@ -19,8 +20,14 @@ public class PurchaseOrderQueueConsumer
 		PurchaseOrderManager = purchaseOrderManager;
 	}
 
-	public override Task HandleMessageAsync(CarDealershipPurchaseOrderQueue message)
+	public override async Task HandleMessageAsync(CarDealershipPurchaseOrderQueue message)
 	{
-		return base.HandleMessageAsync(message);
+		var purchaseOrder = new WarehousePurchaseOrder()
+		{
+			CarDealershipOrderId = message.OrderId,
+			Car = message.Car
+		};
+
+		await PurchaseOrderManager.CreatePurchaseOrderAsync(purchaseOrder);
 	}
 }

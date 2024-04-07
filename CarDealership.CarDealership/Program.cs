@@ -71,7 +71,7 @@ public class Program
 	{
 		services.AddLogging(loggingBuilder =>
 		{
-			loggingBuilder.AddSeq(configuration.GetValue<string>("SeqUrl"));
+			loggingBuilder.AddSeq(configuration.GetSection("SeqUrl").Value);
 		});
 	}
 }

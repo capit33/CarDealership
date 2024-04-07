@@ -39,6 +39,26 @@ public class PurchaseOrderManager : IPurchaseOrderManager
 		return await PurchaseOrderRepository.GetPurchaseOrderByStutusAsync(documentStatus);
 	}
 
+	public async Task CreatePurchaseOrderAsync(WarehousePurchaseOrder purchaseOrder)
+	{
+		if (purchaseOrder == null)
+			throw new ArgumentNullException(nameof(purchaseOrder));
+
+		if (string.IsNullOrEmpty(purchaseOrder.SupplierOrderId))
+			throw new ArgumentNullException(nameof(purchaseOrder.SupplierOrderId));
+
+		if (!purchaseOrder.Car.IsObjectValid(out var errorMessage))
+			throw new InvalidDataException(errorMessage);
+
+		 var supplierOrder =  await SupplierOrderManager.CreateSupplierOrderFromPurchaseOrderAsync(purchaseOrder);
+
+		purchaseOrder.SupplierOrderId = supplierOrder.Id;
+		purchaseOrder.DocumentStatus = DocumentStatus.Created;
+		purchaseOrder.CreatedDate = DateTime.UtcNow;
+
+		await PurchaseOrderRepository.CreatePurchaseOrderAsync(purchaseOrder);
+	}
+
 	public async Task DeletePurchaseOrderAsync(string purchaseOrderId)
 	{
 		if (string.IsNullOrWhiteSpace(purchaseOrderId))

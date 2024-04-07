@@ -9,6 +9,6 @@ namespace CarDealership.Contracts.Model.QueueModel;
 
 public class CarDealershipPurchaseOrderQueue : BaseQueueMessage
 {
-	public string Id { get; set; }
+	public string OrderId { get; set; }
 	public Car Car { get; set; }
 }
