@@ -73,7 +73,8 @@ public class CustomerManager : ICustomerManager
 		if (customerEdit.IsObjectValid(out string errorMessage))
 			throw new InvalidDataException(errorMessage);
 
-		bool isValid = Helper.ValidationInputData(customerEdit, customerId, customerId);
+		Helper.InputIdValidation(customerId, customerId);
+		Helper.InputDataValidation(customerEdit);
 
 		return await CustomerRepository.EditCustomerAsync(customerId, customerEdit);
 	}

@@ -1,8 +1,11 @@
-﻿namespace CarDealership.Contracts.Model.CarModel;
+﻿using CarDealership.Contracts.Enum;
+
+namespace CarDealership.Contracts.Model.CarModel;
 
 public class CarInfo : Car
 {
 	public string CarId { get; set; }
+	public InventoryStatus InventoryStatus { get; }
 
 	public CarInfo()
 	{

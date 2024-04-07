@@ -11,7 +11,6 @@ public interface ICustomerOrderManager
 	Task<List<CustomerOrder>> GetCustomerOrdersByStatusAsync(string status);
 	Task<CustomerOrder> CreateCustomerOrderAsync(CustomerOrderCreate customerOrderCreate);
 	Task<CustomerOrder> EditCustomerOrderAsync(string customerOrderId, CustomerOrderEdit customerOrderEdit);
-	Task<CustomerOrder> EditCustomerOrderEmployeeIdAsync(string customerOrderId, string employeeId);
 	Task<CustomerOrder> CanceledCustomerOrderAsync(string customerOrderId);
 	Task DeleteCustomerOrderAsync(string customerOrderId);
 }

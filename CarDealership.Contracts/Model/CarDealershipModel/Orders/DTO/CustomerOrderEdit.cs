@@ -1,8 +1,25 @@
-﻿namespace CarDealership.Contracts.Model.CarDealershipModel.Orders.DTO;
+﻿using CarDealership.Contracts.Interface;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-public class CustomerOrderEdit
+namespace CarDealership.Contracts.Model.CarDealershipModel.Orders.DTO;
+
+public class CustomerOrderEdit : IObjectValidation
 {
 	public string CustomerId { get; set; }
 	public string EmployeeId { get; set; }
 	public string ReservedCarId { get; set; }
+
+	public bool IsObjectValid(out string errorMessage)
+	{
+		errorMessage = string.Empty;
+		if (string.IsNullOrWhiteSpace(CustomerId)
+			&& string.IsNullOrWhiteSpace(EmployeeId)
+			&& string.IsNullOrWhiteSpace(ReservedCarId))
+		{
+			errorMessage = ConstantApp.NoFieldsToEdit;
+			return false;
+		}
+		return true;
+	}
 }
