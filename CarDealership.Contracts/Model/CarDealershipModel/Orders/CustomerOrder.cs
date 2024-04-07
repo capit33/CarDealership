@@ -11,6 +11,6 @@ public class CustomerOrder
 	public Car Car { get; set; }
 	public string ReservedCarId { get; set; }
 	public string EmployeeId { get; set; }
-	public DocumentStatus OrderStatus { get; set; }
+	public DocumentStatus DocumentStatus { get; set; }
 	public DateTime CreatedDate { get; set; }
 }

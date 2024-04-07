@@ -1,7 +1,7 @@
 ﻿using CarDealership.Contracts.Model.QueueModel;
 using CarDealership.Infrastructure.MessageBroker;
 using CarDealership.Infrastructure.MessageBroker.Interface;
-using CarDealership.Warehouse.MessageBroker.Interface;
+using CarDealership.Warehouse.Interfaces.MessageBroker;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 

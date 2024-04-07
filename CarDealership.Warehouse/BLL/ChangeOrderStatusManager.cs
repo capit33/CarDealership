@@ -4,7 +4,7 @@ using CarDealership.Contracts.Model.WarehouseModel.DTO;
 using CarDealership.Infrastructure;
 using CarDealership.Warehouse.Interfaces.BLL;
 using CarDealership.Warehouse.Interfaces.DAL;
-using CarDealership.Warehouse.MessageBroker.Interface;
+using CarDealership.Warehouse.Interfaces.MessageBroker;
 using System;
 using System.Threading.Tasks;
 

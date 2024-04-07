@@ -1,4 +1,4 @@
-﻿using CarDealership.CarDealership.MessageBroker.Interface;
+﻿using CarDealership.CarDealership.Interfaces.MessageBroker;
 using CarDealership.Contracts.Model.QueueModel;
 using CarDealership.Infrastructure.MessageBroker;
 using MassTransit;

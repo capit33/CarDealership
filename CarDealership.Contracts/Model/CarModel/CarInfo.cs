@@ -2,15 +2,15 @@
 
 public class CarInfo : Car
 {
-	public string Id { get; set; }
+	public string CarId { get; set; }
 
 	public CarInfo()
 	{
 	}
 
-	public CarInfo(string id, Car car)
+	public CarInfo(string carId, Car car)
 	{
-		Id = id;
+		CarId = carId;
 		Make = car.Make;
 		Model = car.Model;
 		ModelTrim = car.ModelTrim;

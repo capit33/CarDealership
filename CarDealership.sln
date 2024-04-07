@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarDealership.CarDealership
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarDealership.PersonsAdministration", "CarDealership.PersonsAdministration\CarDealership.PersonsAdministration.csproj", "{D9D9BDB2-2CFD-49E9-BF14-300956EE4C3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarDealership.SearchService", "CarDealership.SearchService\CarDealership.SearchService.csproj", "{69024BC7-6650-43A2-8996-F674AD47619F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,10 +43,6 @@ Global
 		{D9D9BDB2-2CFD-49E9-BF14-300956EE4C3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9D9BDB2-2CFD-49E9-BF14-300956EE4C3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9D9BDB2-2CFD-49E9-BF14-300956EE4C3F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{69024BC7-6650-43A2-8996-F674AD47619F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{69024BC7-6650-43A2-8996-F674AD47619F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{69024BC7-6650-43A2-8996-F674AD47619F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{69024BC7-6650-43A2-8996-F674AD47619F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,7 +53,6 @@ Global
 		{7F1527A2-0B77-485F-991D-7AE9FA7519EA} = {D7341AE9-8E91-4D93-83E1-C543DDC48954}
 		{45A29554-DCC7-42A8-951B-05C8CADA2847} = {D7341AE9-8E91-4D93-83E1-C543DDC48954}
 		{D9D9BDB2-2CFD-49E9-BF14-300956EE4C3F} = {D7341AE9-8E91-4D93-83E1-C543DDC48954}
-		{69024BC7-6650-43A2-8996-F674AD47619F} = {D7341AE9-8E91-4D93-83E1-C543DDC48954}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B11DBF6C-74D4-494A-99AF-B44F815E481F}

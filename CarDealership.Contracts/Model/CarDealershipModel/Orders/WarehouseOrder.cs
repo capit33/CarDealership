@@ -9,6 +9,6 @@ public class WarehouseOrder
 	public string Id { get; set; }
 	public Car Car { get; set; }
 	public string EmployeeId { get; set; }
-	public DocumentStatus OrderStatus { get; set; }
+	public DocumentStatus DocumentStatus { get; set; }
 	public DateTime CreatedDate { get; set; }
 }
