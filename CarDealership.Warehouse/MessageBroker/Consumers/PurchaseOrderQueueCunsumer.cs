@@ -2,7 +2,6 @@
 using CarDealership.Contracts.Model.WarehouseModel;
 using CarDealership.Infrastructure.MessageBroker;
 using CarDealership.Warehouse.Interfaces.BLL;
-using MassTransit.Context;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 

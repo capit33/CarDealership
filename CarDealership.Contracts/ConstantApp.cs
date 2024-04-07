@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace CarDealership.Contracts;
+﻿namespace CarDealership.Contracts;
 
 public static class ConstantApp
 {
@@ -8,17 +6,12 @@ public static class ConstantApp
 	public const string PageSizeError = "Page size must be greater than 0";
 	public const string PageNumberError = "Page number cannot be negative";
 	public const string NoFieldsToEdit = "No fields to edit";
-	public const string EditObjectNullErrorMessage = "Edit object can not be null.";
+	public const string ObjectNullErrorMessage = "Object can not be null.";
 	public const string RemoveIsTrue = "IsRemove can not be true";
 	public const string CarNotAvailableError = "The car is not available.";
 	public const string CarStatusNotValidError = "The car status is not valid.";
 	public const string CarNotReservationError = "The car is not reservation.";
 	public const string DocumentStatusNotValidError = "The document status is not valid.";
-	public const string IdNullOrEmptyErrorMessage = "Id can not be null or empty";
-
-	public const string CarNotFoundError = "The car is not found.";
-	public const string SupplierOrderNotFoundError = "The Supplier Order is not found.";
-	public const string PurchaseOrderNotFoundError = "The Purchase Order is not found.";
 
 	public const int MinProductionYear = 1900;
 	public static readonly string BadProductionYear = $"The year of production cannot be less than {1900} and greater than the current year";
@@ -28,6 +21,12 @@ public static class ConstantApp
 	public static string GetMessageNullOrEmpty(string prefix)
 	{
 		return $"{prefix} {SuffixNullOrEmptyErrorMessage}.";
+	}
+
+	public static string GetNotFoundErrorMessage(string objectName, string objectValue)
+	{
+		return $"{objectName} value: {objectValue} is not found.";
+		
 	}
 
 	public static string GetErrorMessageDeleteNotPossible(string propertyName, string propertyValue)

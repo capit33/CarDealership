@@ -1,11 +1,10 @@
-﻿using CarDealership.Warehouse.Interfaces.BLL;
-using Microsoft.AspNetCore.Http;
+﻿using CarDealership.Contracts.Model.WarehouseModel.DTO;
+using CarDealership.Contracts.Model.WarehouseModel.Filter;
+using CarDealership.Warehouse.Interfaces.BLL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 using System;
-using CarDealership.Contracts.Model.WarehouseModel.Filter;
-using CarDealership.Contracts.Model.WarehouseModel.DTO;
+using System.Threading.Tasks;
 
 namespace CarDealership.Warehouse.Controllers;
 
@@ -27,21 +26,6 @@ public class ClientController : ControllerBase
 		CarWarehouseManager = carWarehouseManager;
 		CustomerOrderManager = customerOrderManager;
 		PurchaseOrderManager = purchaseOrderManager;
-	}
-
-	[HttpGet]
-	[Route("car/available")]
-	public async Task<IActionResult> GetAvailableCarAsync()
-	{
-		try
-		{
-			return Ok(await CarWarehouseManager.GetAvailableCarsAsync());
-		}
-		catch (Exception ex)
-		{
-			Logger.LogError(ex, ex.Message, ex.StackTrace);
-			return BadRequest(ex.Message);
-		}
 	}
 
 	[HttpGet]
@@ -106,12 +90,12 @@ public class ClientController : ControllerBase
 	}
 
 	[HttpPut]
-	[Route("purchase-order/canceled/{purchaseOrderId}")]
-	public async Task<IActionResult> ChangeCustomerOrderAsync(string purchaseOrderId)
+	[Route("purchase-order/canceled/{carDealershipOrderId}")]
+	public async Task<IActionResult> CanceledPurchaseOrderAsync(string carDealershipOrderId)
 	{
 		try
 		{
-			await PurchaseOrderManager.CanceledPurchaseOrderCarDealershipAsync(purchaseOrderId);
+			await PurchaseOrderManager.CanceledPurchaseOrderCarDealershipAsync(carDealershipOrderId);
 			return Ok();
 		}
 		catch (Exception ex)

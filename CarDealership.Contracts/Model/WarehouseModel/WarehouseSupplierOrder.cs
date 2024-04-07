@@ -1,5 +1,4 @@
 ﻿using CarDealership.Contracts.Enum;
-using CarDealership.Contracts.Model.CarModel;
 using System;
 
 namespace CarDealership.Contracts.Model.WarehouseModel;

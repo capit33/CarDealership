@@ -1,15 +1,11 @@
 ﻿using CarDealership.Contracts;
 using CarDealership.Contracts.Enum;
-using CarDealership.Contracts.Model.CarDealershipModel.Orders;
-using CarDealership.Contracts.Model.CarDealershipModel.Orders.DTO;
 using CarDealership.Contracts.Model.CarModel;
 using CarDealership.Contracts.Model.WarehouseModel;
 using CarDealership.Contracts.Model.WarehouseModel.DTO;
 using CarDealership.Infrastructure;
-using CarDealership.Warehouse.DAL;
 using CarDealership.Warehouse.Interfaces.BLL;
 using CarDealership.Warehouse.Interfaces.DAL;
-using CarDealership.Warehouse.MessageBroker.Interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -107,7 +103,7 @@ public class CustomerOrderManager : ICustomerOrderManager
 			throw new InvalidOperationException(ConstantApp.DocumentStatusNotValidError);
 
 		if (customerOrder.ReservedCarId == null)
-			throw new ArgumentNullException(ConstantApp.CarNotFoundError);
+			throw new ArgumentNullException(nameof(customerOrder.ReservedCarId));
 
 		await CarWarehouseManager.CarSoldOutAsync(customerOrder.ReservedCarId);
 
@@ -157,7 +153,7 @@ public class CustomerOrderManager : ICustomerOrderManager
 		var carFile = await CarWarehouseManager.GetCarByIdAsync(warehouseCustomerOrderCreate.ReservedCarId);
 
 		if (carFile == null)
-			throw new InvalidDataException(ConstantApp.CarNotFoundError);
+			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(carFile), warehouseCustomerOrderCreate.ReservedCarId));
 
 		if (carFile.InventoryStatus != InventoryStatus.Available)
 			throw new InvalidOperationException(

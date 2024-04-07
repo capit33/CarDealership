@@ -1,5 +1,4 @@
-﻿using CarDealership.Contracts.Enum;
-using CarDealership.Contracts.Model.WarehouseModel;
+﻿using CarDealership.Contracts.Model.WarehouseModel;
 using CarDealership.Contracts.Model.WarehouseModel.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;

@@ -1,18 +1,13 @@
-﻿using Amazon.Runtime.Endpoints;
-using CarDealership.Contracts;
+﻿using CarDealership.Contracts;
 using CarDealership.Contracts.Enum;
-using CarDealership.Contracts.Model.CarModel;
 using CarDealership.Contracts.Model.WarehouseModel;
 using CarDealership.Contracts.Model.WarehouseModel.DTO;
-using CarDealership.Warehouse.DAL;
+using CarDealership.Infrastructure;
 using CarDealership.Warehouse.Interfaces.BLL;
 using CarDealership.Warehouse.Interfaces.DAL;
-using MassTransit.Transports;
-using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace CarDealership.Warehouse.BLL;
@@ -34,8 +29,7 @@ public class SupplierOrderManager : ISupplierOrderManager
 
 	public async Task<WarehouseSupplierOrder> GetSupplierOrderByIdAsync(string supplierOrderId)
 	{
-		if (string.IsNullOrWhiteSpace(supplierOrderId))
-			throw new ArgumentNullException(nameof(supplierOrderId));
+		Helper.InputIdValidation(supplierOrderId);
 
 		return await SupplierOrderRepository.GetSupplierOrderByIdAsync(supplierOrderId);
 	}
@@ -55,16 +49,12 @@ public class SupplierOrderManager : ISupplierOrderManager
 		if (supplierOrderCreate == null)
 			throw new ArgumentNullException(nameof(supplierOrderCreate));
 
-		if (supplierOrderCreate.Car == null)
-			throw new ArgumentNullException(nameof(supplierOrderCreate.Car));
-
-		if (!supplierOrderCreate.Car.IsObjectValid(out string errorMessage))
-			throw new InvalidDataException(errorMessage);
+		Helper.InputDataValidation(supplierOrderCreate.Car);
 
 		var carFile = await CarWarehouseManager.CreateCarByOrderAsync(supplierOrderCreate.Car);
 
 		if (carFile == null || string.IsNullOrWhiteSpace(carFile.Id))
-			throw new InvalidDataException(ConstantApp.CarNotFoundError);
+			throw new Exception("Car is not created");
 
 		var supplierOrder = new WarehouseSupplierOrder()
 		{
@@ -91,7 +81,7 @@ public class SupplierOrderManager : ISupplierOrderManager
 		var supplierOrder = await GetSupplierOrderByIdAsync(supplierOrderId);
 
 		if (supplierOrder == null)
-			throw new InvalidDataException(ConstantApp.SupplierOrderNotFoundError);
+			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(supplierOrder), supplierOrderId));
 
 		if (supplierOrder.DocumentStatus != DocumentStatus.Created)
 			throw new InvalidOperationException(ConstantApp.DocumentStatusNotValidError);
@@ -110,7 +100,7 @@ public class SupplierOrderManager : ISupplierOrderManager
 		var supplierOrder = await GetSupplierOrderByIdAsync(supplierOrderId);
 
 		if (supplierOrder == null)
-			throw new InvalidDataException(ConstantApp.SupplierOrderNotFoundError);
+			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(supplierOrder), supplierOrderId));
 
 		if (supplierOrder.DocumentStatus != DocumentStatus.Created 
 			|| supplierOrder.DocumentStatus != DocumentStatus.Processing)
@@ -140,7 +130,7 @@ public class SupplierOrderManager : ISupplierOrderManager
 		var supplierOrder = await GetSupplierOrderByIdAsync(supplierOrderId);
 
 		if (supplierOrder == null)
-			throw new InvalidDataException(ConstantApp.SupplierOrderNotFoundError);
+			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(supplierOrder), supplierOrderId));
 
 		if (supplierOrder.DocumentStatus == DocumentStatus.Done
 			|| supplierOrder.DocumentStatus == DocumentStatus.Canceled)
@@ -149,7 +139,7 @@ public class SupplierOrderManager : ISupplierOrderManager
 		var carFile = await CarWarehouseManager.CarArrivalAsync(supplierOrder.CarFileId, VIN);
 
 		if (carFile == null)
-			throw new InvalidDataException(ConstantApp.CarNotFoundError);
+			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(carFile), supplierOrder.CarFileId));
 
 		supplierOrder = await SupplierOrderRepository.EditSupplierOrderStatusAsync(supplierOrderId, DocumentStatus.Done);
 
@@ -162,7 +152,7 @@ public class SupplierOrderManager : ISupplierOrderManager
 		var supplierOrder = await GetSupplierOrderByIdAsync(supplierOrderId);
 
 		if (supplierOrder == null)
-			throw new InvalidDataException(ConstantApp.SupplierOrderNotFoundError);
+			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(supplierOrder), supplierOrderId));
 
 		if (supplierOrder.DocumentStatus == DocumentStatus.Done
 			|| supplierOrder.DocumentStatus == DocumentStatus.Canceled)

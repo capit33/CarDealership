@@ -60,14 +60,14 @@ public class PurchaseOrderManager : IPurchaseOrderManager
 		await PurchaseOrderRepository.CreatePurchaseOrderAsync(purchaseOrder);
 	}
 
-	public async Task CanceledPurchaseOrderCarDealershipAsync(string purchaseCarDealershipOrderId)
+	public async Task CanceledPurchaseOrderCarDealershipAsync(string carDealershipOrderId)
 	{
-		Helper.InputIdValidation(purchaseCarDealershipOrderId);
+		Helper.InputIdValidation(carDealershipOrderId);
 
-		var purchaseOrder = await PurchaseOrderRepository.GetPurchaseOrderByCarDealershipIdAsync(purchaseCarDealershipOrderId);
+		var purchaseOrder = await PurchaseOrderRepository.GetPurchaseOrderByCarDealershipIdAsync(carDealershipOrderId);
 
 		if (purchaseOrder == null)
-			throw new FileNotFoundException(ConstantApp.PurchaseOrderNotFoundError);
+			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(purchaseOrder), carDealershipOrderId));
 
 		if (purchaseOrder.DocumentStatus != DocumentStatus.Created)
 			throw new InvalidOperationException(ConstantApp.DocumentStatusNotValidError);

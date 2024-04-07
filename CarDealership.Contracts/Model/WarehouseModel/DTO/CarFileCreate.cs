@@ -1,6 +1,4 @@
-﻿using CarDealership.Contracts.Interface;
-using CarDealership.Contracts.Model.CarModel;
-using System;
+﻿using CarDealership.Contracts.Model.CarModel;
 
 namespace CarDealership.Contracts.Model.WarehouseModel.DTO;
 

@@ -9,7 +9,6 @@ using CarDealership.PersonsAdministration.Interfaces.DAL;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CarDealership.PersonsAdministration.BLL;
 

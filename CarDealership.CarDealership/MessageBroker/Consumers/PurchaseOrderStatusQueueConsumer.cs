@@ -1,6 +1,6 @@
-﻿using CarDealership.Contracts.Model.QueueModel;
+﻿using CarDealership.CarDealership.Interfaces.BLL;
+using CarDealership.Contracts.Model.QueueModel;
 using CarDealership.Infrastructure.MessageBroker;
-using CarDealership.Infrastructure.MessageBroker.Interface;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
@@ -9,13 +9,17 @@ namespace CarDealership.CarDealership.MessageBroker.Consumers;
 public class PurchaseOrderStatusQueueConsumer
 	: BaseConsumer<WarehousePurchaseOrderStatusQueue, PurchaseOrderStatusQueueConsumer>
 {
-	public PurchaseOrderStatusQueueConsumer(ILogger<PurchaseOrderStatusQueueConsumer> logger) 
+	private IWarehouseOrderManager WarehouseOrderManager { get; }
+
+	public PurchaseOrderStatusQueueConsumer(ILogger<PurchaseOrderStatusQueueConsumer> logger, 
+		IWarehouseOrderManager warehouseOrderManager) 
 		: base(logger)
 	{
+		WarehouseOrderManager = warehouseOrderManager;
 	}
 
-	public override Task HandleMessageAsync(WarehousePurchaseOrderStatusQueue message)
+	public override async Task HandleMessageAsync(WarehousePurchaseOrderStatusQueue message)
 	{
-		return base.HandleMessageAsync(message);
+		await WarehouseOrderManager.WarehouseOrderStatusChangedAsync(message.CarDealershipOrderId, message.DocumentStatus);
 	}
 }

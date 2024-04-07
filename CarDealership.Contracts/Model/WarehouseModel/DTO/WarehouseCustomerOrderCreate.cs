@@ -1,5 +1,4 @@
-﻿using CarDealership.Contracts.Enum;
-using CarDealership.Contracts.Interface;
+﻿using CarDealership.Contracts.Interface;
 
 namespace CarDealership.Contracts.Model.WarehouseModel.DTO;
 

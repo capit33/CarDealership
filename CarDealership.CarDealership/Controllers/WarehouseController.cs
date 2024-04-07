@@ -28,7 +28,7 @@ public class WarehouseController : ControllerBase
 	{
 		try
 		{
-			return Ok(await WarehouseManager.GetCarInWarehouseByIdAsync(carId));
+			return Ok(await WarehouseManager.GetCarWarehouseByIdAsync(carId));
 		}
 		catch (Exception ex)
 		{

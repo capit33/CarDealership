@@ -1,0 +1,129 @@
+<mxfile host="Electron" modified="2024-04-07T16:28:34.553Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.1.0 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="3q3WlWsfn9DEZnes5FGD" version="24.1.0" type="device">
+  <diagram name="Сторінка-1" id="uAzbx7v3SxuRT0PB5ymo">
+    <mxGraphModel dx="1247" dy="727" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="dciaLe43gHEG5DpMubLM-15" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="v8V6bMzTX9_s6N6v0sCQ-1" target="dciaLe43gHEG5DpMubLM-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-16" value="ChangeStatus" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="dciaLe43gHEG5DpMubLM-15">
+          <mxGeometry x="0.0374" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="v8V6bMzTX9_s6N6v0sCQ-1" value="PurchaseOrderStatusQueueConsumer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="780" y="200" width="220" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-33" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="v8V6bMzTX9_s6N6v0sCQ-7" target="dciaLe43gHEG5DpMubLM-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-34" value="ChangeStatus" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="dciaLe43gHEG5DpMubLM-33">
+          <mxGeometry x="-0.0126" y="-2" relative="1" as="geometry">
+            <mxPoint y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="v8V6bMzTX9_s6N6v0sCQ-7" value="CustomerOrderStatusQueueConsumer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="170" y="200" width="240" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-27" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="dciaLe43gHEG5DpMubLM-1" target="dciaLe43gHEG5DpMubLM-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-28" value="Create order&lt;div&gt;Edit order&lt;br&gt;&lt;div&gt;Canceled order&lt;/div&gt;&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="dciaLe43gHEG5DpMubLM-27">
+          <mxGeometry x="0.2185" y="-2" relative="1" as="geometry">
+            <mxPoint x="-11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-29" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="dciaLe43gHEG5DpMubLM-1" target="dciaLe43gHEG5DpMubLM-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-30" value="Check employee&lt;br&gt;Customer" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="dciaLe43gHEG5DpMubLM-29">
+          <mxGeometry x="0.0136" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-31" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="dciaLe43gHEG5DpMubLM-1" target="dciaLe43gHEG5DpMubLM-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-32" value="Get car model" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="dciaLe43gHEG5DpMubLM-31">
+          <mxGeometry x="-0.2079" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-35" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="dciaLe43gHEG5DpMubLM-1" target="dciaLe43gHEG5DpMubLM-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-36" value="ChangeStatus" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="dciaLe43gHEG5DpMubLM-35">
+          <mxGeometry x="0.024" y="-3" relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-1" value="CustomerOrderManager" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="260" y="343" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="dciaLe43gHEG5DpMubLM-2" target="dciaLe43gHEG5DpMubLM-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-26" value="Get car info" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="dciaLe43gHEG5DpMubLM-25">
+          <mxGeometry x="-0.0608" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-2" value="WarehouseManager" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="521.25" y="220" width="190" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-14" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.958;entryY=0.014;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="dciaLe43gHEG5DpMubLM-3" target="dciaLe43gHEG5DpMubLM-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-19" value="Check Employee" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="dciaLe43gHEG5DpMubLM-14">
+          <mxGeometry x="-0.0411" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="dciaLe43gHEG5DpMubLM-3" target="dciaLe43gHEG5DpMubLM-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-20" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="dciaLe43gHEG5DpMubLM-3" target="dciaLe43gHEG5DpMubLM-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-21" value="Send order" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="dciaLe43gHEG5DpMubLM-20">
+          <mxGeometry x="0.0806" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-22" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="dciaLe43gHEG5DpMubLM-3" target="dciaLe43gHEG5DpMubLM-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-23" value="Canceled&lt;div&gt;Order&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="dciaLe43gHEG5DpMubLM-22">
+          <mxGeometry x="-0.0332" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-3" value="WarehouseOrderManager" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="760" y="338" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-5" value="CustomerOrderDB" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="130" y="343" width="110" height="57" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-7" value="WarehouseOrderDB" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="970" y="333" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-9" value="CustomerOrderStatusQueuePublisher" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="190" y="478" width="240" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-10" value="PurchaseOrderQueuePublisher" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="820" y="480" width="240" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-12" value="PersonsAdministrationRestClient" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="490" y="600" width="240" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-13" value="WarehouseRestClient" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="550" y="343" width="132.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="dciaLe43gHEG5DpMubLM-18" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="dciaLe43gHEG5DpMubLM-1" target="dciaLe43gHEG5DpMubLM-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

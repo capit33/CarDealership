@@ -1,4 +1,5 @@
-﻿using CarDealership.Contracts.Model.CarDealershipModel.Orders;
+﻿using CarDealership.Contracts.Enum;
+using CarDealership.Contracts.Model.CarDealershipModel.Orders;
 using CarDealership.Contracts.Model.CarDealershipModel.Orders.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace CarDealership.CarDealership.Interfaces.BLL
 		Task<WarehouseOrder> CreateWarehouseOrderAsync(WarehouseOrderCreate warehouseOrderCreate);
 		Task<WarehouseOrder> EditWarehouseOrderEmployeeIdAsync(string warehouseOrderId, string employeeId);
 		Task<WarehouseOrder> CanceledWarehouseOrderAsync(string warehouseOrderId);
+		Task WarehouseOrderStatusChangedAsync(string warehouseOrderId, DocumentStatus documentStatus);
 		Task DeleteWarehouseOrderAsync(string warehouseOrderId);
 	}
 }

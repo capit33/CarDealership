@@ -1,4 +1,3 @@
-using CarDealership.Contracts.Model.QueueModel;
 using CarDealership.Warehouse.BLL;
 using CarDealership.Warehouse.DAL;
 using CarDealership.Warehouse.Interfaces.BLL;

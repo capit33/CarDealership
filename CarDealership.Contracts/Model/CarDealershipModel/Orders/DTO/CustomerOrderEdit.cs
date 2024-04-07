@@ -3,6 +3,6 @@
 public class CustomerOrderEdit
 {
 	public string CustomerId { get; set; }
-	public string ReservedCarId { get; set; }
 	public string EmployeeId { get; set; }
+	public string ReservedCarId { get; set; }
 }

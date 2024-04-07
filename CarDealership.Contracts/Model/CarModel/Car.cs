@@ -1,7 +1,5 @@
-﻿using CarDealership.Contracts.Interface;
-using CarDealership.Contracts.Model.CarModel.Interface;
+﻿using CarDealership.Contracts.Model.CarModel.Interface;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace CarDealership.Contracts.Model.CarModel;
 

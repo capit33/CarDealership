@@ -1,6 +1,5 @@
 ﻿using CarDealership.Contracts.Enum;
 using CarDealership.Contracts.Model.WarehouseModel;
-using CarDealership.Contracts.Model.WarehouseModel.DTO;
 using CarDealership.Infrastructure;
 using CarDealership.Warehouse.Interfaces.BLL;
 using CarDealership.Warehouse.Interfaces.DAL;
