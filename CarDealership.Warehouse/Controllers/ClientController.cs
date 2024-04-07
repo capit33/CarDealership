@@ -16,18 +16,21 @@ public class ClientController : ControllerBase
 	private ILogger<CarWarehouseController> Logger { get; }
 	private ICarWarehouseManager CarWarehouseManager { get; }
 	private ICustomerOrderManager CustomerOrderManager { get; }
+	private IPurchaseOrderManager PurchaseOrderManager { get; }
 
 	public ClientController(ILogger<CarWarehouseController> logger, 
 		ICarWarehouseManager carWarehouseManager, 
-		ICustomerOrderManager customerOrderManager)
+		ICustomerOrderManager customerOrderManager, 
+		IPurchaseOrderManager purchaseOrderManager)
 	{
 		Logger = logger;
 		CarWarehouseManager = carWarehouseManager;
 		CustomerOrderManager = customerOrderManager;
+		PurchaseOrderManager = purchaseOrderManager;
 	}
 
 	[HttpGet]
-	[Route("available")]
+	[Route("car/available")]
 	public async Task<IActionResult> GetAvailableCarAsync()
 	{
 		try
@@ -42,7 +45,7 @@ public class ClientController : ControllerBase
 	}
 
 	[HttpGet]
-	[Route("{carId}")]
+	[Route("car/{carId}")]
 	public async Task<IActionResult> GetCarByIdAsync(string carId)
 	{
 		try
@@ -57,7 +60,7 @@ public class ClientController : ControllerBase
 	}
 
 	[HttpPost]
-	[Route("available/filter")]
+	[Route("car/available/filter")]
 
 	public async Task<IActionResult> GetCarsByFilterAsync([FromBody] CarFilter carFilter)
 	{
@@ -73,7 +76,7 @@ public class ClientController : ControllerBase
 	}
 
 	[HttpPost]
-	[Route("")]
+	[Route("customer-order/create")]
 	public async Task<IActionResult> CreateCustomerOrderAsync([FromBody] WarehouseCarDealershipCustomerOrderCreate warehouseCustomerOrderCreate)
 	{
 		try
@@ -88,12 +91,28 @@ public class ClientController : ControllerBase
 	}
 
 	[HttpPut]
-	[Route("car-dealership-order/{carDealershipOrderId}")]
+	[Route("customer-order/edit/{carDealershipOrderId}")]
 	public async Task<IActionResult> ChangeCustomerOrderAsync(string carDealershipOrderId, [FromBody] WarehouseCustomerOrderEdit customerOrderEdit)
 	{
 		try
 		{
 			return Ok(await CustomerOrderManager.EditCustomerOrderCarDealershipIdAsync(carDealershipOrderId, customerOrderEdit));
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, ex.Message, ex.StackTrace);
+			return BadRequest(ex.Message);
+		}
+	}
+
+	[HttpPut]
+	[Route("purchase-order/canceled/{purchaseOrderId}")]
+	public async Task<IActionResult> ChangeCustomerOrderAsync(string purchaseOrderId)
+	{
+		try
+		{
+			await PurchaseOrderManager.CanceledPurchaseOrderCarDealershipAsync(purchaseOrderId);
+			return Ok();
 		}
 		catch (Exception ex)
 		{

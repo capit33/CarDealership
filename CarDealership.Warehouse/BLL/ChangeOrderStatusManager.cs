@@ -1,8 +1,11 @@
 ﻿using CarDealership.Contracts.Enum;
 using CarDealership.Contracts.Model.WarehouseModel;
+using CarDealership.Contracts.Model.WarehouseModel.DTO;
+using CarDealership.Infrastructure;
 using CarDealership.Warehouse.Interfaces.BLL;
 using CarDealership.Warehouse.Interfaces.DAL;
 using CarDealership.Warehouse.MessageBroker.Interface;
+using System;
 using System.Threading.Tasks;
 
 namespace CarDealership.Warehouse.BLL;
@@ -27,16 +30,53 @@ public class ChangeOrderStatusManager : IChangeOrderStatusManager
 
 	public async Task CarDeleteAsync(string carId)
 	{
-		var customerOrder = await CustomerOrderRepository.GetCustomerOrderByCarIdAsync()
+		var customerOrder = await CustomerOrderRepository.GetCustomerOrderByCarIdAsync(carId);
+
+		if (customerOrder == null) 
+			return;
+
+		if (customerOrder.CarDealershipOrderId == null)
+			return;
+
+		await CustomerOrderRepository.CustomerOrderChangeStatusByIdAsync(customerOrder.Id, DocumentStatus.Canceled);
+
+		await CustomerOrderStatusQueuePublisher.SendMessage(new()
+		{
+			CarDealershipOrderId = customerOrder.CarDealershipOrderId,
+			DocumentStatus = DocumentStatus.Canceled
+		});
 	}
 
-	public Task CustomerOrderStatusChangeAsync(WarehouseCustomerOrder customerOrder, DocumentStatus processing)
+	public async Task CustomerOrderStatusChangeAsync(WarehouseCustomerOrder customerOrder, DocumentStatus processing)
 	{
-		throw new System.NotImplementedException();
+		if (customerOrder == null)
+			throw new ArgumentNullException(nameof(customerOrder));
+
+		if (customerOrder.CarDealershipOrderId == null)
+			return;
+
+		await CustomerOrderStatusQueuePublisher.SendMessage(new()
+		{
+			CarDealershipOrderId = customerOrder.CarDealershipOrderId,
+			DocumentStatus = processing
+		});
 	}
 
-	public Task SupplierOrderStatusChanged(string supplierOrderId, DocumentStatus processing)
+	public async Task SupplierOrderStatusChanged(string supplierOrderId, DocumentStatus processing)
 	{
-		throw new System.NotImplementedException();
+		Helper.InputIdValidation(supplierOrderId);
+
+		var purchaseOrder = await PurchaseOrderRepository.GetPurchaseSupplierIdAsync(supplierOrderId);
+
+		if (purchaseOrder == null || purchaseOrder.CarDealershipOrderId == null)
+			return;
+
+		await PurchaseOrderRepository.EditPurchaseOrderStatusAsync(purchaseOrder.Id, processing);
+
+		await PurchaseOrderStatusQueuePublisher.SendMessage(new()
+		{
+			CarDealershipOrderId = purchaseOrder.CarDealershipOrderId,
+			DocumentStatus = processing
+		});
 	}
 }

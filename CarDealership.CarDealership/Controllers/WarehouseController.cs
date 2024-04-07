@@ -24,7 +24,7 @@ public class WarehouseController : ControllerBase
 
 	[HttpGet]
 	[Route("{carId}")]
-	public async Task<IActionResult> GetCarInWarehouseByIdAsync(string carId)
+	public async Task<IActionResult> GetCarWarehouseByIdAsync(string carId)
 	{
 		try
 		{

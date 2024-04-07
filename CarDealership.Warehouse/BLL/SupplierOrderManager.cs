@@ -64,7 +64,7 @@ public class SupplierOrderManager : ISupplierOrderManager
 		var carFile = await CarWarehouseManager.CreateCarByOrderAsync(supplierOrderCreate.Car);
 
 		if (carFile == null || string.IsNullOrWhiteSpace(carFile.Id))
-			throw new InvalidDataException(ConstantApp.CarNotFindError);
+			throw new InvalidDataException(ConstantApp.CarNotFoundError);
 
 		var supplierOrder = new WarehouseSupplierOrder()
 		{
@@ -83,7 +83,7 @@ public class SupplierOrderManager : ISupplierOrderManager
 		});
 	}
 
-	public async Task<WarehouseSupplierOrder> SupplierOrderConfirmAsync(string supplierOrderId, SupplierOrderConfirm supplierOrderConfirm)
+	public async Task<WarehouseSupplierOrder> SupplierOrderProcessingAsync(string supplierOrderId, SupplierOrderConfirm supplierOrderConfirm)
 	{
 		if (supplierOrderConfirm  == null || string.IsNullOrWhiteSpace(supplierOrderConfirm.SupplierName))
 			throw new InvalidDataException(nameof(supplierOrderConfirm));
@@ -91,12 +91,12 @@ public class SupplierOrderManager : ISupplierOrderManager
 		var supplierOrder = await GetSupplierOrderByIdAsync(supplierOrderId);
 
 		if (supplierOrder == null)
-			throw new InvalidDataException(ConstantApp.SupplierOrderNotFindError);
+			throw new InvalidDataException(ConstantApp.SupplierOrderNotFoundError);
 
 		if (supplierOrder.DocumentStatus != DocumentStatus.Created)
 			throw new InvalidOperationException(ConstantApp.DocumentStatusNotValidError);
 
-		supplierOrder =  await SupplierOrderRepository.SupplierOrderConfirmAsync(supplierOrderId, supplierOrderConfirm);
+		supplierOrder =  await SupplierOrderRepository.EditSupplierOrderProcessingAsync(supplierOrderId, supplierOrderConfirm);
 
 		await ChangeOrderStatusManager.SupplierOrderStatusChanged(supplierOrder.Id, DocumentStatus.Processing);
 		return supplierOrder;
@@ -110,7 +110,7 @@ public class SupplierOrderManager : ISupplierOrderManager
 		var supplierOrder = await GetSupplierOrderByIdAsync(supplierOrderId);
 
 		if (supplierOrder == null)
-			throw new InvalidDataException(ConstantApp.SupplierOrderNotFindError);
+			throw new InvalidDataException(ConstantApp.SupplierOrderNotFoundError);
 
 		if (supplierOrder.DocumentStatus != DocumentStatus.Created 
 			|| supplierOrder.DocumentStatus != DocumentStatus.Processing)
@@ -140,7 +140,7 @@ public class SupplierOrderManager : ISupplierOrderManager
 		var supplierOrder = await GetSupplierOrderByIdAsync(supplierOrderId);
 
 		if (supplierOrder == null)
-			throw new InvalidDataException(ConstantApp.SupplierOrderNotFindError);
+			throw new InvalidDataException(ConstantApp.SupplierOrderNotFoundError);
 
 		if (supplierOrder.DocumentStatus == DocumentStatus.Done
 			|| supplierOrder.DocumentStatus == DocumentStatus.Canceled)
@@ -149,9 +149,9 @@ public class SupplierOrderManager : ISupplierOrderManager
 		var carFile = await CarWarehouseManager.CarArrivalAsync(supplierOrder.CarFileId, VIN);
 
 		if (carFile == null)
-			throw new InvalidDataException(ConstantApp.CarNotFindError);
+			throw new InvalidDataException(ConstantApp.CarNotFoundError);
 
-		supplierOrder = await SupplierOrderRepository.SupplierOrderStatusEditAsync(supplierOrderId, DocumentStatus.Done);
+		supplierOrder = await SupplierOrderRepository.EditSupplierOrderStatusAsync(supplierOrderId, DocumentStatus.Done);
 
 		await ChangeOrderStatusManager.SupplierOrderStatusChanged(supplierOrder.Id, DocumentStatus.Done);
 		return supplierOrder;
@@ -162,7 +162,7 @@ public class SupplierOrderManager : ISupplierOrderManager
 		var supplierOrder = await GetSupplierOrderByIdAsync(supplierOrderId);
 
 		if (supplierOrder == null)
-			throw new InvalidDataException(ConstantApp.SupplierOrderNotFindError);
+			throw new InvalidDataException(ConstantApp.SupplierOrderNotFoundError);
 
 		if (supplierOrder.DocumentStatus == DocumentStatus.Done
 			|| supplierOrder.DocumentStatus == DocumentStatus.Canceled)
@@ -170,9 +170,10 @@ public class SupplierOrderManager : ISupplierOrderManager
 
 		await CarWarehouseManager.DeleteCarAsync(supplierOrder.CarFileId);
 
-		supplierOrder = await SupplierOrderRepository.SupplierOrderStatusEditAsync(supplierOrderId, DocumentStatus.Canceled);
+		supplierOrder = await SupplierOrderRepository.EditSupplierOrderStatusAsync(supplierOrderId, DocumentStatus.Canceled);
 
 		await ChangeOrderStatusManager.SupplierOrderStatusChanged(supplierOrder.Id, DocumentStatus.Canceled);
+
 		return supplierOrder;
 	}
 

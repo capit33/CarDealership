@@ -46,7 +46,7 @@ public class CustomerOrderManager : ICustomerOrderManager
 		if (!Enum.TryParse(status, out documentStatus))
 			throw new ArgumentException(ConstantApp.DocumentStatusNotValidError);
 
-		return await CustomerOrderRepository.GetCustomerOrderByStatusAsync(documentStatus);
+		return await CustomerOrderRepository.GetCustomerOrdersByStatusAsync(documentStatus);
 	}
 
 	public async Task<WarehouseCustomerOrder> CreateCustomerOrderAsync(WarehouseCustomerOrderCreate warehouseCustomerOrderCreate)
@@ -107,7 +107,7 @@ public class CustomerOrderManager : ICustomerOrderManager
 			throw new InvalidOperationException(ConstantApp.DocumentStatusNotValidError);
 
 		if (customerOrder.ReservedCarId == null)
-			throw new ArgumentNullException(ConstantApp.CarNotFindError);
+			throw new ArgumentNullException(ConstantApp.CarNotFoundError);
 
 		await CarWarehouseManager.CarSoldOutAsync(customerOrder.ReservedCarId);
 
@@ -157,7 +157,7 @@ public class CustomerOrderManager : ICustomerOrderManager
 		var carFile = await CarWarehouseManager.GetCarByIdAsync(warehouseCustomerOrderCreate.ReservedCarId);
 
 		if (carFile == null)
-			throw new InvalidDataException(ConstantApp.CarNotFindError);
+			throw new InvalidDataException(ConstantApp.CarNotFoundError);
 
 		if (carFile.InventoryStatus != InventoryStatus.Available)
 			throw new InvalidOperationException(

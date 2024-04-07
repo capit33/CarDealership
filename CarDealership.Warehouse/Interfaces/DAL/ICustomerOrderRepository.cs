@@ -4,17 +4,16 @@ using CarDealership.Contracts.Model.WarehouseModel.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace CarDealership.Warehouse.Interfaces.DAL
+namespace CarDealership.Warehouse.Interfaces.DAL;
+
+public interface ICustomerOrderRepository
 {
-	public interface ICustomerOrderRepository
-	{
-		Task<WarehouseCustomerOrder> CreateCustomerOrderAsync(WarehouseCustomerOrder customerOrder);
-		Task<WarehouseCustomerOrder> CustomerOrderChangeStatusByIdAsync(string id, DocumentStatus canceled);
-		Task DeleteCustomerOrderByIdAsync(string customerOrderId);
-		Task<WarehouseCustomerOrder> EditCustomerOrderAsync(string id, WarehouseCustomerOrderEdit customerOrderEdit);
-		Task<WarehouseCustomerOrder> GetCustomerOrderByCarDealershipIdAsync(string carDealershipOrderId);
-		Task<WarehouseCustomerOrder> GetCustomerOrderByCarIdAsync(string carId);
-		Task<WarehouseCustomerOrder> GetCustomerOrderByIdAsync(string customerOrderId);
-		Task<List<WarehouseCustomerOrder>> GetCustomerOrderByStatusAsync(DocumentStatus documentStatus);
-	}
+	Task<WarehouseCustomerOrder> GetCustomerOrderByIdAsync(string customerOrderId);
+	Task<WarehouseCustomerOrder> GetCustomerOrderByCarIdAsync(string carId);
+	Task<WarehouseCustomerOrder> GetCustomerOrderByCarDealershipIdAsync(string carDealershipOrderId);
+	Task<List<WarehouseCustomerOrder>> GetCustomerOrdersByStatusAsync(DocumentStatus documentStatus);
+	Task<WarehouseCustomerOrder> CreateCustomerOrderAsync(WarehouseCustomerOrder customerOrder);
+	Task<WarehouseCustomerOrder> EditCustomerOrderAsync(string id, WarehouseCustomerOrderEdit customerOrderEdit);
+	Task<WarehouseCustomerOrder> CustomerOrderChangeStatusByIdAsync(string customerOrderId, DocumentStatus canceled);
+	Task DeleteCustomerOrderByIdAsync(string customerOrderId);
 }

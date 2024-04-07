@@ -11,7 +11,7 @@ public interface ISupplierOrderManager
 	Task<List<WarehouseSupplierOrder>> GetSupplierOrderByStatusAsync(string status);
 	Task<WarehouseSupplierOrder> CreateSupplierOrderAsync(WarehouseSupplierOrderCreate supplierOrder);
 	Task<WarehouseSupplierOrder> CreateSupplierOrderFromPurchaseOrderAsync(WarehousePurchaseOrder purchaseOrder);
-	Task<WarehouseSupplierOrder> SupplierOrderConfirmAsync(string supplierOrderId, SupplierOrderConfirm supplierOrderConfirm);
+	Task<WarehouseSupplierOrder> SupplierOrderProcessingAsync(string supplierOrderId, SupplierOrderConfirm supplierOrderConfirm);
 	Task<WarehouseSupplierOrder> EditSupplierOrderAsync(string supplierOrderId, WarehouseSupplierOrderEdit supplierOrder);
 	Task<WarehouseSupplierOrder> ArrivalCarAsync(string supplierOrderId, string VIN);
 	Task<WarehouseSupplierOrder> CanceledSupplierOrderAsync(string supplierOrderId);

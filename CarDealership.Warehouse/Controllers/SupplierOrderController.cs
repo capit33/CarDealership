@@ -67,12 +67,12 @@ public class SupplierOrderController : ControllerBase
 	}
 
 	[HttpPut]
-	[Route("confirm/{supplierOrderId}")]
-	public async Task<IActionResult> SupplierOrderConfirmAsync(string supplierOrderId, [FromBody] SupplierOrderConfirm supplierOrderConfirm)
+	[Route("processing/{supplierOrderId}")]
+	public async Task<IActionResult> SupplierOrderProcessingAsync(string supplierOrderId, [FromBody] SupplierOrderConfirm supplierOrderConfirm)
 	{
 		try
 		{
-			return Ok(await SupplierOrderManager.SupplierOrderConfirmAsync(supplierOrderId, supplierOrderConfirm));
+			return Ok(await SupplierOrderManager.SupplierOrderProcessingAsync(supplierOrderId, supplierOrderConfirm));
 		}
 		catch (Exception ex)
 		{

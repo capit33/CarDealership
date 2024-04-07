@@ -10,5 +10,5 @@ namespace CarDealership.Contracts.Model.QueueModel;
 public class WarehouseCustomerOrderStatusQueue : BaseQueueMessage
 {
 	public string CarDealershipOrderId { get; set; }
-	public DocumentStatus OrderStatus { get; set; }
+	public DocumentStatus DocumentStatus { get; set; }
 }

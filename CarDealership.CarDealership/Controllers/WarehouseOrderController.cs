@@ -23,7 +23,7 @@ public class WarehouseOrderController : ControllerBase
 
 	[HttpGet]
 	[Route("{warehouseOrderId}")]
-	public async Task<IActionResult> GetCustomerOrderByIdAsync(string warehouseOrderId)
+	public async Task<IActionResult> GetWarehouseOrderByIdAsync(string warehouseOrderId)
 	{
 		try
 		{
@@ -82,7 +82,7 @@ public class WarehouseOrderController : ControllerBase
 	}
 
 	[HttpPut]
-	[Route("{warehouseOrderId}/status/canceled")]
+	[Route("canceled/{warehouseOrderId}")]
 	public async Task<IActionResult> CanceledWarehouseOrderAsync(string warehouseOrderId)
 	{
 		try

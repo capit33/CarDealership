@@ -1,4 +1,5 @@
-﻿using CarDealership.Contracts.Model.CarModel;
+﻿using CarDealership.Contracts.Enum;
+using CarDealership.Contracts.Model.CarModel;
 using CarDealership.Contracts.Model.WarehouseModel;
 using CarDealership.Contracts.Model.WarehouseModel.DTO;
 using CarDealership.Contracts.Model.WarehouseModel.Filter;
@@ -15,7 +16,15 @@ public class CarWarehouseRepository : BaseMongoRepository<CarFile>, ICarWarehous
 	public CarWarehouseRepository(IConfiguration configuration) 
 		: base(configuration, "carWarehouse")
 	{
+	}
 
+	public Task<CarFile> GetCarByIdAsync(string carId)
+	{
+		throw new System.NotImplementedException();
+	}
+	public Task<CarInfo> GetCarInfoByIdAsync(string carId)
+	{
+		throw new System.NotImplementedException();
 	}
 
 	public Task<List<CarInfo>> GetAvailableCarsAsync()
@@ -33,27 +42,27 @@ public class CarWarehouseRepository : BaseMongoRepository<CarFile>, ICarWarehous
 		throw new System.NotImplementedException();
 	}
 
-	public Task<CarFile> GetCarByIdAsync(string carId)
-	{
-		throw new System.NotImplementedException();
-	}
-
-	public Task<CarInfo> GetCarInfoByIdAsync(string carId)
-	{
-		throw new System.NotImplementedException();
-	}
-
 	public Task<CarFile> CreateCarAsync(CarFile carFile)
 	{
 		throw new System.NotImplementedException();
 	}
 
-	public Task DeleteCarAsync(string carId)
+	public Task<CarFile> EditCarAsync(string carId, CarFileEdit carFileEdit)
 	{
 		throw new System.NotImplementedException();
 	}
 
-	public Task<CarFile> EditCarAsync(CarFileEdit carFileEdit)
+	public Task<CarFile> EditCarStatusArrivalAsync(string carId, string vIN)
+	{
+		throw new System.NotImplementedException();
+	}
+
+	public Task<CarFile> EditCarStatusAsync(string carId, InventoryStatus status)
+	{
+		throw new System.NotImplementedException();
+	}
+
+	public Task DeleteCarAsync(string carId)
 	{
 		throw new System.NotImplementedException();
 	}

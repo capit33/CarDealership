@@ -8,11 +8,11 @@ namespace CarDealership.Warehouse.Interfaces.DAL;
 
 public interface ISupplierOrderRepository
 {
-	Task<WarehouseSupplierOrder> CreateSupplierOrderAsync(WarehouseSupplierOrder supplierOrder);
-	Task DeleteOrderAsync(string supplierOrderId);
-	Task<WarehouseSupplierOrder> EditSupplierOrderAsync(string supplierOrderId, WarehouseSupplierOrderEdit supplierOrderEdit);
 	Task<WarehouseSupplierOrder> GetSupplierOrderByIdAsync(string supplierOrderId);
 	Task<List<WarehouseSupplierOrder>> GetSupplierOrdersByStatusAsync(DocumentStatus documentStatus);
-	Task<WarehouseSupplierOrder> SupplierOrderConfirmAsync(string supplierOrderId, SupplierOrderConfirm supplierOrderConfirm);
-	Task<WarehouseSupplierOrder> SupplierOrderStatusEditAsync(string supplierOrderId, DocumentStatus done);
+	Task<WarehouseSupplierOrder> CreateSupplierOrderAsync(WarehouseSupplierOrder supplierOrder);
+	Task<WarehouseSupplierOrder> EditSupplierOrderAsync(string supplierOrderId, WarehouseSupplierOrderEdit supplierOrderEdit);
+	Task<WarehouseSupplierOrder> EditSupplierOrderProcessingAsync(string supplierOrderId, SupplierOrderConfirm supplierOrderConfirm);
+	Task<WarehouseSupplierOrder> EditSupplierOrderStatusAsync(string supplierOrderId, DocumentStatus status);
+	Task DeleteOrderAsync(string supplierOrderId);
 }

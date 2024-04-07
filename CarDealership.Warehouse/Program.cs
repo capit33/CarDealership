@@ -5,7 +5,7 @@ using CarDealership.Warehouse.Interfaces.BLL;
 using CarDealership.Warehouse.Interfaces.DAL;
 using CarDealership.Warehouse.MessageBroker.Consumers;
 using CarDealership.Warehouse.MessageBroker.Interface;
-using CarDealership.Warehouse.MessageBroker.Publisher;
+using CarDealership.Warehouse.MessageBroker.Publishers;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;

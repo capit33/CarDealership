@@ -8,17 +8,14 @@ public class CarFileEdit : IObjectValidation
 	public string Model { get; set; }
 	public string ModelTrim { get; set; }
 	public int? Year { get; set; }
-	public string VIN { get; set; }
 
 	public bool IsObjectValid(out string errorMessage)
 	{
 		errorMessage = string.Empty;
 
 		if (string.IsNullOrWhiteSpace(Make)
-			&& string.IsNullOrWhiteSpace(Make)
 			&& string.IsNullOrWhiteSpace(Model)
 			&& string.IsNullOrWhiteSpace(ModelTrim)
-			&& string.IsNullOrWhiteSpace(VIN)
 			&& Year == null )
 		{
 			errorMessage = ConstantApp.NoFieldsToEdit;

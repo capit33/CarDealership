@@ -16,9 +16,9 @@ public static class ConstantApp
 	public const string DocumentStatusNotValidError = "The document status is not valid.";
 	public const string IdNullOrEmptyErrorMessage = "Id can not be null or empty";
 
-	public const string CarNotFindError = "The car is not find.";
-	public const string SupplierOrderNotFindError = "The Supplier Order is not find.";
-	public const string PurchaseOrderNotFindError = "The Purchase Order is not find.";
+	public const string CarNotFoundError = "The car is not found.";
+	public const string SupplierOrderNotFoundError = "The Supplier Order is not found.";
+	public const string PurchaseOrderNotFoundError = "The Purchase Order is not found.";
 
 	public const int MinProductionYear = 1900;
 	public static readonly string BadProductionYear = $"The year of production cannot be less than {1900} and greater than the current year";

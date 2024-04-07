@@ -19,9 +19,14 @@ public class WarehouseCustomerOrderCreate : IObjectValidation
 			return false;
 		}
 
-		if (string.IsNullOrWhiteSpace(CustomerFirstName))
+		if (string.IsNullOrWhiteSpace(CustomerLastName))
 		{
-			errorMessage = ConstantApp.GetMessageNullOrEmpty(nameof(CustomerFirstName));
+			errorMessage = ConstantApp.GetMessageNullOrEmpty(nameof(CustomerLastName));
+			return false;
+		}
+		if (string.IsNullOrWhiteSpace(ReservedCarId))
+		{
+			errorMessage = ConstantApp.GetMessageNullOrEmpty(nameof(ReservedCarId));
 			return false;
 		}
 

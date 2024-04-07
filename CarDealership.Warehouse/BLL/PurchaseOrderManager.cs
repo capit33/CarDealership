@@ -1,6 +1,7 @@
 ﻿using CarDealership.Contracts;
 using CarDealership.Contracts.Enum;
 using CarDealership.Contracts.Model.WarehouseModel;
+using CarDealership.Infrastructure;
 using CarDealership.Warehouse.Interfaces.BLL;
 using CarDealership.Warehouse.Interfaces.DAL;
 using System;
@@ -36,7 +37,7 @@ public class PurchaseOrderManager : IPurchaseOrderManager
 		if (!Enum.TryParse(status, out documentStatus))
 			throw new ArgumentException(ConstantApp.DocumentStatusNotValidError);
 
-		return await PurchaseOrderRepository.GetPurchaseOrderByStutusAsync(documentStatus);
+		return await PurchaseOrderRepository.GetPurchaseOrderByStatusAsync(documentStatus);
 	}
 
 	public async Task CreatePurchaseOrderAsync(WarehousePurchaseOrder purchaseOrder)
@@ -50,13 +51,28 @@ public class PurchaseOrderManager : IPurchaseOrderManager
 		if (!purchaseOrder.Car.IsObjectValid(out var errorMessage))
 			throw new InvalidDataException(errorMessage);
 
-		 var supplierOrder =  await SupplierOrderManager.CreateSupplierOrderFromPurchaseOrderAsync(purchaseOrder);
+		var supplierOrder =  await SupplierOrderManager.CreateSupplierOrderFromPurchaseOrderAsync(purchaseOrder);
 
 		purchaseOrder.SupplierOrderId = supplierOrder.Id;
 		purchaseOrder.DocumentStatus = DocumentStatus.Created;
 		purchaseOrder.CreatedDate = DateTime.UtcNow;
 
 		await PurchaseOrderRepository.CreatePurchaseOrderAsync(purchaseOrder);
+	}
+
+	public async Task CanceledPurchaseOrderCarDealershipAsync(string purchaseCarDealershipOrderId)
+	{
+		Helper.InputIdValidation(purchaseCarDealershipOrderId);
+
+		var purchaseOrder = await PurchaseOrderRepository.GetPurchaseOrderByCarDealershipIdAsync(purchaseCarDealershipOrderId);
+
+		if (purchaseOrder == null)
+			throw new FileNotFoundException(ConstantApp.PurchaseOrderNotFoundError);
+
+		if (purchaseOrder.DocumentStatus != DocumentStatus.Created)
+			throw new InvalidOperationException(ConstantApp.DocumentStatusNotValidError);
+		
+		await PurchaseOrderRepository.EditPurchaseOrderStatusAsync(purchaseOrder.Id, DocumentStatus.Canceled);
 	}
 
 	public async Task DeletePurchaseOrderAsync(string purchaseOrderId)

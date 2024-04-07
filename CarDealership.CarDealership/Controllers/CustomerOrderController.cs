@@ -82,22 +82,7 @@ public class CustomerOrderController : ControllerBase
 	}
 
 	[HttpPut]
-	[Route("{customerOrderId}/employee/{employeeId}")]
-	public async Task<IActionResult> EditCustomerOrderEmployeeIdAsync(string customerOrderId, string employeeId)
-	{
-		try
-		{
-			return Ok(await CustomerOrderManager.EditCustomerOrderEmployeeIdAsync(customerOrderId, employeeId));
-		}
-		catch (Exception ex)
-		{
-			Logger.LogError(ex, ex.Message, ex.StackTrace);
-			return BadRequest(ex.Message);
-		}
-	}
-
-	[HttpPut]
-	[Route("{customerOrderId}/status/canceled")]
+	[Route("canceled/{customerOrderId}")]
 	public async Task<IActionResult> CanceledCustomerOrderAsync(string customerOrderId)
 	{
 		try

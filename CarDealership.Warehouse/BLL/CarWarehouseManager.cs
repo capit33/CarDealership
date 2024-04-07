@@ -91,13 +91,13 @@ public class CarWarehouseManager : ICarWarehouseManager
 		var carFile = await GetCarByIdAsync(carId);
 
 		if (carFile == null)
-			throw new InvalidDataException(ConstantApp.CarNotFindError);
+			throw new InvalidDataException(ConstantApp.CarNotFoundError);
 
 		if (!(carFile.InventoryStatus == InventoryStatus.Created
 			|| carFile.InventoryStatus == InventoryStatus.Ordered))
 			throw new InvalidOperationException(ConstantApp.CarStatusNotValidError);
 
-		return await CarWarehouseRepository.EditCarArrivalAsync(carId, VIN);
+		return await CarWarehouseRepository.EditCarStatusArrivalAsync(carId, VIN);
 	}
 
 	public async Task<CarFile> CarSoldOutAsync(string carId)
@@ -121,7 +121,7 @@ public class CarWarehouseManager : ICarWarehouseManager
 		var carFile = await GetCarByIdAsync(carId);
 
 		if (carFile == null)
-			throw new InvalidDataException(ConstantApp.CarNotFindError);
+			throw new InvalidDataException(ConstantApp.CarNotFoundError);
 
 		if (carFile.InventoryStatus != InventoryStatus.Available)
 			throw new InvalidOperationException(ConstantApp.CarNotAvailableError);
@@ -136,7 +136,7 @@ public class CarWarehouseManager : ICarWarehouseManager
 		var carFile = await GetCarByIdAsync(carId);
 
 		if (carFile == null)
-			throw new InvalidDataException(ConstantApp.CarNotFindError);
+			throw new InvalidDataException(ConstantApp.CarNotFoundError);
 
 		if (carFile.InventoryStatus != InventoryStatus.Reserved)
 			throw new InvalidOperationException(ConstantApp.CarNotReservationError);
@@ -152,7 +152,7 @@ public class CarWarehouseManager : ICarWarehouseManager
 		var carFile = await GetCarByIdAsync(carId);
 
 		if (carFile == null)
-			throw new InvalidDataException(ConstantApp.CarNotFindError);
+			throw new InvalidDataException(ConstantApp.CarNotFoundError);
 
 		if (carFile.InventoryStatus == InventoryStatus.SoldOut
 			|| carFile.InventoryStatus == InventoryStatus.Reserved)

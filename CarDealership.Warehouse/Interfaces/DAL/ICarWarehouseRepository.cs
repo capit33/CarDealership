@@ -17,7 +17,7 @@ public interface ICarWarehouseRepository
 	Task<long> GetAvailableCarsCountByFilterAsync(CarFilter carFilter);
 	Task<CarFile> CreateCarAsync(CarFile carFile);
 	Task<CarFile> EditCarAsync(string carId, CarFileEdit carFileEdit);
-	Task<CarFile> EditCarArrivalAsync(string carId, string vIN);
+	Task<CarFile> EditCarStatusArrivalAsync(string carId, string vIN);
 	Task<CarFile> EditCarStatusAsync(string carId, InventoryStatus status);
 	Task DeleteCarAsync(string carId);
 }
