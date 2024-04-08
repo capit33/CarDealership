@@ -1,5 +1,4 @@
-﻿using CarDealership.Contracts.Model.CarDealershipModel.Orders;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using TestService.Interface;
 
 namespace TestService.BLL;

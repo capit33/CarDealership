@@ -1,10 +1,10 @@
 ﻿using CarDealership.Contracts.Model.CarDealershipModel.Filter;
-using CarDealership.Contracts.Model.CarDealershipModel.Person.Customer.DTO;
 using CarDealership.Contracts.Model.CarDealershipModel.Person.Customer;
+using CarDealership.Contracts.Model.CarDealershipModel.Person.Customer.DTO;
+using CarDealership.Contracts.Model.CarDealershipModel.Person.Employee;
+using CarDealership.Contracts.Model.CarDealershipModel.Person.Employee.DTO;
 using CarDealership.Contracts.Model.Filters;
 using System.Threading.Tasks;
-using CarDealership.Contracts.Model.CarDealershipModel.Person.Employee.DTO;
-using CarDealership.Contracts.Model.CarDealershipModel.Person.Employee;
 
 namespace TestService.Interface;
 

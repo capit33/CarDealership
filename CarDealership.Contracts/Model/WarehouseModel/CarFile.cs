@@ -1,6 +1,8 @@
 ﻿using CarDealership.Contracts.Enum;
 using CarDealership.Contracts.Model.CarModel;
 using CarDealership.Contracts.Model.CarModel.Interface;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
 
 namespace CarDealership.Contracts.Model.WarehouseModel;
 
@@ -8,6 +10,7 @@ public class CarFile : Car
 {
 	public string Id { get; set; }
 	public string VIN { get; set; }
+	[BsonRepresentation(BsonType.String)]
 	public InventoryStatus InventoryStatus { get; set; }
 
 	public CarFile()

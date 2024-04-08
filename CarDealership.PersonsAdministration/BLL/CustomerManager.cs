@@ -73,10 +73,9 @@ public class CustomerManager : ICustomerManager
 		if (string.IsNullOrWhiteSpace(customerId))
 			throw new ArgumentNullException(nameof(customerId));
 
-		if (customerEdit.IsObjectValid(out string errorMessage))
+		if (!customerEdit.IsObjectValid(out string errorMessage))
 			throw new InvalidDataException(errorMessage);
 
-		Helper.InputIdValidation(customerId, customerId);
 		Helper.InputDataValidation(customerEdit);
 
 		return await CustomerRepository.EditCustomerAsync(customerId, customerEdit);

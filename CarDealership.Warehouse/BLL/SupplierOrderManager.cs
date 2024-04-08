@@ -90,6 +90,8 @@ public class SupplierOrderManager : ISupplierOrderManager
 		supplierOrder = await SupplierOrderRepository.EditSupplierOrderAsync(supplierOrderId, 
 			supplierOrderConfirm, DocumentStatus.Processing);
 
+
+
 		await ChangeOrderStatusManager.SupplierOrderStatusChanged(supplierOrder.Id, DocumentStatus.Processing);
 		return supplierOrder;
 	}

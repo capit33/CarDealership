@@ -46,7 +46,6 @@ public class ClientController : ControllerBase
 
 	[HttpPost]
 	[Route("car/filter")]
-
 	public async Task<IActionResult> GetCarsByFilterAsync([FromBody] CarFilter carFilter)
 	{
 		try
@@ -77,7 +76,7 @@ public class ClientController : ControllerBase
 
 	[HttpPatch]
 	[Route("customer-order/edit/{carDealershipOrderId}")]
-	public async Task<IActionResult> ChangeCustomerOrderAsync(string carDealershipOrderId, [FromBody] WarehouseCustomerOrderEdit customerOrderEdit)
+	public async Task<IActionResult> EditCustomerOrderAsync(string carDealershipOrderId, [FromBody] WarehouseCustomerOrderEdit customerOrderEdit)
 	{
 		try
 		{

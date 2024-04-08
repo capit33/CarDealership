@@ -1,12 +1,8 @@
-﻿using CarDealership.Contracts.Enum;
-using CarDealership.Contracts.Model.CarDealershipModel.Orders;
+﻿using CarDealership.Contracts.Model.CarDealershipModel.Orders;
 using CarDealership.Contracts.Model.CarDealershipModel.Orders.DTO;
-using CarDealership.Contracts.Model.CarDealershipModel.Person.Customer;
-using CarDealership.Contracts.Model.CarDealershipModel.Person.Employee;
 using CarDealership.Contracts.Model.CarModel;
 using CarDealership.Contracts.Model.DTO;
 using CarDealership.Contracts.Model.Filters;
-using CarDealership.Contracts.Model.WarehouseModel;
 using CarDealership.Contracts.Model.WarehouseModel.Filter;
 using CarDealership.Infrastructure.RestClient;
 using Microsoft.Extensions.Configuration;

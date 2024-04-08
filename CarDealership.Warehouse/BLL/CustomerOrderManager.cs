@@ -1,6 +1,5 @@
 ﻿using CarDealership.Contracts;
 using CarDealership.Contracts.Enum;
-using CarDealership.Contracts.Model.CarDealershipModel.Orders;
 using CarDealership.Contracts.Model.WarehouseModel;
 using CarDealership.Contracts.Model.WarehouseModel.DTO;
 using CarDealership.Infrastructure;
@@ -66,6 +65,7 @@ public class CustomerOrderManager : ICustomerOrderManager
 		var customerOrder = await CreateCustomerOrderModel(warehouseCustomerOrderCreate);
 		customerOrder.CarDealershipOrderId = warehouseCustomerOrderCreate.CarDealershipOrderId;
 
+		customerOrder = await CustomerOrderRepository.CreateCustomerOrderAsync(customerOrder);
 		await CarWarehouseManager.CarReservationAsync(customerOrder.ReservedCarId);
 
 		return new WarehouseCustomerOrderInfo(customerOrder);
@@ -125,6 +125,8 @@ public class CustomerOrderManager : ICustomerOrderManager
 
 		Helper.NullValidation(customerOrder, customerOrderId);
 
+		customerOrder = await CanceledCustomerOrderAsync(customerOrder);
+
 		await ChangeOrderStatusManager.CustomerOrderStatusChangeAsync(customerOrder, DocumentStatus.Canceled);
 		return customerOrder;
 	}
@@ -132,9 +134,14 @@ public class CustomerOrderManager : ICustomerOrderManager
 	public async Task CanceledCustomerOrderByCarDealershipIdAsync(string carDealershipOrderId)
 	{
 		Helper.InputIdValidation(carDealershipOrderId);
-		var customerOrder = await CustomerOrderRepository.GetCustomerOrderByCarDealershipIdAsync(carDealershipOrderId);
 
+		var customerOrder = await CustomerOrderRepository.GetCustomerOrderByCarDealershipIdAsync(carDealershipOrderId);
 		Helper.NullValidation(customerOrder, carDealershipOrderId);
+
+		if (customerOrder.DocumentStatus == DocumentStatus.Done
+			|| customerOrder.DocumentStatus == DocumentStatus.Canceled)
+			throw new InvalidOperationException(ConstantApp.DocumentStatusNotValidError);
+
 		await CanceledCustomerOrderAsync(customerOrder);
 	}
 

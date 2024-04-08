@@ -1,7 +1,5 @@
 ﻿using CarDealership.Contracts;
 using CarDealership.Contracts.Interface;
-using CarDealership.Contracts.Model.CarModel;
-using CarDealership.Contracts.Model.WarehouseModel;
 using System;
 using System.IO;
 
@@ -25,7 +23,7 @@ public static class Helper
 		if (objectValidation == null)
 			throw new ArgumentNullException(ConstantApp.ObjectNullErrorMessage);
 
-		if (objectValidation.IsObjectValid(out string errorMessage))
+		if (!objectValidation.IsObjectValid(out string errorMessage))
 			throw new InvalidDataException(errorMessage);
 
 		return true;

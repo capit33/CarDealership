@@ -45,8 +45,8 @@ public class PurchaseOrderManager : IPurchaseOrderManager
 		if (purchaseOrder == null)
 			throw new ArgumentNullException(nameof(purchaseOrder));
 
-		if (string.IsNullOrEmpty(purchaseOrder.SupplierOrderId))
-			throw new ArgumentNullException(nameof(purchaseOrder.SupplierOrderId));
+		if (string.IsNullOrEmpty(purchaseOrder.CarDealershipOrderId))
+			throw new ArgumentNullException(nameof(purchaseOrder.CarDealershipOrderId));
 
 		if (!purchaseOrder.Car.IsObjectValid(out var errorMessage))
 			throw new InvalidDataException(errorMessage);

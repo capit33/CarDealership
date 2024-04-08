@@ -76,7 +76,7 @@ public class CustomerOrderManager : ICustomerOrderManager
 			EmployeeId = employee.Id,
 			ReservedCarId = carInfo.CarId,
 			Car = (Car)carInfo,
-			DocumentStatus = DocumentStatus.Created,
+			DocumentStatus = DocumentStatus.Processing,
 			CreatedDate = DateTime.UtcNow
 		};
 

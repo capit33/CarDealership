@@ -13,6 +13,13 @@ public class SearchController : ControllerBase
 	private ILogger<SearchController> Logger { get; }
 	private ISearchManager SearchManager { get; }
 
+	public SearchController(ILogger<SearchController> logger, 
+		ISearchManager searchManager)
+	{
+		Logger = logger;
+		SearchManager = searchManager;
+	}
+
 	[HttpGet]
 	[Route("customer/{customerId}")]
 	public async Task<IActionResult> FindCustomerIdAsync(string customerId)

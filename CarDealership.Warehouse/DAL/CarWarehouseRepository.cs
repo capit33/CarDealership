@@ -81,7 +81,9 @@ public class CarWarehouseRepository : BaseMongoRepository<CarFile>, ICarWarehous
 	public Task<CarFile> EditCarStatusArrivalAsync(string carId, string vIN)
 	{
 		var filter = Builders<CarFile>.Filter.Where(c => c.Id == carId);
-		var update = Builders<CarFile>.Update.Set(c => c.VIN, vIN);
+		var update = Builders<CarFile>.Update.Set(c => c.VIN, vIN)
+			.Set(c => c.InventoryStatus, InventoryStatus.Available);
+
 		return Collection.FindOneAndUpdateAsync(filter, update, _defaultUpdateOptions);
 	}
 
@@ -99,7 +101,17 @@ public class CarWarehouseRepository : BaseMongoRepository<CarFile>, ICarWarehous
 
 	private ProjectionDefinition<CarFile, CarInfo> CarInfoProjectionDefinition()
 	{
-		return Builders<CarFile>.Projection.Expression(c => new CarInfo(c.Id, c.InventoryStatus, c));
+		//return Builders<CarFile>.Projection.Expression(c => new CarInfo(c.Id, c.InventoryStatus, c));
+
+		return Builders<CarFile>.Projection.Expression(c => new CarInfo()
+		{
+			CarId = c.Id,
+			InventoryStatus = c.InventoryStatus,
+			Make = c.Make,
+			Model = c.Model,
+			ModelTrim = c.ModelTrim,
+			Year = c.Year
+		});
 	}
 
 	private FilterDefinition<CarFile> FilterDefinition(CarFilter carFilter, InventoryStatus? inventoryStatus = null)

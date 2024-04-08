@@ -12,7 +12,7 @@ public interface ISupplierOrderManager
 	Task<WarehouseSupplierOrder> CreateSupplierOrderAsync(WarehouseSupplierOrderCreate supplierOrder);
 	Task<WarehouseSupplierOrder> CreateSupplierOrderFromPurchaseOrderAsync(WarehousePurchaseOrder purchaseOrder);
 	Task<WarehouseSupplierOrder> SupplierOrderProcessingAsync(string supplierOrderId, SupplierOrderConfirm supplierOrderConfirm);
-	Task<WarehouseSupplierOrder> EditSupplierOrderAsync(string supplierOrderId, WarehouseSupplierOrderEdit supplierOrder);
+	Task<WarehouseSupplierOrder> EditSupplierOrderAsync(string supplierOrderId, WarehouseSupplierOrderEdit supplierOrderEdit);
 	Task<WarehouseSupplierOrder> ArrivalCarAsync(string supplierOrderId, string VIN);
 	Task<WarehouseSupplierOrder> CanceledSupplierOrderAsync(string supplierOrderId);
 	Task DeleteSupplierOrderAsync(string supplierOrderId);
