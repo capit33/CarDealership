@@ -1,6 +1,5 @@
 ﻿using CarDealership.Contracts;
 using CarDealership.Contracts.Enum;
-using CarDealership.Contracts.Model.CarModel;
 using CarDealership.Contracts.Model.WarehouseModel;
 using CarDealership.Contracts.Model.WarehouseModel.DTO;
 using CarDealership.Infrastructure;
@@ -19,8 +18,8 @@ public class CustomerOrderManager : ICustomerOrderManager
 	private IChangeOrderStatusManager ChangeOrderStatusManager { get; }
 	private ICustomerOrderRepository CustomerOrderRepository { get; }
 
-	public CustomerOrderManager(ICarWarehouseManager carWarehouseManager, 
-		IChangeOrderStatusManager changeOrderStatusManager, 
+	public CustomerOrderManager(ICarWarehouseManager carWarehouseManager,
+		IChangeOrderStatusManager changeOrderStatusManager,
 		ICustomerOrderRepository customerOrderRepository)
 	{
 		CarWarehouseManager = carWarehouseManager;
@@ -169,7 +168,7 @@ public class CustomerOrderManager : ICustomerOrderManager
 		};
 	}
 
-	private async Task<WarehouseCustomerOrder> EditCustomerOrderAsync(WarehouseCustomerOrder customerOrder, 
+	private async Task<WarehouseCustomerOrder> EditCustomerOrderAsync(WarehouseCustomerOrder customerOrder,
 		WarehouseCustomerOrderEdit customerOrderEdit)
 	{
 		if (customerOrder == null)
@@ -179,7 +178,7 @@ public class CustomerOrderManager : ICustomerOrderManager
 			|| customerOrder.DocumentStatus == DocumentStatus.Canceled)
 			throw new InvalidOperationException(ConstantApp.DocumentStatusNotValidError);
 
-		if (customerOrderEdit.ReservedCarId != null 
+		if (customerOrderEdit.ReservedCarId != null
 			&& customerOrder.ReservedCarId != customerOrderEdit.ReservedCarId)
 		{
 			await CarWarehouseManager.CarReservationAsync(customerOrderEdit.ReservedCarId);

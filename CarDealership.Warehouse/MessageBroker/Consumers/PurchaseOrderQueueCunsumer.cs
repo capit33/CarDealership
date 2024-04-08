@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace CarDealership.Warehouse.MessageBroker.Consumers;
 
-public class PurchaseOrderQueueConsumer 
+public class PurchaseOrderQueueConsumer
 	: BaseConsumer<CarDealershipPurchaseOrderQueue, PurchaseOrderQueueConsumer>
 {
 	private IPurchaseOrderManager PurchaseOrderManager { get; }
-	
-	public PurchaseOrderQueueConsumer(ILogger<PurchaseOrderQueueConsumer> logger, 
-		IPurchaseOrderManager purchaseOrderManager) 
+
+	public PurchaseOrderQueueConsumer(ILogger<PurchaseOrderQueueConsumer> logger,
+		IPurchaseOrderManager purchaseOrderManager)
 		: base(logger)
 	{
 		PurchaseOrderManager = purchaseOrderManager;

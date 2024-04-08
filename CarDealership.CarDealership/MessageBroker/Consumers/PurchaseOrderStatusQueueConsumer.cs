@@ -11,8 +11,8 @@ public class PurchaseOrderStatusQueueConsumer
 {
 	private IWarehouseOrderManager WarehouseOrderManager { get; }
 
-	public PurchaseOrderStatusQueueConsumer(ILogger<PurchaseOrderStatusQueueConsumer> logger, 
-		IWarehouseOrderManager warehouseOrderManager) 
+	public PurchaseOrderStatusQueueConsumer(ILogger<PurchaseOrderStatusQueueConsumer> logger,
+		IWarehouseOrderManager warehouseOrderManager)
 		: base(logger)
 	{
 		WarehouseOrderManager = warehouseOrderManager;

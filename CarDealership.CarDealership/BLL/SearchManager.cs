@@ -1,11 +1,8 @@
 ﻿using CarDealership.CarDealership.Interfaces.BLL;
 using CarDealership.CarDealership.Interfaces.DAL;
 using CarDealership.Contracts.Enum;
-using CarDealership.Contracts.Model.CarDealershipModel.Orders;
 using CarDealership.Contracts.Model.DTO;
 using CarDealership.Infrastructure;
-using MongoDB.Driver.Core.Connections;
-using SharpCompress.Common;
 using System.Threading.Tasks;
 
 namespace CarDealership.CarDealership.BLL;
@@ -28,7 +25,7 @@ public class SearchManager : ISearchManager
 		if (customerOrder != null)
 			return new SearchResult() { Result = SearchResultEnum.Found };
 
-		return new SearchResult(){Result = SearchResultEnum.NotFound};
+		return new SearchResult() { Result = SearchResultEnum.NotFound };
 	}
 
 	public async Task<SearchResult> FindEmployeeIdAsync(string employeeOrderId)
@@ -40,7 +37,7 @@ public class SearchManager : ISearchManager
 			return new SearchResult() { Result = SearchResultEnum.Found };
 
 		var warehouseOrder = await WarehouseOrderRepository.GetFirstEntryEmployeeIdAsync(employeeOrderId);
-		if(warehouseOrder != null)
+		if (warehouseOrder != null)
 			return new SearchResult() { Result = SearchResultEnum.Found };
 
 		return new SearchResult() { Result = SearchResultEnum.NotFound };

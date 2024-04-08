@@ -10,7 +10,7 @@ namespace CarDealership.Warehouse.DAL;
 
 public class PurchaseOrderRepository : BaseMongoRepository<WarehousePurchaseOrder>, IPurchaseOrderRepository
 {
-	public PurchaseOrderRepository(IConfiguration configuration) 
+	public PurchaseOrderRepository(IConfiguration configuration)
 		: base(configuration, "warehousePurchaseOrder")
 	{
 	}

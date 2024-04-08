@@ -2,19 +2,15 @@
 using CarDealership.CarDealership.Interfaces.DAL;
 using CarDealership.CarDealership.Interfaces.MessageBroker;
 using CarDealership.CarDealership.Interfaces.RestClients;
-using CarDealership.Contracts.Enum;
 using CarDealership.Contracts;
+using CarDealership.Contracts.Enum;
 using CarDealership.Contracts.Model.CarDealershipModel.Orders;
 using CarDealership.Contracts.Model.CarDealershipModel.Orders.DTO;
 using CarDealership.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.IO;
-using Amazon.Runtime.Internal.Auth;
-using Amazon.Runtime;
-using CarDealership.Contracts.Model.QueueModel;
-using CarDealership.Contracts.Model.CarDealershipModel.Person.Employee;
+using System.Threading.Tasks;
 
 namespace CarDealership.CarDealership.BLL;
 
@@ -25,9 +21,9 @@ public class WarehouseOrderManager : IWarehouseOrderManager
 	private IPersonsAdministrationRestClient PersonsAdministrationRestClient { get; }
 	private IPurchaseOrderQueuePublisher PurchaseOrderQueuePublisher { get; }
 
-	public WarehouseOrderManager(IWarehouseOrderRepository warehouseOrderRepository, 
-		IWarehouseRestClient warehouseRestClient, 
-		IPersonsAdministrationRestClient personsAdministrationRestClient, 
+	public WarehouseOrderManager(IWarehouseOrderRepository warehouseOrderRepository,
+		IWarehouseRestClient warehouseRestClient,
+		IPersonsAdministrationRestClient personsAdministrationRestClient,
 		IPurchaseOrderQueuePublisher purchaseOrderQueuePublisher)
 	{
 		WarehouseOrderRepository = warehouseOrderRepository;
@@ -100,7 +96,7 @@ public class WarehouseOrderManager : IWarehouseOrderManager
 		if (warehouseOrder.EmployeeId == employeeId)
 			return warehouseOrder;
 
-        var employee = await PersonsAdministrationRestClient.GetEmployeeByIdAsync(employeeId);
+		var employee = await PersonsAdministrationRestClient.GetEmployeeByIdAsync(employeeId);
 
 		if (employee == null)
 			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(employee), employeeId));
@@ -146,7 +142,7 @@ public class WarehouseOrderManager : IWarehouseOrderManager
 
 		if (warehouseOrder.DocumentStatus != DocumentStatus.Canceled)
 			throw new InvalidOperationException(
-					ConstantApp.GetErrorMessageDeleteNotPossible(nameof(warehouseOrder.DocumentStatus), 
+					ConstantApp.GetErrorMessageDeleteNotPossible(nameof(warehouseOrder.DocumentStatus),
 					warehouseOrder.DocumentStatus.ToString()));
 
 		await WarehouseOrderRepository.DeleteWarehouseOrderAsync(warehouseOrderId);

@@ -18,8 +18,8 @@ public class SupplierOrderManager : ISupplierOrderManager
 	private IChangeOrderStatusManager ChangeOrderStatusManager { get; }
 	private ISupplierOrderRepository SupplierOrderRepository { get; }
 
-	public SupplierOrderManager(ICarWarehouseManager carWarehouseManager, 
-		IChangeOrderStatusManager changeOrderStatusManager, 
+	public SupplierOrderManager(ICarWarehouseManager carWarehouseManager,
+		IChangeOrderStatusManager changeOrderStatusManager,
 		ISupplierOrderRepository supplierOrderRepository)
 	{
 		CarWarehouseManager = carWarehouseManager;
@@ -75,7 +75,7 @@ public class SupplierOrderManager : ISupplierOrderManager
 
 	public async Task<WarehouseSupplierOrder> SupplierOrderProcessingAsync(string supplierOrderId, SupplierOrderConfirm supplierOrderConfirm)
 	{
-		if (supplierOrderConfirm  == null || string.IsNullOrWhiteSpace(supplierOrderConfirm.SupplierName))
+		if (supplierOrderConfirm == null || string.IsNullOrWhiteSpace(supplierOrderConfirm.SupplierName))
 			throw new InvalidDataException(nameof(supplierOrderConfirm));
 
 		var supplierOrder = await GetSupplierOrderByIdAsync(supplierOrderId);
@@ -86,7 +86,7 @@ public class SupplierOrderManager : ISupplierOrderManager
 		if (supplierOrder.DocumentStatus != DocumentStatus.Created)
 			throw new InvalidOperationException(ConstantApp.DocumentStatusNotValidError);
 
-		supplierOrder =  await SupplierOrderRepository.EditSupplierOrderProcessingAsync(supplierOrderId, supplierOrderConfirm);
+		supplierOrder = await SupplierOrderRepository.EditSupplierOrderProcessingAsync(supplierOrderId, supplierOrderConfirm);
 
 		await ChangeOrderStatusManager.SupplierOrderStatusChanged(supplierOrder.Id, DocumentStatus.Processing);
 		return supplierOrder;
@@ -102,7 +102,7 @@ public class SupplierOrderManager : ISupplierOrderManager
 		if (supplierOrder == null)
 			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(supplierOrder), supplierOrderId));
 
-		if (supplierOrder.DocumentStatus != DocumentStatus.Created 
+		if (supplierOrder.DocumentStatus != DocumentStatus.Created
 			|| supplierOrder.DocumentStatus != DocumentStatus.Processing)
 			throw new InvalidOperationException(
 					ConstantApp.GetErrorMessageEditNotPossible(nameof(supplierOrder.DocumentStatus), supplierOrder.DocumentStatus.ToString()));

@@ -10,8 +10,8 @@ public class PurchaseOrderQueuePublisher
 	: BasePublisher<CarDealershipPurchaseOrderQueue, PurchaseOrderQueuePublisher>,
 	IPurchaseOrderQueuePublisher
 {
-	public PurchaseOrderQueuePublisher(IPublishEndpoint publishEndpoint, 
-		ILogger<PurchaseOrderQueuePublisher> logger) 
+	public PurchaseOrderQueuePublisher(IPublishEndpoint publishEndpoint,
+		ILogger<PurchaseOrderQueuePublisher> logger)
 		: base(publishEndpoint, logger)
 	{
 	}

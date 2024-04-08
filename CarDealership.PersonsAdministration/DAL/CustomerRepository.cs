@@ -14,7 +14,8 @@ namespace CarDealership.PersonsAdministration.DAL;
 
 public class CustomerRepository : BaseMongoRepository<Customer>, ICustomerRepository
 {
-	public CustomerRepository(IConfiguration configuration) : base(configuration, "customers")
+	public CustomerRepository(IConfiguration configuration) 
+		: base(configuration, "customers")
 	{
 	}
 
@@ -52,23 +53,16 @@ public class CustomerRepository : BaseMongoRepository<Customer>, ICustomerReposi
 	{
 		var filter = Builders<Customer>.Filter.Where(c => c.Id == customerId);
 		var update = UpdateDefinition(customerEdit);
-		var options = new FindOneAndUpdateOptions<Customer, Customer>()
-		{
-			ReturnDocument = ReturnDocument.After
-		};
-		return await Collection.FindOneAndUpdateAsync(filter, update, options);
+
+		return await Collection.FindOneAndUpdateAsync(filter, update, defaultUpdateOptions);
 	}
 
 	public async Task<Customer> ChangeCustomerRemoveStatusAsync(string customerId, bool removeStatus)
 	{
 		var filter = Builders<Customer>.Filter.Where(e => e.Id == customerId);
 		var update = Builders<Customer>.Update.Set(e => e.IsRemove, removeStatus);
-		var options = new FindOneAndUpdateOptions<Customer, Customer>()
-		{
-			ReturnDocument = ReturnDocument.After
-		};
-
-		return await Collection.FindOneAndUpdateAsync(filter, update, options);
+		
+		return await Collection.FindOneAndUpdateAsync(filter, update, defaultUpdateOptions);
 	}
 
 	public async Task DeleteCustomerAsync(string customerId)

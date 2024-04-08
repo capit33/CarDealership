@@ -20,7 +20,7 @@ public class CustomerManager : ICustomerManager
 	public ICustomerRepository CustomerRepository { get; }
 	public ICarDealershipRestClient CarDealershipRestClient { get; }
 
-	public CustomerManager(ICustomerRepository customerRepository, 
+	public CustomerManager(ICustomerRepository customerRepository,
 		ICarDealershipRestClient carDealershipRestClient)
 	{
 		CustomerRepository = customerRepository;

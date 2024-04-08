@@ -17,9 +17,9 @@ public class ClientController : ControllerBase
 	private ICustomerOrderManager CustomerOrderManager { get; }
 	private IPurchaseOrderManager PurchaseOrderManager { get; }
 
-	public ClientController(ILogger<CarWarehouseController> logger, 
-		ICarWarehouseManager carWarehouseManager, 
-		ICustomerOrderManager customerOrderManager, 
+	public ClientController(ILogger<CarWarehouseController> logger,
+		ICarWarehouseManager carWarehouseManager,
+		ICustomerOrderManager customerOrderManager,
 		IPurchaseOrderManager purchaseOrderManager)
 	{
 		Logger = logger;

@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace CarDealership.Warehouse.MessageBroker.Consumers;
 
-public class CustomerOrderStatusQueueConsumer 
+public class CustomerOrderStatusQueueConsumer
 	: BaseConsumer<CarDealershipCustomerOrderStatusQueue, CustomerOrderStatusQueueConsumer>
 {
 	private ICustomerOrderManager CustomerOrderManager { get; set; }
 
-	public CustomerOrderStatusQueueConsumer(ILogger<CustomerOrderStatusQueueConsumer> logger, 
-		ICustomerOrderManager customerOrderManager) 
+	public CustomerOrderStatusQueueConsumer(ILogger<CustomerOrderStatusQueueConsumer> logger,
+		ICustomerOrderManager customerOrderManager)
 		: base(logger)
 	{
 		CustomerOrderManager = customerOrderManager;

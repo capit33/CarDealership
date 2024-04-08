@@ -1,5 +1,4 @@
 ﻿using CarDealership.Contracts.Interface;
-using System;
 
 namespace CarDealership.Contracts.Model.CarDealershipModel.Orders.DTO;
 

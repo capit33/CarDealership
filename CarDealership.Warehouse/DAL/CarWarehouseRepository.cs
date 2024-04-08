@@ -13,7 +13,7 @@ namespace CarDealership.Warehouse.DAL;
 
 public class CarWarehouseRepository : BaseMongoRepository<CarFile>, ICarWarehouseRepository
 {
-	public CarWarehouseRepository(IConfiguration configuration) 
+	public CarWarehouseRepository(IConfiguration configuration)
 		: base(configuration, "carWarehouse")
 	{
 	}

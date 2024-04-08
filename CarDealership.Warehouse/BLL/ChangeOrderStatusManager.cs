@@ -13,7 +13,7 @@ public class ChangeOrderStatusManager : IChangeOrderStatusManager
 {
 	private IPurchaseOrderRepository PurchaseOrderRepository { get; }
 	private ICustomerOrderRepository CustomerOrderRepository { get; }
-	private IPurchaseOrderStatusQueuePublisher PurchaseOrderStatusQueuePublisher { get;}
+	private IPurchaseOrderStatusQueuePublisher PurchaseOrderStatusQueuePublisher { get; }
 	private ICustomerOrderStatusQueuePublisher CustomerOrderStatusQueuePublisher { get; }
 
 	public ChangeOrderStatusManager(IPurchaseOrderRepository purchaseOrderRepository,
@@ -31,7 +31,7 @@ public class ChangeOrderStatusManager : IChangeOrderStatusManager
 	{
 		var customerOrder = await CustomerOrderRepository.GetCustomerOrderByCarIdAsync(carId);
 
-		if (customerOrder == null) 
+		if (customerOrder == null)
 			return;
 
 		if (customerOrder.CarDealershipOrderId == null)

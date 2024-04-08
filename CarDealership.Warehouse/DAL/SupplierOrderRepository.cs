@@ -11,7 +11,7 @@ namespace CarDealership.Warehouse.DAL;
 
 public class SupplierOrderRepository : BaseMongoRepository<WarehouseSupplierOrder>, ISupplierOrderRepository
 {
-	public SupplierOrderRepository(IConfiguration configuration) 
+	public SupplierOrderRepository(IConfiguration configuration)
 		: base(configuration, "warehouseSupplierOrder")
 	{
 	}
@@ -46,7 +46,7 @@ public class SupplierOrderRepository : BaseMongoRepository<WarehouseSupplierOrde
 		throw new System.NotImplementedException();
 	}
 
-	
+
 	public Task DeleteOrderAsync(string supplierOrderId)
 	{
 		throw new System.NotImplementedException();

@@ -10,7 +10,7 @@ namespace CarDealership.CarDealership.RestClients;
 
 public class PersonsAdministrationRestClient : BaseRestClient, IPersonsAdministrationRestClient
 {
-	public PersonsAdministrationRestClient(IConfiguration configuration, IHttpClientFactory httpClientFactory) 
+	public PersonsAdministrationRestClient(IConfiguration configuration, IHttpClientFactory httpClientFactory)
 		: base(configuration, "PersonsAdministration", httpClientFactory)
 	{
 	}

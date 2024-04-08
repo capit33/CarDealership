@@ -7,12 +7,12 @@ using Microsoft.Extensions.Logging;
 namespace CarDealership.Warehouse.MessageBroker.Publishers;
 
 public class PurchaseOrderStatusQueuePublisher
-    : BasePublisher<WarehousePurchaseOrderStatusQueue, PurchaseOrderStatusQueuePublisher>,
-    IPurchaseOrderStatusQueuePublisher
+	: BasePublisher<WarehousePurchaseOrderStatusQueue, PurchaseOrderStatusQueuePublisher>,
+	IPurchaseOrderStatusQueuePublisher
 {
-    public PurchaseOrderStatusQueuePublisher(IPublishEndpoint publishEndpoint,
-        ILogger<PurchaseOrderStatusQueuePublisher> logger)
-        : base(publishEndpoint, logger)
-    {
-    }
+	public PurchaseOrderStatusQueuePublisher(IPublishEndpoint publishEndpoint,
+		ILogger<PurchaseOrderStatusQueuePublisher> logger)
+		: base(publishEndpoint, logger)
+	{
+	}
 }

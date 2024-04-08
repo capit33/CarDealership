@@ -11,7 +11,7 @@ namespace CarDealership.Warehouse.DAL;
 
 public class CustomerOrderRepository : BaseMongoRepository<WarehouseCustomerOrder>, ICustomerOrderRepository
 {
-	public CustomerOrderRepository(IConfiguration configuration) 
+	public CustomerOrderRepository(IConfiguration configuration)
 		: base(configuration, "warehouseCustomerOrder")
 	{
 	}

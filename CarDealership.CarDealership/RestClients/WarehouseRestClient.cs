@@ -1,8 +1,6 @@
 ﻿using CarDealership.CarDealership.Interfaces.RestClients;
-using CarDealership.Contracts.Model.CarDealershipModel.Orders;
 using CarDealership.Contracts.Model.CarModel;
 using CarDealership.Contracts.Model.Filters;
-using CarDealership.Contracts.Model.WarehouseModel;
 using CarDealership.Contracts.Model.WarehouseModel.DTO;
 using CarDealership.Contracts.Model.WarehouseModel.Filter;
 using CarDealership.Infrastructure.RestClient;
@@ -14,7 +12,7 @@ namespace CarDealership.CarDealership.RestClients;
 
 public class WarehouseRestClient : BaseRestClient, IWarehouseRestClient
 {
-	public WarehouseRestClient(IConfiguration configuration, IHttpClientFactory httpClientFactory) 
+	public WarehouseRestClient(IConfiguration configuration, IHttpClientFactory httpClientFactory)
 		: base(configuration, "Warehouse", httpClientFactory)
 	{
 	}
@@ -36,7 +34,7 @@ public class WarehouseRestClient : BaseRestClient, IWarehouseRestClient
 			($"client/customer-order/create", carDealershipCustomerOrderCreate);
 	}
 
-	public async Task<WarehouseCustomerOrderInfo> EditCustomerOrderAsync(string customerOrderId, 
+	public async Task<WarehouseCustomerOrderInfo> EditCustomerOrderAsync(string customerOrderId,
 		WarehouseCustomerOrderEdit warehouseCustomerOrderEdit)
 	{
 		return await PatchAsync<WarehouseCustomerOrderInfo, WarehouseCustomerOrderEdit>

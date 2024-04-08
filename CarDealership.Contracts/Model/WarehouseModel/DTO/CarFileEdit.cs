@@ -16,7 +16,7 @@ public class CarFileEdit : IObjectValidation
 		if (string.IsNullOrWhiteSpace(Make)
 			&& string.IsNullOrWhiteSpace(Model)
 			&& string.IsNullOrWhiteSpace(ModelTrim)
-			&& Year == null )
+			&& Year == null)
 		{
 			errorMessage = ConstantApp.NoFieldsToEdit;
 			return false;

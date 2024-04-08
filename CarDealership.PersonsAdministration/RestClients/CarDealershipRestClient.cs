@@ -1,5 +1,4 @@
-﻿using CarDealership.Contracts.Model.CarDealershipModel.Person.Customer;
-using CarDealership.Contracts.Model.DTO;
+﻿using CarDealership.Contracts.Model.DTO;
 using CarDealership.Infrastructure.RestClient;
 using CarDealership.PersonsAdministration.Interfaces.RestClients;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +9,7 @@ namespace CarDealership.PersonsAdministration.RestClients;
 
 public class CarDealershipRestClient : BaseRestClient, ICarDealershipRestClient
 {
-	public CarDealershipRestClient(IConfiguration configuration, IHttpClientFactory httpClientFactory) 
+	public CarDealershipRestClient(IConfiguration configuration, IHttpClientFactory httpClientFactory)
 		: base(configuration, "CarDealership", httpClientFactory)
 	{
 

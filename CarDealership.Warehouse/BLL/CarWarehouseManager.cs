@@ -21,7 +21,7 @@ public class CarWarehouseManager : ICarWarehouseManager
 	private IChangeOrderStatusManager ChangeOrderStatusManager { get; }
 	private ICarWarehouseRepository CarWarehouseRepository { get; }
 
-	public CarWarehouseManager(ICarWarehouseRepository carWarehouseRepository, 
+	public CarWarehouseManager(ICarWarehouseRepository carWarehouseRepository,
 		IChangeOrderStatusManager changeOrderStatusManager)
 	{
 		ChangeOrderStatusManager = changeOrderStatusManager;

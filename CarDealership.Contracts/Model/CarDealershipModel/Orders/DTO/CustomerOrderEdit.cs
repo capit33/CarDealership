@@ -1,6 +1,4 @@
 ﻿using CarDealership.Contracts.Interface;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace CarDealership.Contracts.Model.CarDealershipModel.Orders.DTO;
 

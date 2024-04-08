@@ -3,9 +3,14 @@ using MongoDB.Driver;
 
 namespace CarDealership.Infrastructure.Repository;
 
-public class BaseMongoRepository<T>
+public class BaseMongoRepository<T> where T : class
 {
 	protected IMongoCollection<T> Collection { get; }
+
+	protected readonly FindOneAndUpdateOptions<T, T> defaultUpdateOptions = new FindOneAndUpdateOptions<T, T>()
+	{
+		ReturnDocument = ReturnDocument.After
+	};
 
 	public BaseMongoRepository(IConfiguration configuration, string collectionName)
 	{
@@ -15,5 +20,10 @@ public class BaseMongoRepository<T>
 
 		var client = new MongoClient(settings);
 		Collection = client.GetDatabase(mongoUrl.DatabaseName).GetCollection<T>(collectionName);
+	}
+
+	protected FindOneAndUpdateOptions<T, T> DefaultUpdateOptions()
+	{
+		return
 	}
 }

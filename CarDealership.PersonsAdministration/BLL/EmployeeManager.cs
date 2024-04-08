@@ -1,6 +1,5 @@
 ﻿using CarDealership.Contracts;
 using CarDealership.Contracts.Enum;
-using CarDealership.Contracts.Model.CarDealershipModel.Person.Customer;
 using CarDealership.Contracts.Model.CarDealershipModel.Person.Employee;
 using CarDealership.Contracts.Model.CarDealershipModel.Person.Employee.DTO;
 using CarDealership.Contracts.Model.DTO;
@@ -8,7 +7,6 @@ using CarDealership.Contracts.Model.Filters;
 using CarDealership.PersonsAdministration.Interfaces.BLL;
 using CarDealership.PersonsAdministration.Interfaces.DAL;
 using CarDealership.PersonsAdministration.Interfaces.RestClients;
-using CarDealership.PersonsAdministration.RestClients;
 using System;
 using System.IO;
 using System.Threading.Tasks;

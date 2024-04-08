@@ -16,7 +16,7 @@ public class PurchaseOrderManager : IPurchaseOrderManager
 	private IPurchaseOrderRepository PurchaseOrderRepository { get; }
 	private ISupplierOrderManager SupplierOrderManager { get; }
 
-	public PurchaseOrderManager(IPurchaseOrderRepository purchaseOrderRepository, 
+	public PurchaseOrderManager(IPurchaseOrderRepository purchaseOrderRepository,
 		ISupplierOrderManager supplierOrderManager)
 	{
 		PurchaseOrderRepository = purchaseOrderRepository;
@@ -51,7 +51,7 @@ public class PurchaseOrderManager : IPurchaseOrderManager
 		if (!purchaseOrder.Car.IsObjectValid(out var errorMessage))
 			throw new InvalidDataException(errorMessage);
 
-		var supplierOrder =  await SupplierOrderManager.CreateSupplierOrderFromPurchaseOrderAsync(purchaseOrder);
+		var supplierOrder = await SupplierOrderManager.CreateSupplierOrderFromPurchaseOrderAsync(purchaseOrder);
 
 		purchaseOrder.SupplierOrderId = supplierOrder.Id;
 		purchaseOrder.DocumentStatus = DocumentStatus.Created;
@@ -71,7 +71,7 @@ public class PurchaseOrderManager : IPurchaseOrderManager
 
 		if (purchaseOrder.DocumentStatus != DocumentStatus.Created)
 			throw new InvalidOperationException(ConstantApp.DocumentStatusNotValidError);
-		
+
 		await PurchaseOrderRepository.EditPurchaseOrderStatusAsync(purchaseOrder.Id, DocumentStatus.Canceled);
 	}
 

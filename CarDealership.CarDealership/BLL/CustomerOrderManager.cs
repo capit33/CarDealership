@@ -1,21 +1,18 @@
-﻿using CarDealership.CarDealership.DAL;
-using CarDealership.CarDealership.Interfaces.BLL;
+﻿using CarDealership.CarDealership.Interfaces.BLL;
 using CarDealership.CarDealership.Interfaces.DAL;
 using CarDealership.CarDealership.Interfaces.MessageBroker;
 using CarDealership.CarDealership.Interfaces.RestClients;
-using CarDealership.Contracts.Enum;
 using CarDealership.Contracts;
+using CarDealership.Contracts.Enum;
 using CarDealership.Contracts.Model.CarDealershipModel.Orders;
 using CarDealership.Contracts.Model.CarDealershipModel.Orders.DTO;
+using CarDealership.Contracts.Model.CarModel;
+using CarDealership.Contracts.Model.WarehouseModel.DTO;
 using CarDealership.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using CarDealership.Contracts.Model.CarModel;
-using CarDealership.Contracts.Model.WarehouseModel.DTO;
 using System.IO;
-using System.Net.WebSockets;
-using CarDealership.Contracts.Model.QueueModel;
+using System.Threading.Tasks;
 
 namespace CarDealership.CarDealership.BLL;
 
@@ -27,8 +24,8 @@ public class CustomerOrderManager : ICustomerOrderManager
 	private IWarehouseRestClient WarehouseRestClient { get; }
 	private ICustomerOrderStatusQueuePublisher CustomerOrderStatusQueuePublisher { get; }
 
-	public CustomerOrderManager(IWarehouseManager warehouseManager, 
-		ICustomerOrderRepository customerOrderRepository, 
+	public CustomerOrderManager(IWarehouseManager warehouseManager,
+		ICustomerOrderRepository customerOrderRepository,
 		IPersonsAdministrationRestClient personsAdministrationRestClient,
 		IWarehouseRestClient warehouseRestClient,
 		ICustomerOrderStatusQueuePublisher customerOrderStatusQueuePublisher)
@@ -78,7 +75,7 @@ public class CustomerOrderManager : ICustomerOrderManager
 			CustomerId = customer.Id,
 			EmployeeId = employee.Id,
 			ReservedCarId = carInfo.CarId,
-			Car = (Car) carInfo,
+			Car = (Car)carInfo,
 			DocumentStatus = DocumentStatus.Created,
 			CreatedDate = DateTime.UtcNow
 		};
@@ -101,7 +98,7 @@ public class CustomerOrderManager : ICustomerOrderManager
 		}
 		catch
 		{
-			await CustomerOrderRepository.DeleteCustomerOrderByIdAsync(customerOrder.Id);
+			await CustomerOrderRepository.DeleteCustomerOrderAsync(customerOrder.Id);
 			throw;
 		}
 
@@ -133,7 +130,7 @@ public class CustomerOrderManager : ICustomerOrderManager
 		if (customerOrderEdit.CustomerId == customerOrder.CustomerId)
 			customerOrderEdit.CustomerId = null;
 
-		if (customerOrderEdit.CustomerId != null )
+		if (customerOrderEdit.CustomerId != null)
 		{
 			var customer = await PersonsAdministrationRestClient.GetCustomerByIdAsync(customerOrderEdit.CustomerId);
 			if (customer == null)

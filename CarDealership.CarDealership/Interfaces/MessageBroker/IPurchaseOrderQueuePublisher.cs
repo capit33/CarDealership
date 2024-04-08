@@ -4,6 +4,6 @@ using CarDealership.Infrastructure.MessageBroker.Interface;
 namespace CarDealership.CarDealership.Interfaces.MessageBroker;
 
 public interface IPurchaseOrderQueuePublisher
-    : IBasePublisher<CarDealershipPurchaseOrderQueue>
+	: IBasePublisher<CarDealershipPurchaseOrderQueue>
 {
 }

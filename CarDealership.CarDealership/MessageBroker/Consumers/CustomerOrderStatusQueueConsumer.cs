@@ -12,7 +12,7 @@ public class CustomerOrderStatusQueueConsumer
 	private ICustomerOrderManager CustomerOrderManager { get; }
 
 	public CustomerOrderStatusQueueConsumer(ILogger<CustomerOrderStatusQueueConsumer> logger,
-		ICustomerOrderManager customerOrderManager) 
+		ICustomerOrderManager customerOrderManager)
 		: base(logger)
 	{
 		CustomerOrderManager = customerOrderManager;

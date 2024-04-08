@@ -16,7 +16,7 @@ public static class ConstantApp
 	public const int MinProductionYear = 1900;
 	public static readonly string BadProductionYear = $"The year of production cannot be less than {1900} and greater than the current year";
 	public const string SuffixNullOrEmptyErrorMessage = "can not be null or empty";
-	
+
 
 	public static string GetMessageNullOrEmpty(string prefix)
 	{
@@ -26,7 +26,7 @@ public static class ConstantApp
 	public static string GetNotFoundErrorMessage(string objectName, string objectValue)
 	{
 		return $"{objectName} value: {objectValue} is not found.";
-		
+
 	}
 
 	public static string GetErrorMessageDeleteNotPossible(string propertyName, string propertyValue)
