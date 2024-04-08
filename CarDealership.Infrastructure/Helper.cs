@@ -1,5 +1,7 @@
 ﻿using CarDealership.Contracts;
 using CarDealership.Contracts.Interface;
+using CarDealership.Contracts.Model.CarModel;
+using CarDealership.Contracts.Model.WarehouseModel;
 using System;
 using System.IO;
 
@@ -27,5 +29,11 @@ public static class Helper
 			throw new InvalidDataException(errorMessage);
 
 		return true;
+	}
+
+	public static void NullValidation(object obj, string value)
+	{
+		if (obj == null)
+			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage("Object", value));
 	}
 }

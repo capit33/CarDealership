@@ -1,17 +1,14 @@
 
-using CarDealership.PersonsAdministration.BLL;
-using CarDealership.PersonsAdministration.DAL;
-using CarDealership.PersonsAdministration.Interfaces.BLL;
-using CarDealership.PersonsAdministration.Interfaces.DAL;
-using CarDealership.PersonsAdministration.Interfaces.RestClients;
-using CarDealership.PersonsAdministration.RestClients;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using TestService.BLL;
+using TestService.Interface;
+using TestService.RestClient;
 
-namespace CarDealership.PersonsAdministration;
+namespace TestService;
 
 public class Program
 {
@@ -19,14 +16,13 @@ public class Program
 	{
 		var builder = WebApplication.CreateBuilder(args);
 
+		RegisterManagers(builder.Services);
+		RegisterRegisterRestClient(builder.Services);
+		ConfigureServices(builder.Services, builder.Configuration);
+
 		builder.Services.AddControllers();
 		builder.Services.AddEndpointsApiExplorer();
 		builder.Services.AddSwaggerGen();
-
-		RegisterManagers(builder.Services);
-		RegisterRepositories(builder.Services);
-		RegisterRegisterRestClient(builder.Services);
-		ConfigureServices(builder.Services, builder.Configuration);
 
 		var app = builder.Build();
 
@@ -40,6 +36,7 @@ public class Program
 
 		app.UseAuthorization();
 
+
 		app.MapControllers();
 
 		app.Run();
@@ -48,19 +45,15 @@ public class Program
 	private static void RegisterRegisterRestClient(IServiceCollection services)
 	{
 		services.AddHttpClient();
+		services.AddScoped<IPersonsAdministrationRestClient, PersonsAdministrationRestClient>();
+		services.AddScoped<IWarehouseRestClient, WarehouseRestClient>();
 		services.AddScoped<ICarDealershipRestClient, CarDealershipRestClient>();
+
 	}
 
 	private static void RegisterManagers(IServiceCollection services)
 	{
-		services.AddScoped<ICustomerManager, CustomerManager>();
-		services.AddScoped<IEmployeeManager, EmployeeManager>();
-	}
-
-	private static void RegisterRepositories(IServiceCollection services)
-	{
-		services.AddScoped<ICustomerRepository, CustomerRepository>();
-		services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+		services.AddScoped<ITestManager, TestManager>();
 	}
 
 	public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)

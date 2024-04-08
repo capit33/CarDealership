@@ -37,7 +37,7 @@ public class CustomerOrderController : ControllerBase
 	}
 
 	[HttpGet]
-	[Route("/status/{status}")]
+	[Route("status/{status}")]
 	public async Task<IActionResult> GetCustomerOrderByStatusAsync(string status)
 	{
 		try
