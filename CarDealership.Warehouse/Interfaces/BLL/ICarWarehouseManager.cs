@@ -14,7 +14,7 @@ public interface ICarWarehouseManager
 	Task<CarFile> GetCarByIdAsync(string carId);
 	Task<CarInfo> GetCarInfoByIdAsync(string carId);
 	Task<List<CarInfo>> GetAvailableCarsAsync();
-	Task<PageItems<CarInfo>> GetCarsByFilterAsync(CarFilter carFilter);
+	Task<PageItems<CarInfo>> GetCarsByFilterAsync(CarFilter carFilter, string inventoryStatus = null);
 	Task<CarFile> CreateCarAsync(ICar carFileCreate);
 	Task<CarFile> CreateCarByOrderAsync(ICar carFileCreate);
 	Task<CarFile> CarArrivalAsync(string carId, string VIN);

@@ -1,6 +1,8 @@
-﻿namespace CarDealership.Contracts.Model.WarehouseModel.DTO;
+﻿using CarDealership.Contracts.Model.WarehouseModel.Interface;
 
-public class SupplierOrderConfirm
+namespace CarDealership.Contracts.Model.WarehouseModel.DTO;
+
+public class SupplierOrderConfirm : ISupplierOrderEdit
 {
 	public string SupplierName { get; set; }
 }

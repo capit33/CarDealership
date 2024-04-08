@@ -58,7 +58,6 @@ public class Program
 	{
 		services.AddScoped<ICustomerManager, CustomerManager>();
 		services.AddScoped<IEmployeeManager, EmployeeManager>();
-		services.AddScoped<IObjectUsageManager, ObjectUsageManager>();
 	}
 
 	private static void RegisterRepositories(IServiceCollection services)

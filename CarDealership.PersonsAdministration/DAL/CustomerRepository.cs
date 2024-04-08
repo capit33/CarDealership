@@ -54,7 +54,7 @@ public class CustomerRepository : BaseMongoRepository<Customer>, ICustomerReposi
 		var filter = Builders<Customer>.Filter.Where(c => c.Id == customerId);
 		var update = UpdateDefinition(customerEdit);
 
-		return await Collection.FindOneAndUpdateAsync(filter, update, defaultUpdateOptions);
+		return await Collection.FindOneAndUpdateAsync(filter, update, _defaultUpdateOptions);
 	}
 
 	public async Task<Customer> ChangeCustomerRemoveStatusAsync(string customerId, bool removeStatus)
@@ -62,7 +62,7 @@ public class CustomerRepository : BaseMongoRepository<Customer>, ICustomerReposi
 		var filter = Builders<Customer>.Filter.Where(e => e.Id == customerId);
 		var update = Builders<Customer>.Update.Set(e => e.IsRemove, removeStatus);
 		
-		return await Collection.FindOneAndUpdateAsync(filter, update, defaultUpdateOptions);
+		return await Collection.FindOneAndUpdateAsync(filter, update, _defaultUpdateOptions);
 	}
 
 	public async Task DeleteCustomerAsync(string customerId)

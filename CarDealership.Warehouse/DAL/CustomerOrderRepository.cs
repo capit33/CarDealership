@@ -4,6 +4,8 @@ using CarDealership.Contracts.Model.WarehouseModel.DTO;
 using CarDealership.Infrastructure.Repository;
 using CarDealership.Warehouse.Interfaces.DAL;
 using Microsoft.Extensions.Configuration;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,41 +20,68 @@ public class CustomerOrderRepository : BaseMongoRepository<WarehouseCustomerOrde
 
 	public Task<WarehouseCustomerOrder> GetCustomerOrderByIdAsync(string customerOrderId)
 	{
-		throw new System.NotImplementedException();
+		return Collection.Find(c => c.Id == customerOrderId).SingleOrDefaultAsync();
 	}
 
-	public Task<WarehouseCustomerOrder> GetCustomerOrderByCarIdAsync(string carId)
+	public async Task<WarehouseCustomerOrder> GetCustomerOrderByCarIdAsync(string carId)
 	{
-		throw new System.NotImplementedException();
+		return await Collection.Find(c => c.ReservedCarId == carId).SingleOrDefaultAsync();
 	}
 
-	public Task<WarehouseCustomerOrder> GetCustomerOrderByCarDealershipIdAsync(string carDealershipOrderId)
+	public async Task<WarehouseCustomerOrder> GetCustomerOrderByCarDealershipIdAsync(string carDealershipOrderId)
 	{
-		throw new System.NotImplementedException();
+		return await Collection.Find(c => c.CarDealershipOrderId == carDealershipOrderId).SingleOrDefaultAsync();
 	}
 
-	public Task<List<WarehouseCustomerOrder>> GetCustomerOrdersByStatusAsync(DocumentStatus documentStatus)
+	public async Task<List<WarehouseCustomerOrder>> GetCustomerOrdersByStatusAsync(DocumentStatus documentStatus)
 	{
-		throw new System.NotImplementedException();
+		return await Collection.Find(c => c.DocumentStatus == documentStatus)
+			.Sort(Builders<WarehouseCustomerOrder>.Sort.Ascending(c => c.CreatedDate))
+			.ToListAsync();
 	}
 
-	public Task<WarehouseCustomerOrder> CreateCustomerOrderAsync(WarehouseCustomerOrder customerOrder)
+	public async Task<WarehouseCustomerOrder> CreateCustomerOrderAsync(WarehouseCustomerOrder customerOrder)
 	{
-		throw new System.NotImplementedException();
+		customerOrder.Id = ObjectId.GenerateNewId().ToString();
+
+		await Collection.InsertOneAsync(customerOrder);
+		return await GetCustomerOrderByIdAsync(customerOrder.Id);
 	}
 
-	public Task<WarehouseCustomerOrder> EditCustomerOrderAsync(string id, WarehouseCustomerOrderEdit customerOrderEdit)
+	public async Task<WarehouseCustomerOrder> EditCustomerOrderAsync(string customerOrderId, WarehouseCustomerOrderEdit customerOrderEdit)
 	{
-		throw new System.NotImplementedException();
+		var filter = Builders<WarehouseCustomerOrder>.Filter.Where(c => c.Id == customerOrderId);
+		var update = UpdateDefinition(customerOrderEdit);
+
+		return await Collection.FindOneAndUpdateAsync(filter, update, _defaultUpdateOptions);
 	}
 
-	public Task<WarehouseCustomerOrder> CustomerOrderChangeStatusByIdAsync(string customerOrderId, DocumentStatus canceled)
+	public async Task<WarehouseCustomerOrder> CustomerOrderChangeStatusByIdAsync(string customerOrderId, DocumentStatus documentStatus)
 	{
-		throw new System.NotImplementedException();
+		var filter = Builders<WarehouseCustomerOrder>.Filter.Where(c => c.Id == customerOrderId);
+		var update = Builders<WarehouseCustomerOrder>.Update.Set(c => c.DocumentStatus, documentStatus);
+
+		return await Collection.FindOneAndUpdateAsync(filter, update, _defaultUpdateOptions);
 	}
 
-	public Task DeleteCustomerOrderByIdAsync(string customerOrderId)
+	public async Task DeleteCustomerOrderByIdAsync(string customerOrderId)
 	{
-		throw new System.NotImplementedException();
+		await Collection.DeleteOneAsync(c => c.Id == customerOrderId);
+	}
+
+	private UpdateDefinition<WarehouseCustomerOrder> UpdateDefinition(WarehouseCustomerOrderEdit customerOrderEdit)
+	{
+		var updates = new List<UpdateDefinition<WarehouseCustomerOrder>>();
+
+		if (customerOrderEdit.CustomerFirstName != null)
+			updates.Add(Builders<WarehouseCustomerOrder>.Update.Set(c => c.CustomerFirstName, customerOrderEdit.CustomerFirstName));
+
+		if (customerOrderEdit.CustomerLastName != null)
+			updates.Add(Builders<WarehouseCustomerOrder>.Update.Set(c => c.CustomerLastName, customerOrderEdit.CustomerLastName));
+
+		if (customerOrderEdit.ReservedCarId != null)
+			updates.Add(Builders<WarehouseCustomerOrder>.Update.Set(c => c.ReservedCarId, customerOrderEdit.ReservedCarId));
+
+		return Builders<WarehouseCustomerOrder>.Update.Combine(updates);
 	}
 }

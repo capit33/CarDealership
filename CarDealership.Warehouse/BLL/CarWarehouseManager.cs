@@ -49,24 +49,33 @@ public class CarWarehouseManager : ICarWarehouseManager
 		return await CarWarehouseRepository.GetCarInfoByIdAsync(carId);
 	}
 
-	public async Task<PageItems<CarInfo>> GetCarsByFilterAsync(CarFilter carFilter)
+	public async Task<PageItems<CarInfo>> GetCarsByFilterAsync(CarFilter carFilter, string inventoryStatus = null)
 	{
 		if (carFilter == null)
 			throw new ArgumentNullException(nameof(carFilter));
 
-		var isValid = carFilter.IsPaginationValid(out string message);
-		if (!isValid)
+		if (!carFilter.IsPaginationValid(out string message))
 			throw new InvalidDataException(message);
+
+		InventoryStatus? inventoryStatusEnum = null;
+
+		if (inventoryStatus != null)
+		{
+			InventoryStatus tempStatus;
+			if (!Enum.TryParse(inventoryStatus, true, out tempStatus))
+				throw new ArgumentException(ConstantApp.DocumentStatusNotValidError);
+			inventoryStatusEnum = tempStatus;
+		}
 
 		var pageItems = new PageItems<CarInfo>(carFilter);
 
-		var carCount = await CarWarehouseRepository.GetAvailableCarsCountByFilterAsync(carFilter);
+		var carCount = await CarWarehouseRepository.GetCarsCountByFilterAsync(carFilter, inventoryStatusEnum);
 
 		if (carCount == 0)
 			return pageItems;
 
 		pageItems.SetPageCount((int)carCount);
-		pageItems.Items = await CarWarehouseRepository.GetAvailableCarsByFilterAsync(carFilter);
+		pageItems.Items = await CarWarehouseRepository.GetCarsByFilterAsync(carFilter, inventoryStatusEnum);
 
 		return pageItems;
 	}

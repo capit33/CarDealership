@@ -53,24 +53,16 @@ public class EmployeeRepository : BaseMongoRepository<Employee>, IEmployeeReposi
 	{
 		var filter = Builders<Employee>.Filter.Where(e => e.Id == employeeId);
 		var update = UpdateDefinition(employeeEdit);
-		var options = new FindOneAndUpdateOptions<Employee, Employee>()
-		{
-			ReturnDocument = ReturnDocument.After
-		};
-
-		return await Collection.FindOneAndUpdateAsync(filter, update, options);
+		
+		return await Collection.FindOneAndUpdateAsync(filter, update, _defaultUpdateOptions);
 	}
 
 	public async Task<Employee> ChangeEmployeeRemoveStatusAsync(string employeeId, bool removeStatus)
 	{
 		var filter = Builders<Employee>.Filter.Where(e => e.Id == employeeId);
 		var update = Builders<Employee>.Update.Set(e => e.IsRemove, removeStatus);
-		var options = new FindOneAndUpdateOptions<Employee, Employee>()
-		{
-			ReturnDocument = ReturnDocument.After
-		};
-
-		return await Collection.FindOneAndUpdateAsync(filter, update, options);
+		
+		return await Collection.FindOneAndUpdateAsync(filter, update, _defaultUpdateOptions);
 	}
 
 	public async Task DeleteEmployeeAsync(string employeeId)

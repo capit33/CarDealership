@@ -7,11 +7,11 @@ namespace CarDealership.Warehouse.Interfaces.DAL;
 
 public interface IPurchaseOrderRepository
 {
-	Task<WarehousePurchaseOrder> GetPurchaseSupplierIdAsync(string supplierOrderId);
-	Task<WarehousePurchaseOrder> GetPurchaseOrderByCarDealershipIdAsync(string purchaseOrderId);
 	Task<WarehousePurchaseOrder> GetPurchaseOrderByIdAsync(string purchaseOrderId);
 	Task<List<WarehousePurchaseOrder>> GetPurchaseOrderByStatusAsync(DocumentStatus documentStatus);
-	Task CreatePurchaseOrderAsync(WarehousePurchaseOrder purchaseOrder);
-	Task EditPurchaseOrderStatusAsync(string purchaseOrderId, DocumentStatus status);
+	Task<WarehousePurchaseOrder> GetPurchaseOrderBySupplierOrderIdAsync(string supplierOrderId);
+	Task<WarehousePurchaseOrder> GetPurchaseOrderByCarDealershipIdAsync(string carDealershipOrderId);
+	Task<WarehousePurchaseOrder> CreatePurchaseOrderAsync(WarehousePurchaseOrder purchaseOrder);
+	Task<WarehousePurchaseOrder> EditPurchaseOrderStatusAsync(string purchaseOrderId, DocumentStatus documentStatus);
 	Task DeletePurchaseOrderAsync(string purchaseOrderId);
 }

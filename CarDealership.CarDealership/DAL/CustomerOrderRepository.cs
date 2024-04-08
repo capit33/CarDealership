@@ -25,7 +25,9 @@ public class CustomerOrderRepository : BaseMongoRepository<CustomerOrder>, ICust
 
 	public async Task<List<CustomerOrder>> GetCustomerOrdersByStatusAsync(DocumentStatus documentStatus)
 	{
-		return await Collection.Find(c => c.DocumentStatus == documentStatus).ToListAsync();
+		return await Collection.Find(c => c.DocumentStatus == documentStatus)
+			.Sort(Builders<CustomerOrder>.Sort.Ascending(w => w.CreatedDate))
+			.ToListAsync();
 	}
 
 	public async Task<CustomerOrder> GetFirstEntryCustomerIdAsync(string customerId)
@@ -37,9 +39,11 @@ public class CustomerOrderRepository : BaseMongoRepository<CustomerOrder>, ICust
 	{
 		return await Collection.Find(c => c.EmployeeId == employeeId).FirstOrDefaultAsync();
 	}
+
 	public async Task<CustomerOrder> CreateCustomerOrderAsync(CustomerOrder customerOrder)
 	{
 		customerOrder.Id = ObjectId.GenerateNewId().ToString();
+
 		await Collection.InsertOneAsync(customerOrder);
 		return await GetCustomerOrderByIdAsync(customerOrder.Id);
 	}
@@ -49,7 +53,7 @@ public class CustomerOrderRepository : BaseMongoRepository<CustomerOrder>, ICust
 		var filter = Builders<CustomerOrder>.Filter.Where(c => c.Id == customerOrderId);
 		var update = UpdateDefinition(customerOrderEdit);
 		
-		return await Collection.FindOneAndUpdateAsync(filter, update, defaultUpdateOptions);
+		return await Collection.FindOneAndUpdateAsync(filter, update, _defaultUpdateOptions);
 	}
 
 	public async Task<CustomerOrder> EditCustomerOrderStatusAsync(string customerOrderId, DocumentStatus documentStatus)
@@ -57,7 +61,7 @@ public class CustomerOrderRepository : BaseMongoRepository<CustomerOrder>, ICust
 		var filter = Builders<CustomerOrder>.Filter.Where(c => c.Id == customerOrderId);
 		var update = Builders<CustomerOrder>.Update.Set(c => c.DocumentStatus, documentStatus);
 		
-		return await Collection.FindOneAndUpdateAsync(filter, update, defaultUpdateOptions);
+		return await Collection.FindOneAndUpdateAsync(filter, update, _defaultUpdateOptions);
 	}
 
 	public async Task DeleteCustomerOrderAsync(string customerOrderId)

@@ -1,4 +1,5 @@
-﻿using CarDealership.Contracts.Model.WarehouseModel.DTO;
+﻿using CarDealership.Contracts.Enum;
+using CarDealership.Contracts.Model.WarehouseModel.DTO;
 using CarDealership.Contracts.Model.WarehouseModel.Filter;
 using CarDealership.Warehouse.Interfaces.BLL;
 using Microsoft.AspNetCore.Mvc;
@@ -50,7 +51,7 @@ public class ClientController : ControllerBase
 	{
 		try
 		{
-			return Ok(await CarWarehouseManager.GetCarsByFilterAsync(carFilter));
+			return Ok(await CarWarehouseManager.GetCarsByFilterAsync(carFilter, InventoryStatus.Available.ToString()));
 		}
 		catch (Exception ex)
 		{

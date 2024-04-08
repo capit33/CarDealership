@@ -65,7 +65,7 @@ public class ChangeOrderStatusManager : IChangeOrderStatusManager
 	{
 		Helper.InputIdValidation(supplierOrderId);
 
-		var purchaseOrder = await PurchaseOrderRepository.GetPurchaseSupplierIdAsync(supplierOrderId);
+		var purchaseOrder = await PurchaseOrderRepository.GetPurchaseOrderBySupplierOrderIdAsync(supplierOrderId);
 
 		if (purchaseOrder == null || purchaseOrder.CarDealershipOrderId == null)
 			return;

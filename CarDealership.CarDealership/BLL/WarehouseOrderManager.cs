@@ -43,7 +43,7 @@ public class WarehouseOrderManager : IWarehouseOrderManager
 	{
 		DocumentStatus documentStatus;
 
-		if (!Enum.TryParse(status, out documentStatus))
+		if (!Enum.TryParse(status, true, out documentStatus))
 			throw new ArgumentException(ConstantApp.DocumentStatusNotValidError);
 
 		return await WarehouseOrderRepository.GetWarehouseOrdersByStatusAsync(documentStatus);
@@ -101,7 +101,7 @@ public class WarehouseOrderManager : IWarehouseOrderManager
 		if (employee == null)
 			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(employee), employeeId));
 
-		return await WarehouseOrderRepository.EditWarehouseOrderEmployeeIdAsync(warehouseOrderId, employee);
+		return await WarehouseOrderRepository.EditWarehouseOrderEmployeeIdAsync(warehouseOrderId, employeeId);
 	}
 
 	public async Task WarehouseNotifyOrderStatusChangedAsync(string warehouseOrderId, DocumentStatus documentStatus)

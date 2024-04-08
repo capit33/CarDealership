@@ -53,13 +53,13 @@ public class CarWarehouseController : ControllerBase
 	}
 
 	[HttpPost]
-	[Route("available/filter")]
+	[Route("filter/status/{inventoryStatus}")]
 
-	public async Task<IActionResult> GetCarsByFilterAsync([FromBody] CarFilter carFilter)
+	public async Task<IActionResult> GetCarsByFilterAsync([FromBody] CarFilter carFilter, string inventoryStatus)
 	{
 		try
 		{
-			return Ok(await CarWarehouseManager.GetCarsByFilterAsync(carFilter));
+			return Ok(await CarWarehouseManager.GetCarsByFilterAsync(carFilter, inventoryStatus));
 		}
 		catch (Exception ex)
 		{

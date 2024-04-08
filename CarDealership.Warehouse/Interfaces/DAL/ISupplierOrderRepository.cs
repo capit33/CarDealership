@@ -1,6 +1,6 @@
 ﻿using CarDealership.Contracts.Enum;
 using CarDealership.Contracts.Model.WarehouseModel;
-using CarDealership.Contracts.Model.WarehouseModel.DTO;
+using CarDealership.Contracts.Model.WarehouseModel.Interface;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,8 +11,7 @@ public interface ISupplierOrderRepository
 	Task<WarehouseSupplierOrder> GetSupplierOrderByIdAsync(string supplierOrderId);
 	Task<List<WarehouseSupplierOrder>> GetSupplierOrdersByStatusAsync(DocumentStatus documentStatus);
 	Task<WarehouseSupplierOrder> CreateSupplierOrderAsync(WarehouseSupplierOrder supplierOrder);
-	Task<WarehouseSupplierOrder> EditSupplierOrderAsync(string supplierOrderId, WarehouseSupplierOrderEdit supplierOrderEdit);
-	Task<WarehouseSupplierOrder> EditSupplierOrderProcessingAsync(string supplierOrderId, SupplierOrderConfirm supplierOrderConfirm);
-	Task<WarehouseSupplierOrder> EditSupplierOrderStatusAsync(string supplierOrderId, DocumentStatus status);
+	Task<WarehouseSupplierOrder> EditSupplierOrderAsync(string supplierOrderId,
+		ISupplierOrderEdit supplierOrderEdit = null, DocumentStatus? documentStatus = null);
 	Task DeleteOrderAsync(string supplierOrderId);
 }

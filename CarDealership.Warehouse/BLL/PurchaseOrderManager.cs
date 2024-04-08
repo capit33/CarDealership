@@ -34,7 +34,7 @@ public class PurchaseOrderManager : IPurchaseOrderManager
 	public async Task<List<WarehousePurchaseOrder>> GetPurchaseOrderByStatusAsync(string status)
 	{
 		DocumentStatus documentStatus;
-		if (!Enum.TryParse(status, out documentStatus))
+		if (!Enum.TryParse(status, true, out documentStatus))
 			throw new ArgumentException(ConstantApp.DocumentStatusNotValidError);
 
 		return await PurchaseOrderRepository.GetPurchaseOrderByStatusAsync(documentStatus);

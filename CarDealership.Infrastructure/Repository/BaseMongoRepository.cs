@@ -7,7 +7,7 @@ public class BaseMongoRepository<T> where T : class
 {
 	protected IMongoCollection<T> Collection { get; }
 
-	protected readonly FindOneAndUpdateOptions<T, T> defaultUpdateOptions = new FindOneAndUpdateOptions<T, T>()
+	protected readonly FindOneAndUpdateOptions<T, T> _defaultUpdateOptions = new FindOneAndUpdateOptions<T, T>()
 	{
 		ReturnDocument = ReturnDocument.After
 	};
@@ -20,10 +20,5 @@ public class BaseMongoRepository<T> where T : class
 
 		var client = new MongoClient(settings);
 		Collection = client.GetDatabase(mongoUrl.DatabaseName).GetCollection<T>(collectionName);
-	}
-
-	protected FindOneAndUpdateOptions<T, T> DefaultUpdateOptions()
-	{
-		return
 	}
 }

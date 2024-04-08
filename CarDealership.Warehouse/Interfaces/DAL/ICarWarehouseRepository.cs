@@ -13,8 +13,8 @@ public interface ICarWarehouseRepository
 	Task<CarFile> GetCarByIdAsync(string carId);
 	Task<CarInfo> GetCarInfoByIdAsync(string carId);
 	Task<List<CarInfo>> GetAvailableCarsAsync();
-	Task<List<CarInfo>> GetAvailableCarsByFilterAsync(CarFilter carFilter);
-	Task<long> GetAvailableCarsCountByFilterAsync(CarFilter carFilter);
+	Task<List<CarInfo>> GetCarsByFilterAsync(CarFilter carFilter, InventoryStatus? inventoryStatus = null);
+	Task<long> GetCarsCountByFilterAsync(CarFilter carFilter, InventoryStatus? inventoryStatus = null);
 	Task<CarFile> CreateCarAsync(CarFile carFile);
 	Task<CarFile> EditCarAsync(string carId, CarFileEdit carFileEdit);
 	Task<CarFile> EditCarStatusArrivalAsync(string carId, string vIN);

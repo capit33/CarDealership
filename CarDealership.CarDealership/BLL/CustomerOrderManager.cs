@@ -48,7 +48,7 @@ public class CustomerOrderManager : ICustomerOrderManager
 	{
 		DocumentStatus documentStatus;
 
-		if (!Enum.TryParse(status, out documentStatus))
+		if (!Enum.TryParse(status, true, out documentStatus))
 			throw new ArgumentException(ConstantApp.DocumentStatusNotValidError);
 
 		return await CustomerOrderRepository.GetCustomerOrdersByStatusAsync(documentStatus);

@@ -1,10 +1,13 @@
 ﻿using CarDealership.Contracts.Enum;
 using CarDealership.Contracts.Model.WarehouseModel;
-using CarDealership.Contracts.Model.WarehouseModel.DTO;
+using CarDealership.Contracts.Model.WarehouseModel.Interface;
 using CarDealership.Infrastructure.Repository;
 using CarDealership.Warehouse.Interfaces.DAL;
 using Microsoft.Extensions.Configuration;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CarDealership.Warehouse.DAL;
@@ -16,39 +19,60 @@ public class SupplierOrderRepository : BaseMongoRepository<WarehouseSupplierOrde
 	{
 	}
 
-	public Task<WarehouseSupplierOrder> GetSupplierOrderByIdAsync(string supplierOrderId)
+	public async Task<WarehouseSupplierOrder> GetSupplierOrderByIdAsync(string supplierOrderId)
 	{
-		throw new System.NotImplementedException();
+		return await Collection.Find(s => s.Id == supplierOrderId).SingleOrDefaultAsync();
 	}
 
-	public Task<List<WarehouseSupplierOrder>> GetSupplierOrdersByStatusAsync(DocumentStatus documentStatus)
+	public async Task<List<WarehouseSupplierOrder>> GetSupplierOrdersByStatusAsync(DocumentStatus documentStatus)
 	{
-		throw new System.NotImplementedException();
+		return await Collection.Find(s => s.DocumentStatus == documentStatus)
+			.Sort(Builders<WarehouseSupplierOrder>.Sort.Ascending(s => s.CreatedDate))
+			.ToListAsync();
 	}
 
-	public Task<WarehouseSupplierOrder> CreateSupplierOrderAsync(WarehouseSupplierOrder supplierOrder)
+	public async Task<WarehouseSupplierOrder> CreateSupplierOrderAsync(WarehouseSupplierOrder supplierOrder)
 	{
-		throw new System.NotImplementedException();
+		supplierOrder.Id = ObjectId.GenerateNewId().ToString();
+
+		await Collection.InsertOneAsync(supplierOrder);
+		return await GetSupplierOrderByIdAsync(supplierOrder.Id);
 	}
 
-	public Task<WarehouseSupplierOrder> EditSupplierOrderAsync(string supplierOrderId, WarehouseSupplierOrderEdit supplierOrderEdit)
+	public async Task<WarehouseSupplierOrder> EditSupplierOrderAsync(string supplierOrderId, 
+		ISupplierOrderEdit supplierOrderEdit, DocumentStatus? documentStatus)
 	{
-		throw new System.NotImplementedException();
+		var filter = Builders<WarehouseSupplierOrder>.Filter.Where(s => s.Id == supplierOrderId);
+		var update = UpdateDefinition(supplierOrderEdit, documentStatus);
+
+		if (update == null)
+			return await GetSupplierOrderByIdAsync(supplierOrderId);
+
+		return await Collection.FindOneAndUpdateAsync(filter, update, _defaultUpdateOptions);
 	}
 
-	public Task<WarehouseSupplierOrder> EditSupplierOrderProcessingAsync(string supplierOrderId, SupplierOrderConfirm supplierOrderConfirm)
+	public async Task DeleteOrderAsync(string supplierOrderId)
 	{
-		throw new System.NotImplementedException();
+		await Collection.DeleteOneAsync(s => s.Id == supplierOrderId);
 	}
 
-	public Task<WarehouseSupplierOrder> EditSupplierOrderStatusAsync(string supplierOrderId, DocumentStatus status)
+	private UpdateDefinition<WarehouseSupplierOrder> UpdateDefinition(ISupplierOrderEdit supplierOrderEdit = null, 
+		DocumentStatus? documentStatus = null)
 	{
-		throw new System.NotImplementedException();
-	}
+		var updates = new List<UpdateDefinition<WarehouseSupplierOrder>>();
 
+		if (documentStatus != null)
+			updates.Add(Builders<WarehouseSupplierOrder>.Update.Set(s => s.DocumentStatus, documentStatus));
 
-	public Task DeleteOrderAsync(string supplierOrderId)
-	{
-		throw new System.NotImplementedException();
+		if (supplierOrderEdit != null)
+		{
+			if (supplierOrderEdit.SupplierName != null)
+				updates.Add(Builders<WarehouseSupplierOrder>.Update.Set(s => s.SupplierName, supplierOrderEdit.SupplierName));
+		}
+
+		if (updates.Any())
+			return Builders<WarehouseSupplierOrder>.Update.Combine(updates);
+
+		return null;
 	}
 }

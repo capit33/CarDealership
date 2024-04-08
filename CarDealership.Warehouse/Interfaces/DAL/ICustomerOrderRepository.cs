@@ -14,6 +14,6 @@ public interface ICustomerOrderRepository
 	Task<List<WarehouseCustomerOrder>> GetCustomerOrdersByStatusAsync(DocumentStatus documentStatus);
 	Task<WarehouseCustomerOrder> CreateCustomerOrderAsync(WarehouseCustomerOrder customerOrder);
 	Task<WarehouseCustomerOrder> EditCustomerOrderAsync(string id, WarehouseCustomerOrderEdit customerOrderEdit);
-	Task<WarehouseCustomerOrder> CustomerOrderChangeStatusByIdAsync(string customerOrderId, DocumentStatus canceled);
+	Task<WarehouseCustomerOrder> CustomerOrderChangeStatusByIdAsync(string customerOrderId, DocumentStatus documentStatus);
 	Task DeleteCustomerOrderByIdAsync(string customerOrderId);
 }

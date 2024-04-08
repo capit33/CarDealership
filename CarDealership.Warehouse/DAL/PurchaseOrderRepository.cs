@@ -3,6 +3,8 @@ using CarDealership.Contracts.Model.WarehouseModel;
 using CarDealership.Infrastructure.Repository;
 using CarDealership.Warehouse.Interfaces.DAL;
 using Microsoft.Extensions.Configuration;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,33 +17,45 @@ public class PurchaseOrderRepository : BaseMongoRepository<WarehousePurchaseOrde
 	{
 	}
 
-	public Task<WarehousePurchaseOrder> GetPurchaseOrderByIdAsync(string purchaseOrderId)
+	public async Task<WarehousePurchaseOrder> GetPurchaseOrderByIdAsync(string purchaseOrderId)
 	{
-		throw new System.NotImplementedException();
+		return await Collection.Find(p => p.Id == purchaseOrderId).SingleOrDefaultAsync();
 	}
 
-	public Task<List<WarehousePurchaseOrder>> GetPurchaseOrderByStatusAsync(DocumentStatus documentStatus)
+	public async Task<List<WarehousePurchaseOrder>> GetPurchaseOrderByStatusAsync(DocumentStatus documentStatus)
 	{
-		throw new System.NotImplementedException();
+		return await Collection.Find(p => p.DocumentStatus == documentStatus)
+			.Sort(Builders<WarehousePurchaseOrder>.Sort.Ascending(p => p.CreatedDate))
+			.ToListAsync();
 	}
 
-	public Task<WarehousePurchaseOrder> GetPurchaseSupplierIdAsync(string supplierOrderId)
+	public async Task<WarehousePurchaseOrder> GetPurchaseOrderBySupplierOrderIdAsync(string supplierOrderId)
 	{
-		throw new System.NotImplementedException();
+		return await Collection.Find(p => p.SupplierOrderId == supplierOrderId).SingleOrDefaultAsync();
+	}
+	public async Task<WarehousePurchaseOrder> GetPurchaseOrderByCarDealershipIdAsync(string carDealershipOrderId)
+	{
+		return await Collection.Find(p => p.CarDealershipOrderId == carDealershipOrderId).SingleOrDefaultAsync();
 	}
 
-	public Task<WarehousePurchaseOrder> GetPurchaseOrderByCarDealershipIdAsync(string purchaseOrderId)
+	public async Task<WarehousePurchaseOrder> CreatePurchaseOrderAsync(WarehousePurchaseOrder purchaseOrder)
 	{
-		throw new System.NotImplementedException();
+		purchaseOrder.Id = ObjectId.GenerateNewId().ToString();
+
+		await Collection.InsertOneAsync(purchaseOrder);
+		return await GetPurchaseOrderByIdAsync(purchaseOrder.Id);
 	}
 
-	public Task CreatePurchaseOrderAsync(WarehousePurchaseOrder purchaseOrder)
+	public async Task<WarehousePurchaseOrder> EditPurchaseOrderStatusAsync(string purchaseOrderId, DocumentStatus documentStatus)
 	{
-		throw new System.NotImplementedException();
+		var filter = Builders<WarehousePurchaseOrder>.Filter.Where(p => p.Id == purchaseOrderId);
+		var update = Builders<WarehousePurchaseOrder>.Update.Set(p => p.DocumentStatus, documentStatus);
+
+		return await Collection.FindOneAndUpdateAsync(filter, update, _defaultUpdateOptions);
 	}
 
-	public Task DeletePurchaseOrderAsync(string purchaseOrderId)
+	public async Task DeletePurchaseOrderAsync(string purchaseOrderId)
 	{
-		throw new System.NotImplementedException();
+		await Collection.DeleteOneAsync(p => p.Id == purchaseOrderId);
 	}
 }

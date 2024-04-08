@@ -38,7 +38,7 @@ public class SupplierOrderManager : ISupplierOrderManager
 	{
 		DocumentStatus documentStatus;
 
-		if (!Enum.TryParse(status, out documentStatus))
+		if (!Enum.TryParse(status, true, out documentStatus))
 			throw new ArgumentException(ConstantApp.DocumentStatusNotValidError);
 
 		return await SupplierOrderRepository.GetSupplierOrdersByStatusAsync(documentStatus);
@@ -73,7 +73,8 @@ public class SupplierOrderManager : ISupplierOrderManager
 		});
 	}
 
-	public async Task<WarehouseSupplierOrder> SupplierOrderProcessingAsync(string supplierOrderId, SupplierOrderConfirm supplierOrderConfirm)
+	public async Task<WarehouseSupplierOrder> SupplierOrderProcessingAsync(string supplierOrderId, 
+		SupplierOrderConfirm supplierOrderConfirm)
 	{
 		if (supplierOrderConfirm == null || string.IsNullOrWhiteSpace(supplierOrderConfirm.SupplierName))
 			throw new InvalidDataException(nameof(supplierOrderConfirm));
@@ -86,7 +87,8 @@ public class SupplierOrderManager : ISupplierOrderManager
 		if (supplierOrder.DocumentStatus != DocumentStatus.Created)
 			throw new InvalidOperationException(ConstantApp.DocumentStatusNotValidError);
 
-		supplierOrder = await SupplierOrderRepository.EditSupplierOrderProcessingAsync(supplierOrderId, supplierOrderConfirm);
+		supplierOrder = await SupplierOrderRepository.EditSupplierOrderAsync(supplierOrderId, 
+			supplierOrderConfirm, DocumentStatus.Processing);
 
 		await ChangeOrderStatusManager.SupplierOrderStatusChanged(supplierOrder.Id, DocumentStatus.Processing);
 		return supplierOrder;
@@ -141,7 +143,8 @@ public class SupplierOrderManager : ISupplierOrderManager
 		if (carFile == null)
 			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(carFile), supplierOrder.CarFileId));
 
-		supplierOrder = await SupplierOrderRepository.EditSupplierOrderStatusAsync(supplierOrderId, DocumentStatus.Done);
+		supplierOrder = await SupplierOrderRepository.EditSupplierOrderAsync(supplierOrderId, 
+			documentStatus: DocumentStatus.Done);
 
 		await ChangeOrderStatusManager.SupplierOrderStatusChanged(supplierOrder.Id, DocumentStatus.Done);
 		return supplierOrder;
@@ -160,7 +163,8 @@ public class SupplierOrderManager : ISupplierOrderManager
 
 		await CarWarehouseManager.DeleteCarAsync(supplierOrder.CarFileId);
 
-		supplierOrder = await SupplierOrderRepository.EditSupplierOrderStatusAsync(supplierOrderId, DocumentStatus.Canceled);
+		supplierOrder = await SupplierOrderRepository.EditSupplierOrderAsync(supplierOrderId, 
+			documentStatus: DocumentStatus.Canceled);
 
 		await ChangeOrderStatusManager.SupplierOrderStatusChanged(supplierOrder.Id, DocumentStatus.Canceled);
 
