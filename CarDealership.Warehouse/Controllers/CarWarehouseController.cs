@@ -83,7 +83,7 @@ public class CarWarehouseController : ControllerBase
 		}
 	}
 
-	[HttpPut]
+	[HttpPatch]
 	[Route("{carId}")]
 	public async Task<IActionResult> EditCarAsync(string carId, [FromBody] CarFileEdit carFileEdit)
 	{

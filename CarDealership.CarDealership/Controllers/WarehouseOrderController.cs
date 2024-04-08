@@ -66,7 +66,7 @@ public class WarehouseOrderController : ControllerBase
 		}
 	}
 
-	[HttpPut]
+	[HttpPatch]
 	[Route("{warehouseOrderId}/employee/{employeeId}")]
 	public async Task<IActionResult> EditWarehouseOrderEmployeeIdAsync(string warehouseOrderId, string employeeId)
 	{
@@ -81,7 +81,7 @@ public class WarehouseOrderController : ControllerBase
 		}
 	}
 
-	[HttpPut]
+	[HttpPatch]
 	[Route("canceled/{warehouseOrderId}")]
 	public async Task<IActionResult> CanceledWarehouseOrderAsync(string warehouseOrderId)
 	{

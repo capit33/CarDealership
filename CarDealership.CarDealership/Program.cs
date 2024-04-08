@@ -97,6 +97,7 @@ public class Program
 		services.AddScoped<ICustomerOrderManager, CustomerOrderManager>();
 		services.AddScoped<IWarehouseOrderManager, WarehouseOrderManager>();
 		services.AddScoped<IWarehouseManager, WarehouseManager>();
+		services.AddScoped<ISearchManager, SearchManager>();
 	}
 
 	private static void RegisterRepositories(IServiceCollection services)

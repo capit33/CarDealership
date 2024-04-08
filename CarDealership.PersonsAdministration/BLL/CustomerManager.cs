@@ -1,11 +1,14 @@
 ﻿using CarDealership.Contracts;
+using CarDealership.Contracts.Enum;
 using CarDealership.Contracts.Model.CarDealershipModel.Filter;
 using CarDealership.Contracts.Model.CarDealershipModel.Person.Customer;
 using CarDealership.Contracts.Model.CarDealershipModel.Person.Customer.DTO;
+using CarDealership.Contracts.Model.DTO;
 using CarDealership.Contracts.Model.Filters;
 using CarDealership.Infrastructure;
 using CarDealership.PersonsAdministration.Interfaces.BLL;
 using CarDealership.PersonsAdministration.Interfaces.DAL;
+using CarDealership.PersonsAdministration.Interfaces.RestClients;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -14,14 +17,14 @@ namespace CarDealership.PersonsAdministration.BLL;
 
 public class CustomerManager : ICustomerManager
 {
-	public IObjectUsageManager ObjectUsageManager { get; }
 	public ICustomerRepository CustomerRepository { get; }
+	public ICarDealershipRestClient CarDealershipRestClient { get; }
 
-	public CustomerManager(IObjectUsageManager objectUsageManager,
-		ICustomerRepository customerRepository)
+	public CustomerManager(ICustomerRepository customerRepository, 
+		ICarDealershipRestClient carDealershipRestClient)
 	{
-		ObjectUsageManager = objectUsageManager;
 		CustomerRepository = customerRepository;
+		CarDealershipRestClient = carDealershipRestClient;
 	}
 
 	public async Task<Customer> GetCustomerByIdAsync(string customerId)
@@ -97,8 +100,8 @@ public class CustomerManager : ICustomerManager
 
 	public async Task DeleteCustomerAsync(string customerId)
 	{
-		var isUsing = await ObjectUsageManager.IsCustomerIdUsedAsync(customerId);
-		if (isUsing)
+		SearchResult result = await CarDealershipRestClient.FindCustomerIdAsync(customerId);
+		if (result.Result == SearchResultEnum.Found)
 			new Exception($"{nameof(customerId)}: {customerId} {ConstantApp.DeleteError}");
 
 		await CustomerRepository.DeleteCustomerAsync(customerId);

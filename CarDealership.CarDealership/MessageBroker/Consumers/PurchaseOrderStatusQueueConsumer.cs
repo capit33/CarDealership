@@ -20,6 +20,6 @@ public class PurchaseOrderStatusQueueConsumer
 
 	public override async Task HandleMessageAsync(WarehousePurchaseOrderStatusQueue message)
 	{
-		await WarehouseOrderManager.WarehouseOrderStatusChangedAsync(message.CarDealershipOrderId, message.DocumentStatus);
+		await WarehouseOrderManager.WarehouseNotifyOrderStatusChangedAsync(message.CarDealershipOrderId, message.DocumentStatus);
 	}
 }

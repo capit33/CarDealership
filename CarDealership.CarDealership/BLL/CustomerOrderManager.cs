@@ -15,6 +15,7 @@ using CarDealership.Contracts.Model.CarModel;
 using CarDealership.Contracts.Model.WarehouseModel.DTO;
 using System.IO;
 using System.Net.WebSockets;
+using CarDealership.Contracts.Model.QueueModel;
 
 namespace CarDealership.CarDealership.BLL;
 
@@ -64,7 +65,7 @@ public class CustomerOrderManager : ICustomerOrderManager
 		if (employee == null)
 			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(employee), customerOrderCreate.EmployeeId));
 
-		var customer = await PersonsAdministrationRestClient.GetEmployeeByIdAsync(customerOrderCreate.CustomerId);
+		var customer = await PersonsAdministrationRestClient.GetCustomerByIdAsync(customerOrderCreate.CustomerId);
 		if (customer == null)
 			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(customer), customerOrderCreate.CustomerId));
 
@@ -95,7 +96,8 @@ public class CustomerOrderManager : ICustomerOrderManager
 		// if car already reserved
 		try
 		{
-			WarehouseCustomerOrderInfo warehouseCustomerOrderInfo = await WarehouseRestClient.CreateCustomerOrderAsync(carDealershipCustomerOrderCreate);
+			var warehouseCustomerOrderInfo = await WarehouseRestClient
+				.CreateCustomerOrderAsync(carDealershipCustomerOrderCreate);
 		}
 		catch
 		{
@@ -118,16 +120,22 @@ public class CustomerOrderManager : ICustomerOrderManager
 
 		var warehouseCustomerOrderEdit = new WarehouseCustomerOrderEdit();
 
-		if (customerOrderEdit.EmployeeId != null && customerOrderEdit.EmployeeId != customerOrder.EmployeeId)
+		if (customerOrderEdit.EmployeeId == customerOrder.EmployeeId)
+			customerOrderEdit.EmployeeId = null;
+
+		if (customerOrderEdit.EmployeeId != null)
 		{
 			var employee = await PersonsAdministrationRestClient.GetEmployeeByIdAsync(customerOrderEdit.EmployeeId);
 			if (employee == null)
 				throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(employee), customerOrderEdit.EmployeeId));
 		}
 
-		if (customerOrderEdit.CustomerId != null && customerOrderEdit.CustomerId != customerOrder.CustomerId)
+		if (customerOrderEdit.CustomerId == customerOrder.CustomerId)
+			customerOrderEdit.CustomerId = null;
+
+		if (customerOrderEdit.CustomerId != null )
 		{
-			var customer = await PersonsAdministrationRestClient.GetEmployeeByIdAsync(customerOrderEdit.CustomerId);
+			var customer = await PersonsAdministrationRestClient.GetCustomerByIdAsync(customerOrderEdit.CustomerId);
 			if (customer == null)
 				throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(customer), customerOrderEdit.CustomerId));
 
@@ -135,7 +143,10 @@ public class CustomerOrderManager : ICustomerOrderManager
 			warehouseCustomerOrderEdit.CustomerLastName = customer.LastName;
 		}
 
-		if (customerOrderEdit.ReservedCarId != null && customerOrderEdit.ReservedCarId != customerOrder.ReservedCarId)
+		if (customerOrderEdit.ReservedCarId == customerOrder.ReservedCarId)
+			customerOrderEdit.ReservedCarId = null;
+
+		if (customerOrderEdit.ReservedCarId != null)
 		{
 			CarInfo carInfo = await WarehouseManager.GetCarWarehouseByIdAsync(customerOrderEdit.ReservedCarId);
 			if (carInfo.InventoryStatus != InventoryStatus.Available)
@@ -145,20 +156,63 @@ public class CustomerOrderManager : ICustomerOrderManager
 		}
 
 		if (warehouseCustomerOrderEdit.IsObjectValid(out string _))
-		{
 			await WarehouseRestClient.EditCustomerOrderAsync(customerOrderId, warehouseCustomerOrderEdit);
-		}
 
-		return await CustomerOrderRepository.EditCustomerOrderAsync(customerOrderId, customerOrderEdit);
+		if (customerOrderEdit.IsObjectValid(out string _))
+			return await CustomerOrderRepository.EditCustomerOrderAsync(customerOrderId, customerOrderEdit);
+
+		return customerOrder;
 	}
 
-	public Task<CustomerOrder> CanceledCustomerOrderAsync(string customerOrderId)
+	public async Task WarehouseNotifyOrderStatusChangedAsync(string customerOrderId, DocumentStatus documentStatus)
 	{
-		throw new System.NotImplementedException();
+		Helper.InputIdValidation(customerOrderId);
+
+		var customerOrder = await GetCustomerOrderByIdAsync(customerOrderId);
+
+		if (customerOrder == null)
+			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(customerOrder), customerOrderId));
+
+		await CustomerOrderRepository.EditCustomerOrderStatusAsync(customerOrderId, documentStatus);
 	}
 
-	public Task DeleteCustomerOrderAsync(string customerOrderId)
+	public async Task<CustomerOrder> CanceledCustomerOrderAsync(string customerOrderId)
 	{
-		throw new System.NotImplementedException();
+		Helper.InputIdValidation(customerOrderId);
+		var customerOrder = await GetCustomerOrderByIdAsync(customerOrderId);
+
+		if (customerOrder == null)
+			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(customerOrder), customerOrderId));
+
+		if (customerOrder.DocumentStatus == DocumentStatus.Canceled)
+			return customerOrder;
+
+		if (customerOrder.DocumentStatus == DocumentStatus.Done)
+			throw new InvalidOperationException(ConstantApp.DocumentStatusNotValidError);
+
+		await CustomerOrderStatusQueuePublisher.SendMessage(new()
+		{
+			CarDealershipOrderId = customerOrder.Id,
+			DocumentStatus = DocumentStatus.Canceled
+		});
+
+		return await CustomerOrderRepository.EditCustomerOrderStatusAsync(customerOrderId, DocumentStatus.Canceled);
+	}
+
+	public async Task DeleteCustomerOrderAsync(string customerOrderId)
+	{
+		Helper.InputIdValidation(customerOrderId);
+
+		var customerOrder = await GetCustomerOrderByIdAsync(customerOrderId);
+
+		if (customerOrder == null)
+			return;
+
+		if (customerOrder.DocumentStatus != DocumentStatus.Canceled)
+			throw new InvalidOperationException(
+					ConstantApp.GetErrorMessageDeleteNotPossible(nameof(customerOrder.DocumentStatus),
+					customerOrder.DocumentStatus.ToString()));
+
+		await CustomerOrderRepository.DeleteCustomerOrderAsync(customerOrderId);
 	}
 }

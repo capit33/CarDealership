@@ -1,9 +1,14 @@
 ﻿using CarDealership.Contracts;
+using CarDealership.Contracts.Enum;
+using CarDealership.Contracts.Model.CarDealershipModel.Person.Customer;
 using CarDealership.Contracts.Model.CarDealershipModel.Person.Employee;
 using CarDealership.Contracts.Model.CarDealershipModel.Person.Employee.DTO;
+using CarDealership.Contracts.Model.DTO;
 using CarDealership.Contracts.Model.Filters;
 using CarDealership.PersonsAdministration.Interfaces.BLL;
 using CarDealership.PersonsAdministration.Interfaces.DAL;
+using CarDealership.PersonsAdministration.Interfaces.RestClients;
+using CarDealership.PersonsAdministration.RestClients;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -13,14 +18,14 @@ namespace CarDealership.PersonsAdministration.BLL;
 public class EmployeeManager : IEmployeeManager
 {
 	public IEmployeeRepository EmployeeRepository { get; }
-	public IObjectUsageManager ObjectUsageManager { get; }
+	public ICarDealershipRestClient CarDealershipRestClient { get; }
 
 	public EmployeeManager(
 		IEmployeeRepository employeeRepository,
-		IObjectUsageManager objectUsageManager)
+		ICarDealershipRestClient carDealershipRestClient)
 	{
 		EmployeeRepository = employeeRepository;
-		ObjectUsageManager = objectUsageManager;
+		CarDealershipRestClient = carDealershipRestClient;
 	}
 
 	public async Task<Employee> GetEmployeeByIdAsync(string employeeId)
@@ -91,14 +96,13 @@ public class EmployeeManager : IEmployeeManager
 	{
 		if (string.IsNullOrWhiteSpace(employeeId))
 			throw new ArgumentNullException(nameof(employeeId));
-
 		await EmployeeRepository.ChangeEmployeeRemoveStatusAsync(employeeId, true);
 	}
 
 	public async Task DeleteEmployeeAsync(string employeeId)
 	{
-		var isUsing = await ObjectUsageManager.IsEmployeeIdUsedAsync(employeeId);
-		if (isUsing)
+		SearchResult result = await CarDealershipRestClient.FindEmployeeIdAsync(employeeId);
+		if (result.Result == SearchResultEnum.Found)
 			new Exception($"{nameof(employeeId)}: {employeeId} {ConstantApp.DeleteError}");
 
 		await EmployeeRepository.DeleteEmployeeAsync(employeeId);

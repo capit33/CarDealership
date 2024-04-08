@@ -1,4 +1,5 @@
-﻿using CarDealership.Contracts.Model.CarDealershipModel.Orders;
+﻿using CarDealership.Contracts.Enum;
+using CarDealership.Contracts.Model.CarDealershipModel.Orders;
 using CarDealership.Contracts.Model.CarDealershipModel.Orders.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,4 +14,5 @@ public interface ICustomerOrderManager
 	Task<CustomerOrder> EditCustomerOrderAsync(string customerOrderId, CustomerOrderEdit customerOrderEdit);
 	Task<CustomerOrder> CanceledCustomerOrderAsync(string customerOrderId);
 	Task DeleteCustomerOrderAsync(string customerOrderId);
+	Task WarehouseNotifyOrderStatusChangedAsync(string carDealershipOrderId, DocumentStatus documentStatus);
 }

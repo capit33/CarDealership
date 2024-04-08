@@ -66,7 +66,7 @@ public class CustomerOrderController : ControllerBase
 		}
 	}
 
-	[HttpPut]
+	[HttpPatch]
 	[Route("{customerOrderId}")]
 	public async Task<IActionResult> EditCustomerOrderAsync(string customerOrderId, [FromBody] CustomerOrderEdit customerOrderEdit)
 	{
@@ -81,7 +81,7 @@ public class CustomerOrderController : ControllerBase
 		}
 	}
 
-	[HttpPut]
+	[HttpPatch]
 	[Route("canceled/{customerOrderId}")]
 	public async Task<IActionResult> CanceledCustomerOrderAsync(string customerOrderId)
 	{

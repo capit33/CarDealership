@@ -66,7 +66,8 @@ public class WarehouseOrderManager : IWarehouseOrderManager
 		var employee = await PersonsAdministrationRestClient.GetEmployeeByIdAsync(warehouseOrderCreate.EmployeeId);
 
 		if (employee == null)
-			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(employee), warehouseOrderCreate.EmployeeId));
+			throw new InvalidDataException(
+				ConstantApp.GetNotFoundErrorMessage(nameof(employee), warehouseOrderCreate.EmployeeId));
 
 		var warehouseOrder = new WarehouseOrder()
 		{
@@ -107,7 +108,7 @@ public class WarehouseOrderManager : IWarehouseOrderManager
 		return await WarehouseOrderRepository.EditWarehouseOrderEmployeeIdAsync(warehouseOrderId, employee);
 	}
 
-	public async Task WarehouseOrderStatusChangedAsync(string warehouseOrderId, DocumentStatus documentStatus)
+	public async Task WarehouseNotifyOrderStatusChangedAsync(string warehouseOrderId, DocumentStatus documentStatus)
 	{
 		Helper.InputIdValidation(warehouseOrderId);
 
@@ -116,7 +117,7 @@ public class WarehouseOrderManager : IWarehouseOrderManager
 		if (warehouseOrder == null)
 			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(warehouseOrder), warehouseOrderId));
 
-		WarehouseOrderRepository.EditWarehouseOrderStatusAsunc(warehouseOrderId, documentStatus);
+		await WarehouseOrderRepository.EditWarehouseOrderStatusAsync(warehouseOrderId, documentStatus);
 	}
 
 	public async Task<WarehouseOrder> CanceledWarehouseOrderAsync(string warehouseOrderId)
@@ -132,7 +133,7 @@ public class WarehouseOrderManager : IWarehouseOrderManager
 			throw new InvalidOperationException(ConstantApp.DocumentStatusNotValidError);
 
 		await WarehouseRestClient.CanceledWarehouseOrderAsync(warehouseOrderId);
-		return WarehouseOrderRepository.EditWarehouseOrderStatusAsunc(warehouseOrderId, DocumentStatus.Canceled);
+		return await WarehouseOrderRepository.EditWarehouseOrderStatusAsync(warehouseOrderId, DocumentStatus.Canceled);
 	}
 
 	public async Task DeleteWarehouseOrderAsync(string warehouseOrderId)
@@ -140,7 +141,6 @@ public class WarehouseOrderManager : IWarehouseOrderManager
 		Helper.InputIdValidation(warehouseOrderId);
 
 		var warehouseOrder = await GetWarehouseOrderByIdAsync(warehouseOrderId);
-
 		if (warehouseOrder == null)
 			return;
 

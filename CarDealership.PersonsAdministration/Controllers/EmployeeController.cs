@@ -69,7 +69,7 @@ public class EmployeeController : ControllerBase
 		}
 	}
 
-	[HttpPut]
+	[HttpPatch]
 	[Route("{employeeId}")]
 	public async Task<IActionResult> EditEmployeeAsync(string employeeId, [FromBody] EmployeeEdit employeeEdit)
 	{
@@ -84,7 +84,7 @@ public class EmployeeController : ControllerBase
 		}
 	}
 
-	[HttpPut]
+	[HttpPatch]
 	[Route("restore/{employeeId}")]
 	public async Task<IActionResult> RestoreEmployeeAsync(string employeeId)
 	{
@@ -100,7 +100,7 @@ public class EmployeeController : ControllerBase
 	}
 
 
-	[HttpPut]
+	[HttpPatch]
 	[Route("remove/{employeeId}")]
 	public async Task<IActionResult> RemoveEmployeeAsync(string employeeId)
 	{

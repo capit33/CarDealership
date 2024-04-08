@@ -72,6 +72,26 @@ public class BaseRestClient
 			throw new Exception($"{responseMessage.StatusCode.ToString()}: {content}");
 		}
 	}
+	public async Task<T> PatchAsync<T>(string path)
+		where T : class
+	{
+		var requestMessage = new HttpRequestMessage(HttpMethod.Patch, GetUri(path));
+
+		var responseMessage = await _httpClient.SendAsync(requestMessage);
+		var content = await responseMessage.Content.ReadAsStringAsync();
+
+		if (responseMessage.IsSuccessStatusCode)
+		{
+			if (typeof(T) == typeof(string))
+				return (T)Convert.ChangeType(content, typeof(T));
+
+			return JsonConvert.DeserializeObject<T>(content);
+		}
+		else
+		{
+			throw new Exception($"{responseMessage.StatusCode.ToString()}: {content}");
+		}
+	}
 
 	public async Task<T> PatchAsync<T, TY>(string path, TY request)
 		where T : class

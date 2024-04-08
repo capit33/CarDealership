@@ -66,7 +66,7 @@ public class SupplierOrderController : ControllerBase
 		}
 	}
 
-	[HttpPut]
+	[HttpPatch]
 	[Route("processing/{supplierOrderId}")]
 	public async Task<IActionResult> SupplierOrderProcessingAsync(string supplierOrderId, [FromBody] SupplierOrderConfirm supplierOrderConfirm)
 	{
@@ -81,7 +81,7 @@ public class SupplierOrderController : ControllerBase
 		}
 	}
 
-	[HttpPut]
+	[HttpPatch]
 	[Route("{supplierOrderId}")]
 	public async Task<IActionResult> EditSupplierOrderAsync(string supplierOrderId, [FromBody] WarehouseSupplierOrderEdit supplierOrderEdit)
 	{
@@ -96,7 +96,7 @@ public class SupplierOrderController : ControllerBase
 		}
 	}
 
-	[HttpPut]
+	[HttpPatch]
 	[Route("arrival-car/{supplierOrderId}/VIN/{VIN}")]
 	public async Task<IActionResult> ArrivalCarAsync(string supplierOrderId, string VIN)
 	{
@@ -111,7 +111,7 @@ public class SupplierOrderController : ControllerBase
 		}
 	}
 
-	[HttpPut]
+	[HttpPatch]
 	[Route("canceled/{supplierOrderId}")]
 	public async Task<IActionResult> CanceledSupplierOrderAsync(string supplierOrderId)
 	{

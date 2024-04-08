@@ -23,7 +23,7 @@ public class CustomerOrderStatusQueueConsumer
 	{
 		if (message != null)
 		{
-			if (message.OrderStatus == DocumentStatus.Canceled)
+			if (message.DocumentStatus == DocumentStatus.Canceled)
 			{
 				await CustomerOrderManager.CanceledCustomerOrderByCarDealershipIdAsync(message.CarDealershipOrderId);
 			}

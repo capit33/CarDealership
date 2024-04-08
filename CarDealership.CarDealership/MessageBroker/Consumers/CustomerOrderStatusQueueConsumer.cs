@@ -18,8 +18,8 @@ public class CustomerOrderStatusQueueConsumer
 		CustomerOrderManager = customerOrderManager;
 	}
 
-	public override Task HandleMessageAsync(WarehouseCustomerOrderStatusQueue message)
+	public override async Task HandleMessageAsync(WarehouseCustomerOrderStatusQueue message)
 	{
-		return base.HandleMessageAsync(message);
+		await CustomerOrderManager.WarehouseNotifyOrderStatusChangedAsync(message.CarDealershipOrderId, message.DocumentStatus);
 	}
 }

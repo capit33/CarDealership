@@ -44,7 +44,7 @@ public class ClientController : ControllerBase
 	}
 
 	[HttpPost]
-	[Route("car/available/filter")]
+	[Route("car/filter")]
 
 	public async Task<IActionResult> GetCarsByFilterAsync([FromBody] CarFilter carFilter)
 	{
@@ -74,7 +74,7 @@ public class ClientController : ControllerBase
 		}
 	}
 
-	[HttpPut]
+	[HttpPatch]
 	[Route("customer-order/edit/{carDealershipOrderId}")]
 	public async Task<IActionResult> ChangeCustomerOrderAsync(string carDealershipOrderId, [FromBody] WarehouseCustomerOrderEdit customerOrderEdit)
 	{
@@ -89,7 +89,7 @@ public class ClientController : ControllerBase
 		}
 	}
 
-	[HttpPut]
+	[HttpPatch]
 	[Route("purchase-order/canceled/{carDealershipOrderId}")]
 	public async Task<IActionResult> CanceledPurchaseOrderAsync(string carDealershipOrderId)
 	{
