@@ -10,6 +10,19 @@ public class Car : ICar
 	public string ModelTrim { get; set; }
 	public int Year { get; set; }
 
+	public Car()
+	{
+	}
+
+	public Car(CarInfo carInfo)
+	{
+		this.Make = carInfo.Make;
+		this.Model = carInfo.Model;
+		this.ModelTrim = carInfo.ModelTrim;
+		this.Year = carInfo.Year;
+	}
+
+
 	public bool IsObjectValid(out string errorMessage)
 	{
 		errorMessage = string.Empty;

@@ -78,7 +78,7 @@ public class CustomerOrderManager : ICustomerOrderManager
 			CustomerId = customer.Id,
 			EmployeeId = employee.Id,
 			ReservedCarId = carInfo.CarId,
-			Car = (Car)carInfo,
+			Car = new Car(carInfo),
 			DocumentStatus = DocumentStatus.Processing,
 			CreatedDate = DateTime.UtcNow
 		};
@@ -120,6 +120,10 @@ public class CustomerOrderManager : ICustomerOrderManager
 
 		if (customerOrder == null)
 			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(customerOrder), customerOrderId));
+
+		if (customerOrder.DocumentStatus == DocumentStatus.Done 
+			|| customerOrder.DocumentStatus == DocumentStatus.Canceled)
+			throw new InvalidOperationException(ConstantApp.DocumentStatusNotValidError);
 
 		var warehouseCustomerOrderEdit = new WarehouseCustomerOrderEdit();
 

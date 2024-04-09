@@ -77,7 +77,7 @@ public class EmployeeManager : IEmployeeManager
 		if (employeeEdit == null)
 			throw new ArgumentNullException(nameof(employeeEdit));
 
-		if (employeeEdit.IsObjectValid(out string errorMessage))
+		if (!employeeEdit.IsObjectValid(out string errorMessage))
 			throw new InvalidDataException(errorMessage);
 
 		return await EmployeeRepository.EditEmployeeAsync(employeeId, employeeEdit);
