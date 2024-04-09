@@ -1,7 +1,7 @@
 ﻿using CarDealership.Contracts.Enum;
 using CarDealership.Contracts.Model.CarModel;
-using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 
 namespace CarDealership.Contracts.Model.CarDealershipModel.Orders;

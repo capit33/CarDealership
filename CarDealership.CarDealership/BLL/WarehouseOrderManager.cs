@@ -75,6 +75,9 @@ public class WarehouseOrderManager : IWarehouseOrderManager
 
 		warehouseOrder = await WarehouseOrderRepository.CreateWarehouseOrderAsync(warehouseOrder);
 
+		if (warehouseOrder == null)
+			throw new Exception("Warehouse Order not created.");
+
 		await PurchaseOrderQueuePublisher.SendMessage(new()
 		{
 			OrderId = warehouseOrder.Id,

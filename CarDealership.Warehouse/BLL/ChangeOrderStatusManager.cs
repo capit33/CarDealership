@@ -61,7 +61,7 @@ public class ChangeOrderStatusManager : IChangeOrderStatusManager
 		});
 	}
 
-	public async Task SupplierOrderStatusChanged(string supplierOrderId, DocumentStatus processing)
+	public async Task SupplierOrderStatusChanged(string supplierOrderId, DocumentStatus documentStatus)
 	{
 		Helper.InputIdValidation(supplierOrderId);
 
@@ -70,12 +70,12 @@ public class ChangeOrderStatusManager : IChangeOrderStatusManager
 		if (purchaseOrder == null || purchaseOrder.CarDealershipOrderId == null)
 			return;
 
-		await PurchaseOrderRepository.EditPurchaseOrderStatusAsync(purchaseOrder.Id, processing);
+		await PurchaseOrderRepository.EditPurchaseOrderStatusAsync(purchaseOrder.Id, documentStatus);
 
 		await PurchaseOrderStatusQueuePublisher.SendMessage(new()
 		{
 			CarDealershipOrderId = purchaseOrder.CarDealershipOrderId,
-			DocumentStatus = processing
+			DocumentStatus = documentStatus
 		});
 	}
 }

@@ -114,7 +114,7 @@ public class CarWarehouseManager : ICarWarehouseManager
 		var carFile = await GetCarByIdAsync(carId);
 
 		if (carFile == null)
-			return null;
+			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(carFile), carId));
 
 		if (!(carFile.InventoryStatus == InventoryStatus.Available
 			|| carFile.InventoryStatus == InventoryStatus.Reserved))

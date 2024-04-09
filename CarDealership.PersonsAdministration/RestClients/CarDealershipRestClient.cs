@@ -17,11 +17,11 @@ public class CarDealershipRestClient : BaseRestClient, ICarDealershipRestClient
 
 	public async Task<SearchResult> FindCustomerIdAsync(string customerId)
 	{
-		return await GetAsync<SearchResult>($"customer/{customerId}");
+		return await GetAsync<SearchResult>($"search/customer/{customerId}");
 	}
 
 	public async Task<SearchResult> FindEmployeeIdAsync(string employeeId)
 	{
-		return await GetAsync<SearchResult>($"employee/{employeeId}");
+		return await GetAsync<SearchResult>($"search/employee/{employeeId}");
 	}
 }

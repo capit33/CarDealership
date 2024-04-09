@@ -1,6 +1,5 @@
 ﻿using CarDealership.Contracts.Enum;
 using CarDealership.Contracts.Model.CarModel.Interface;
-using RabbitMQ.Client;
 
 namespace CarDealership.Contracts.Model.CarModel;
 

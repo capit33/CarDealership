@@ -67,6 +67,9 @@ public class CustomerOrderManager : ICustomerOrderManager
 			throw new InvalidDataException(ConstantApp.GetNotFoundErrorMessage(nameof(customer), customerOrderCreate.CustomerId));
 
 		CarInfo carInfo = await WarehouseManager.GetCarWarehouseByIdAsync(customerOrderCreate.ReservedCarId);
+
+		Helper.NullValidation(carInfo, customerOrderCreate.ReservedCarId);
+
 		if (carInfo.InventoryStatus != InventoryStatus.Available)
 			throw new InvalidOperationException(ConstantApp.CarNotAvailableError);
 
@@ -81,6 +84,9 @@ public class CustomerOrderManager : ICustomerOrderManager
 		};
 
 		customerOrder = await CustomerOrderRepository.CreateCustomerOrderAsync(customerOrder);
+
+		if (customerOrder == null)
+			throw new Exception("Customer order not created");
 
 		var carDealershipCustomerOrderCreate = new WarehouseCarDealershipCustomerOrderCreate()
 		{

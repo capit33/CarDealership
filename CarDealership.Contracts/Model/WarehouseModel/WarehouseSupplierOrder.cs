@@ -1,6 +1,6 @@
 ﻿using CarDealership.Contracts.Enum;
-using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 
 namespace CarDealership.Contracts.Model.WarehouseModel;

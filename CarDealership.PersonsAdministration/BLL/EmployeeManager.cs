@@ -4,6 +4,7 @@ using CarDealership.Contracts.Model.CarDealershipModel.Person.Employee;
 using CarDealership.Contracts.Model.CarDealershipModel.Person.Employee.DTO;
 using CarDealership.Contracts.Model.DTO;
 using CarDealership.Contracts.Model.Filters;
+using CarDealership.Infrastructure;
 using CarDealership.PersonsAdministration.Interfaces.BLL;
 using CarDealership.PersonsAdministration.Interfaces.DAL;
 using CarDealership.PersonsAdministration.Interfaces.RestClients;
@@ -100,8 +101,12 @@ public class EmployeeManager : IEmployeeManager
 	public async Task DeleteEmployeeAsync(string employeeId)
 	{
 		SearchResult result = await CarDealershipRestClient.FindEmployeeIdAsync(employeeId);
+
+		if (result == null)
+			Helper.NullValidation(result, employeeId);
+
 		if (result.Result == SearchResultEnum.Found)
-			new Exception($"{nameof(employeeId)}: {employeeId} {ConstantApp.DeleteError}");
+			throw new Exception($"{nameof(employeeId)}: {employeeId} {ConstantApp.DeleteError}");
 
 		await EmployeeRepository.DeleteEmployeeAsync(employeeId);
 	}

@@ -38,11 +38,11 @@ public class WarehouseRestClient : BaseRestClient, IWarehouseRestClient
 		WarehouseCustomerOrderEdit warehouseCustomerOrderEdit)
 	{
 		return await PatchAsync<WarehouseCustomerOrderInfo, WarehouseCustomerOrderEdit>
-			($"customer-order/edit/{customerOrderId}", warehouseCustomerOrderEdit);
+			($"client/customer-order/edit/{customerOrderId}", warehouseCustomerOrderEdit);
 	}
 
 	public async Task CanceledWarehouseOrderAsync(string warehouseOrderId)
 	{
-		await PatchAsync<object>($"purchase-order/canceled/{warehouseOrderId}");
+		await PatchAsync<object>($"client/purchase-order/canceled/{warehouseOrderId}");
 	}
 }

@@ -100,8 +100,12 @@ public class CustomerManager : ICustomerManager
 	public async Task DeleteCustomerAsync(string customerId)
 	{
 		SearchResult result = await CarDealershipRestClient.FindCustomerIdAsync(customerId);
+
+		if (result == null)
+			Helper.NullValidation(result, customerId);
+
 		if (result.Result == SearchResultEnum.Found)
-			new Exception($"{nameof(customerId)}: {customerId} {ConstantApp.DeleteError}");
+			throw new Exception($"{nameof(customerId)}: {customerId} {ConstantApp.DeleteError}");
 
 		await CustomerRepository.DeleteCustomerAsync(customerId);
 	}

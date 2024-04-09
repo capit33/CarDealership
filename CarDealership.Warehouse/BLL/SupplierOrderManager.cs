@@ -67,6 +67,9 @@ public class SupplierOrderManager : ISupplierOrderManager
 
 	public async Task<WarehouseSupplierOrder> CreateSupplierOrderFromPurchaseOrderAsync(WarehousePurchaseOrder purchaseOrder)
 	{
+		if (purchaseOrder == null) 
+			throw new ArgumentNullException(nameof(purchaseOrder));
+
 		return await CreateSupplierOrderAsync(new WarehouseSupplierOrderCreate()
 		{
 			Car = purchaseOrder.Car,
@@ -76,6 +79,8 @@ public class SupplierOrderManager : ISupplierOrderManager
 	public async Task<WarehouseSupplierOrder> SupplierOrderProcessingAsync(string supplierOrderId, 
 		SupplierOrderConfirm supplierOrderConfirm)
 	{
+		Helper.InputIdValidation(supplierOrderId);
+
 		if (supplierOrderConfirm == null || string.IsNullOrWhiteSpace(supplierOrderConfirm.SupplierName))
 			throw new InvalidDataException(nameof(supplierOrderConfirm));
 
@@ -90,16 +95,20 @@ public class SupplierOrderManager : ISupplierOrderManager
 		supplierOrder = await SupplierOrderRepository.EditSupplierOrderAsync(supplierOrderId, 
 			supplierOrderConfirm, DocumentStatus.Processing);
 
-
+		if (supplierOrder == null)
+			throw new Exception("Supplier Order is not edited.");
 
 		await ChangeOrderStatusManager.SupplierOrderStatusChanged(supplierOrder.Id, DocumentStatus.Processing);
 		return supplierOrder;
 	}
 
-	public async Task<WarehouseSupplierOrder> EditSupplierOrderAsync(string supplierOrderId, WarehouseSupplierOrderEdit supplierOrderEdit)
+	public async Task<WarehouseSupplierOrder> EditSupplierOrderAsync(string supplierOrderId, 
+		WarehouseSupplierOrderEdit supplierOrderEdit)
 	{
+		Helper.InputIdValidation(supplierOrderId);
+
 		if (supplierOrderEdit == null)
-			throw new InvalidDataException(nameof(supplierOrderId));
+			throw new InvalidDataException(nameof(supplierOrderEdit));
 
 		var supplierOrder = await GetSupplierOrderByIdAsync(supplierOrderId);
 
@@ -128,6 +137,8 @@ public class SupplierOrderManager : ISupplierOrderManager
 
 	public async Task<WarehouseSupplierOrder> ArrivalCarAsync(string supplierOrderId, string VIN)
 	{
+		Helper.InputIdValidation(supplierOrderId);
+
 		if (string.IsNullOrWhiteSpace(VIN))
 			throw new ArgumentNullException(nameof(VIN));
 
@@ -147,6 +158,9 @@ public class SupplierOrderManager : ISupplierOrderManager
 
 		supplierOrder = await SupplierOrderRepository.EditSupplierOrderAsync(supplierOrderId, 
 			documentStatus: DocumentStatus.Done);
+		
+		if (supplierOrder == null)
+			throw new Exception("Supplier Order is not edited.");
 
 		await ChangeOrderStatusManager.SupplierOrderStatusChanged(supplierOrder.Id, DocumentStatus.Done);
 		return supplierOrder;
@@ -154,6 +168,8 @@ public class SupplierOrderManager : ISupplierOrderManager
 
 	public async Task<WarehouseSupplierOrder> CanceledSupplierOrderAsync(string supplierOrderId)
 	{
+		Helper.InputIdValidation(supplierOrderId);
+
 		var supplierOrder = await GetSupplierOrderByIdAsync(supplierOrderId);
 
 		if (supplierOrder == null)

@@ -52,13 +52,20 @@ public class CustomerOrderManager : ICustomerOrderManager
 		var customerOrder = await CreateCustomerOrderModel(warehouseCustomerOrderCreate);
 
 		customerOrder = await CustomerOrderRepository.CreateCustomerOrderAsync(customerOrder);
+		if (customerOrder == null)
+			throw new Exception("Customer order not created.");
+
 		await CarWarehouseManager.CarReservationAsync(customerOrder.ReservedCarId);
 
 		return customerOrder;
 	}
 
-	public async Task<WarehouseCustomerOrderInfo> CreateCustomerOrderCarDealershipAsync(WarehouseCarDealershipCustomerOrderCreate warehouseCustomerOrderCreate)
+	public async Task<WarehouseCustomerOrderInfo> CreateCustomerOrderCarDealershipAsync
+		(WarehouseCarDealershipCustomerOrderCreate warehouseCustomerOrderCreate)
 	{
+		if (warehouseCustomerOrderCreate == null)
+			throw new Exception("WarehouseCustomerOrder is null.");
+
 		if (string.IsNullOrWhiteSpace(warehouseCustomerOrderCreate.CarDealershipOrderId))
 			throw new ArgumentNullException(nameof(warehouseCustomerOrderCreate.CarDealershipOrderId));
 
@@ -66,12 +73,16 @@ public class CustomerOrderManager : ICustomerOrderManager
 		customerOrder.CarDealershipOrderId = warehouseCustomerOrderCreate.CarDealershipOrderId;
 
 		customerOrder = await CustomerOrderRepository.CreateCustomerOrderAsync(customerOrder);
+		if (customerOrder == null)
+			throw new Exception("Customer order not created.");
+
 		await CarWarehouseManager.CarReservationAsync(customerOrder.ReservedCarId);
 
 		return new WarehouseCustomerOrderInfo(customerOrder);
 	}
 
-	public async Task<WarehouseCustomerOrder> EditCustomerOrderByIdAsync(string customerOrderId, WarehouseCustomerOrderEdit customerOrderEdit)
+	public async Task<WarehouseCustomerOrder> EditCustomerOrderByIdAsync(string customerOrderId, 
+		WarehouseCustomerOrderEdit customerOrderEdit)
 	{
 		Helper.InputIdValidation(customerOrderId);
 		Helper.InputDataValidation(customerOrderEdit);
@@ -113,6 +124,9 @@ public class CustomerOrderManager : ICustomerOrderManager
 		await CarWarehouseManager.CarSoldOutAsync(customerOrder.ReservedCarId);
 
 		customerOrder = await CustomerOrderRepository.CustomerOrderChangeStatusByIdAsync(customerOrder.Id, DocumentStatus.Done);
+		if (customerOrder == null)
+			throw new Exception("Customer order is not edit.");
+
 		await ChangeOrderStatusManager.CustomerOrderStatusChangeAsync(customerOrder, DocumentStatus.Done);
 
 		return customerOrder;
@@ -126,6 +140,8 @@ public class CustomerOrderManager : ICustomerOrderManager
 		Helper.NullValidation(customerOrder, customerOrderId);
 
 		customerOrder = await CanceledCustomerOrderAsync(customerOrder);
+		if (customerOrder == null)
+			throw new Exception("Customer order status is not changed.");
 
 		await ChangeOrderStatusManager.CustomerOrderStatusChangeAsync(customerOrder, DocumentStatus.Canceled);
 		return customerOrder;
@@ -189,6 +205,9 @@ public class CustomerOrderManager : ICustomerOrderManager
 	{
 		if (customerOrder == null)
 			throw new ArgumentNullException(nameof(customerOrder));
+
+		if (customerOrderEdit == null)
+			throw new ArgumentNullException(nameof(customerOrderEdit));
 
 		if (customerOrder.DocumentStatus == DocumentStatus.Done
 			|| customerOrder.DocumentStatus == DocumentStatus.Canceled)

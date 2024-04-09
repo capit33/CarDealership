@@ -53,6 +53,9 @@ public class PurchaseOrderManager : IPurchaseOrderManager
 
 		var supplierOrder = await SupplierOrderManager.CreateSupplierOrderFromPurchaseOrderAsync(purchaseOrder);
 
+		if (supplierOrder == null)
+			throw new Exception("Supplier order is not created.");
+
 		purchaseOrder.SupplierOrderId = supplierOrder.Id;
 		purchaseOrder.DocumentStatus = DocumentStatus.Created;
 		purchaseOrder.CreatedDate = DateTime.UtcNow;
@@ -82,7 +85,7 @@ public class PurchaseOrderManager : IPurchaseOrderManager
 
 		var purchaseOrder = await GetPurchaseOrderByIdAsync(purchaseOrderId);
 
-		if (purchaseOrder != null)
+		if (purchaseOrder == null)
 			return;
 
 		if (purchaseOrder.DocumentStatus != DocumentStatus.Canceled)
