@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# ClassDocumentationHeader: The class must have a documentation header.
+dotnet_diagnostic.ClassDocumentationHeader.severity = none
